@@ -1,0 +1,255 @@
+<div class="iq-card" style="cursor: pointer;padding: 0;" >
+    <div class="iq-card-body" style="box-shadow: 0 2px 8px #bcbcbc;border-radius: 15px;">
+        <div class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3" style="background-color: rgb(255 255 255 / 38%) !important;">
+            <div style="background:url({{item.PHOTO?(item.TYPE=='Admin'?'public/uploads/users/admins/':'public/uploads/users/formateurs/')+item.PHOTO:'public/uploads/default.png'}});width: 50px;height: 50px;background-size: cover;background-repeat: no-repeat;border-radius: 50%;"></div>
+            <h5 class="text-white">{{ item.NOM }} {{ item.PRENOM }}</h5>
+            <div>
+                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Seances" ng-click="$event.stopPropagation();methods.Modifier(item.ID_INTERVENANT);animationCtrl.ExpandFolder()" class="ri-settings-2-line font-size-18" role="button" tabindex="0"></i>
+                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();methods.Delete(item.ID_INTERVENANT)" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+            </div>
+
+        </div>
+        <div class="row">
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Type</b><br><span class="span-header">{{ item.TYPE }}</span></p>
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Email </b><br><span class="span-header"> {{ item.email }}</span></p>
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Téléphone </b><br><span class="span-header"> {{ item.TELEPHONE }}</span></p>
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Adresse service</b><br><span class="span-header">{{item.ADRESSE}}</span></p>
+        </div>
+        <div class="folder-content" id="js_folder-content" style="padding-left: 0px;">
+            <div class="folder-item js_folder-item">
+                <div class="col-md-12 ns-block">
+                    <div class="row mb-20" >
+                        <div class="col-6 form-inline my-1 p-0">
+                            <div class="form-group">
+                                <label class="my-1 mr-2" for="start">Du</label>
+                                <input ng-change="methods.CheckSelected(item,dataClass)" ng-date-input ng-model="item.DEBUT" type="date" class="form-control" id="start" max="{{item.MAX}}" min="{{item.MIN}}">
+                                <label class="my-1 mr-2 ml-2" for="end">au</label>
+                                <input ng-change="methods.CheckSelected(item,dataClass)" ng-date-input ng-model="item.FIN" type="date" class="form-control" id="end" max="{{item.MAX}}" min="{{item.MIN}}">
+                            </div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <button ng-class="item.AllSelected ? 'active':''" type="button" class="float-left btn btn-primary w-175" ng-click="methods.ToggleSeances(item.ID_INTERVENANT,'all',dataClass,item)">
+                                {{item.AllSelected? 'Deselectionner':'Selectionner'}} Tout
+                            </button>
+                        </div>
+                        <div class="col-2 p-0" ng-repeat="type_seance in dataTypes">
+                            <button ng-class="item['Selected-'+type_seance.ID_TYPE_SEANCE] ? 'active':''" type="button" class="float-left btn btn-primary w-75" ng-click="methods.ToggleSeances(item.ID_INTERVENANT,type_seance.ID_TYPE_SEANCE,dataClass,item)">
+                                {{type_seance.NOM}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="table-responsive">
+                        <table role="table" class="table b-table" id="__BVID__1220">
+                            <thead role="rowgroup" class="">
+                                <th role="rowheader" scope="row" class="">Module</th>
+                                <th role="rowheader" scope="row" class="">Type Seance</th>
+                                <th role="rowheader" scope="row" class="">Date</th>
+                                <th role="rowheader" scope="row" class="">Debut</th>
+                                <th role="rowheader" scope="row" class="">Fin</th>
+                                <th role="rowheader" scope="row" class="">Action</th>
+                            </thead>
+                            <tbody role="rowgroup">
+                            <tr role="row" class="" ng-repeat="module in item.modules track by $index"  ng-show="dataClass[$index].length>0">
+                                <td rowspan="0" role="cell" class="">{{module.NOM}}</td>
+                                <td role="cell" class="">
+                                    <button type="button" class="float-left btn btn-primary">
+                                        {{seance.NOM_TYPE_SEANCE}}
+                                    </button>
+                                </td>
+                                <td role="cell" class="">
+                                    <button type="button" class="float-left btn btn-primary">
+                                    {{seance.DATE}}
+                                </button>
+                                </td>
+                                <td role="cell" class="">
+                                    <button type="button" class="float-left btn btn-primary ml-1">
+                                {{seance.HD}}
+                            </button>
+                                </td>
+                                <td role="cell" class="">
+                                    <button type="button" class="float-left btn btn-primary ml-1">
+                                {{seance.HF}}
+                            </button>
+                                </td>
+                                <td role="cell" class="">
+                                    <button type="button" class="float-left btn btn-primary" ng-class="seance.SELECTED ? 'active':''" ng-click="methods.ToggleSeance(item,seance)">
+                                    {{seance.SELECTED? 'Deselectionner':'Selectionner'}}
+                                </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+<!--                    <div ng-repeat="module in item.modules track by $index" class="col-md-12 mb-10" ng-show="dataClass[$index].length>0">-->
+<!--                        <div>-->
+<!--                            {{module.NOM}}-->
+<!--                        </div>-->
+<!--                        <div class="offset-2 row" ng-repeat="seance in dataClass[$index] =( module.seances_intervenants | date_between:item.DEBUT:item.FIN) track by $index">-->
+<!--                            <div class="col-3 btn-sc">-->
+<!--                                <button type="button" class="float-left btn btn-primary">-->
+<!--                                    {{seance.NOM_TYPE_SEANCE}}-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="col-2 btn-sc">-->
+<!--                                <button type="button" class="float-left btn btn-primary">-->
+<!--                                    {{seance.DATE}}-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="col-2 btn-sc">-->
+<!--                                De <button type="button" class="float-left btn btn-primary ml-1">-->
+<!--                                {{seance.HD}}-->
+<!--                            </button>-->
+<!--                            </div>-->
+<!--                            <div class="col-2 btn-sc">-->
+<!--                                A <button type="button" class="float-left btn btn-primary ml-1">-->
+<!--                                {{seance.HF}}-->
+<!--                            </button>-->
+<!--                            </div>-->
+<!--                            <div class="col-2 btn-sc">-->
+<!--                                <button type="button" class="float-left btn btn-primary" ng-class="seance.SELECTED ? 'active':''" ng-click="methods.ToggleSeance(item,seance)">-->
+<!--                                    {{seance.SELECTED? 'Deselectionner':'Selectionner'}}-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <hr>-->
+<!--                        </div>-->
+<!--                        <hr>-->
+<!--                    </div>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--<div class="folder">-->
+<!--    <div class="folder-summary">-->
+<!--        <div class="folder-summary__details" style="min-width: 100%;">-->
+<!--            <div class="row ns-block">-->
+<!--                <div class="col-1">-->
+<!--                    <div style="background:url({{item.PHOTO?(item.TYPE=='Admin'?'public/uploads/users/admins/':'public/uploads/users/formateurs/')+item.PHOTO:'public/uploads/default.png'}}); width: 100px; height: 100px; background-size: cover; background-repeat: no-repeat;"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="folder-summary__details__name title-folder-header">-->
+
+<!--                        <h6 class="title-folder">-->
+<!--							<span class="user-name">{{ item.PRENOM }}&nbsp;</span>-->
+<!--						</h6>-->
+
+<!--						<h6 class="title-folder">-->
+<!--						<span class="user-name">{{ item.NOM }}</span>-->
+<!--						</h6>-->
+
+
+<!--                        <div style="position: relative; float: right; display: flex;">-->
+
+<!--                            <button ng-click="methods.Modifier(item.ID_INTERVENANT);animationCtrl.ExpandFolder()" class="folder-collapse-button btn-primary-folder" id="js_folder-collapse-button">-->
+<!--                                <i class="ri-pencil-line" style="position: relative; left: -3px; top: -3px;"></i> Seances-->
+<!--                            </button>-->
+<!--                            <button ng-click="methods.Delete(item.ID_INTERVENANT)" class="folder-collapse-button btn-primary-folder" id="js_folder-collapse-button">-->
+<!--                                <i class="ri-delete-bin-line" style="position: relative; left: -3px; top: -3px;"></i> Supprimer-->
+<!--                            </button>-->
+
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Type </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.TYPE }}</div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Date debut </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.NOM_ORGANISME }}</div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Date fin </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.NOM_ORGANISME }}</div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Email </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.email }}</div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Téléphone </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.TELEPHONE }}</div>-->
+<!--                </div>-->
+<!--                <div class="col-2">-->
+<!--                    <div class="folder-item__details__name"> Session </div>-->
+<!--                    <div class="folder-item__details__date">{{ item.NOM_SESSION }}</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="folder-content" id="js_folder-content" style="padding-left: 0px;">-->
+<!--        <div class="folder-item js_folder-item">-->
+<!--            <div class="col-md-12 ns-block">-->
+<!--                <div class="row mb-20" >-->
+<!--                    <div class="col-6 form-inline my-1 p-0">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="my-1 mr-2" for="start">Du</label>-->
+<!--                            <input ng-change="methods.CheckSelected(item,dataClass)" ng-date-input ng-model="item.DEBUT" type="date" class="form-control" id="start" max="{{item.MAX}}" min="{{item.MIN}}">-->
+<!--                            <label class="my-1 mr-2 ml-2" for="end">au</label>-->
+<!--                            <input ng-change="methods.CheckSelected(item,dataClass)" ng-date-input ng-model="item.FIN" type="date" class="form-control" id="end" max="{{item.MAX}}" min="{{item.MIN}}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-2 p-0">-->
+<!--                        <button ng-class="item.AllSelected ? 'active':''" type="button" class="float-left btn btn-primary w-175" ng-click="methods.ToggleSeances(item.ID_INTERVENANT,'all',dataClass,item)">-->
+<!--                             {{item.AllSelected? 'Deselectionner':'Selectionner'}} Tout-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="col-2 p-0" ng-repeat="type_seance in dataTypes">-->
+<!--                        <button ng-class="item['Selected-'+type_seance.ID_TYPE_SEANCE] ? 'active':''" type="button" class="float-left btn btn-primary w-75" ng-click="methods.ToggleSeances(item.ID_INTERVENANT,type_seance.ID_TYPE_SEANCE,dataClass,item)">-->
+<!--                            {{type_seance.NOM}}-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <hr>-->
+<!--                <div ng-repeat="module in item.modules track by $index" class="col-md-12 mb-10" ng-show="dataClass[$index].length>0">-->
+<!--                       <div>-->
+<!--                           {{module.NOM}}-->
+<!--                       </div>-->
+<!--                    <div class="offset-2 row" ng-repeat="seance in dataClass[$index] =( module.seances_intervenants | date_between:item.DEBUT:item.FIN) track by $index">-->
+<!--                        <div class="col-3 btn-sc">-->
+<!--                            <button type="button" class="float-left btn btn-primary">-->
+<!--                                {{seance.NOM_TYPE_SEANCE}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 btn-sc">-->
+<!--                            <button type="button" class="float-left btn btn-primary">-->
+<!--                                {{seance.DATE}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 btn-sc">-->
+<!--                            De <button type="button" class="float-left btn btn-primary ml-1">-->
+<!--                                {{seance.HD}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 btn-sc">-->
+<!--                            A <button type="button" class="float-left btn btn-primary ml-1">-->
+<!--                                {{seance.HF}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 btn-sc">-->
+<!--                            <button type="button" class="float-left btn btn-primary" ng-class="seance.SELECTED ? 'active':''" ng-click="methods.ToggleSeance(item,seance)">-->
+<!--                                {{seance.SELECTED? 'Deselectionner':'Selectionner'}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <hr>-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<style>
+    .btn-sc{
+        display: inline-flex;
+        align-items: center;
+    }
+</style>
+

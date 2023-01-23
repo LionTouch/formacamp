@@ -1,0 +1,178 @@
+<div class="row" ng-controller="ContratsController">
+    <div class="k-loading">
+        <div class="spinner-border text-primary k-spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary float-right download" ng-click="Print()"><i class="ri-printer-line"></i>Imprimer</button>
+    <button type="button" class="btn btn-primary float-right print" ng-click="Download()"><i class="ri-file-pdf-line"></i>Télécharger</button>
+    <div class="col-sm-12"  id="constat">
+
+        <div class="iq-card prevent-split">
+
+            <div class="iq-card-header d-flex justify-content-between">
+                <div class="iq-header-title mx-auto">
+                    <h4 class="font-weight-bold text-center"><u>CONSTAT DE VERIFICATION</u></h4>
+                    <h4 class="font-weight-bold text-center">{{type_constat.TITRE}}</h4>
+                </div>
+            </div>
+            <div class="iq-card-body">
+                <div class="col-md-12">
+                    <h5 class="font-weight-bold">Opérateur:</h5>
+                    <div class="row">
+
+                        <div class="col-md-3 border">Raison sociale</div>
+                        <div class="col-md-9 border" ng-bind="constat.RAISON_SOCIALE"></div>
+
+                        <div class="col-md-3 border">Etablissement (ou agence)</div>
+                        <div class="col-md-9 border" ng-bind="constat.ETABLISSEMENT"></div>
+
+                        <div class="col-md-3 border">Adresse</div>
+                        <div  class="col-md-9 border" ng-bind="constat.ADRESSE"></div>
+
+                        <div class="col-md-3 border">Service</div>
+                        <div  class="col-md-9 border" ng-bind="constat.SERVICE"></div>
+
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="type_constat.identifications.length>0">
+                    <h5 class="font-weight-bold">Identification du matériel:</h5>
+
+                    <div class="row" ng-repeat="identification in type_constat.identifications track by $index">
+                        <div class="col-md-3 border" class="col-1">{{identification.TITRE}}</div>
+                        <div class="col-md-9 border"  ng-bind="constat.identifications[$index].VALUE" ng-init="constat.identifications[$index].ID_IDENTIFICATION = identification.ID_IDENTIFICATION"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12" ng-if="type_constat.elements.length>0">
+                    <h5 class="font-weight-bold">Eléments de référence pour la vérification:</h5>
+                    <div class="row" ng-repeat="element in type_constat.elements track by $index">
+                        <div class="col-md-3 border">{{element.TITRE}}</div>
+                        <div class="col-md-9 border" ng-bind="constat.elements[$index].VALUE" ng-init="constat.elements[$index].ID_ELEMENT = element.ID_ELEMENT"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-if="type_constat.controles.length>0">
+                    <h5 class="font-weight-bold">Contrôles d’aspect et fonctionnels:</h5>
+                    <div class="row">
+
+                        <div class="col-md-3 border">Éléments contrôlés</div>
+                        <div class="col-md-2 border">Satisfaisant</div>
+                        <div class="col-md-2 border">Défectueux</div>
+                        <div class="col-md-5 border">Remarques</div>
+
+                        <div class="col-md-12" ng-repeat="controle in type_constat.controles track by $index">
+                            <div class="row">
+                                <div class="col-md-3 border">{{controle.TITRE}}</div>
+                                <div class="col-md-2 border">
+                                    <input  type="radio" disabled ng-model="constat.controles[$index].VALUE" ng-value="0">
+                                </div>
+                                <div class="col-md-2 border">
+                                    <input  type="radio" disabled ng-model="constat.controles[$index].VALUE" ng-value="1">
+                                </div>
+                                <div class="col-md-5 border" ng-bind="constat.controles[$index].REMARQUE"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-if="type_constat.releves.length>0">
+                    <h5 class="font-weight-bold">Relevé de mesures:</h5>
+                    <div class="row">
+
+                        <div class="col border" ng-repeat="r in type_constat.releves track by $index">{{r.TITRE}} </div>
+
+                        <div class="col-md-12" ng-repeat="item in constat.releves track by $index">
+                            <div class="row">
+                                <div style="min-height: 20px;" class="col border" ng-repeat="releve in item" ng-bind="releve.VALUE"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <h5 class="font-weight-bold">Résultat de la vérification:</h5>
+                <div class="radio d-inline-block mr-2">
+                    <input disabled type="radio" name="bsradio" id="radio1" ng-model="constat.CONFORM" ng-value="0">
+                    <label for="radio1">Conforme</label>
+                </div>
+                <div class="radio d-inline-block mr-2">
+                    <input disabled type="radio" name="bsradio" id="radio2" ng-model="constat.CONFORM" ng-value="1">
+                    <label for="radio2">Avec *restriction(s)</label>
+                </div>
+                <div class="radio d-inline-block mr-2">
+                    <input disabled type="radio" name="bsradio" id="radio3" ng-model="constat.CONFORM" ng-value="2">
+                    <label for="radio3">Non Conforme</label>
+                </div>
+
+
+                <div class="form-group">
+                    <label ><b>Observations:</b> {{constat.OBSERVATION}}</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label><b>Nom:</b> {{constat.NOM}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label><b>Date:</b> {{constat.DATE |  date:'yyyy-MM-dd'}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label><b>Visa:</b> {{constat.VISA}}</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+        <div class="iq-card page-break">
+            <div class="iq-card-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="iq-header-title mx-auto">
+                            <h4 class="font-weight-bold text-center">ANNEXE</h4>
+                            <h4 class="font-weight-bold text-center">{{type_constat.ANNEXE_TITLE}}</h4>
+                        </div>
+                        <div class="col-md-12" ng-bind-html="type_constat.ANNEXE">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="x/kendo-template" id="page-template">
+    <div class="page-template" >
+        <div class="header">
+            <img src="../resources/assets/images/logo.png" style="width: 100%"/>
+            <div style="position:absolute;margin-left: 41%;top: 10px;color: white;text-align: left">
+                <p style="line-height: 1em">Siège social : 212 Avenue de Tivoli - 33110 Le Bouscat</p>
+                <p style="line-height: 1em">Numéro téléphone : 06.50.14.32.52</p>
+                <p style="line-height: 1em">Siren : 903.001.899</p>
+            </div>
+
+
+        </div>
+        <div class="footer" >
+            <div style="float: right">Page #: pageNum #</div>
+        </div>
+    </div>
+</script>

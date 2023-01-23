@@ -1,0 +1,283 @@
+<div class="col-md-12" ng-controller="CrudModulesController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions/{{module.ID_SESSION}}"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item"><a href="/Sessions/{{module.ID_SESSION}}/Modules"><i class="ri-menu-3-line mr-1 float-left"></i>Modules</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Modules Date&Prix</li>
+            <li class="breadcrumb-item active" aria-current="page" >{{module.NOM}}</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="mt-1" heading="Gestions Des Horaires & Dates" template-url="app/Modules/SessionsModule/Resources/views/accordion_dates_prix.html">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="calendar"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-12" style="overflow: auto;height: 470px;">
+                                        <button class="float-left btn btn-block btn-primary" ng-click="AddSeance($event)">Ajouter Séance</button>
+
+                                        <div class="col-md-12 form-inline my-1">
+                                            <div class="form-group">
+                                                <label class="my-1 mr-2" for="start">Du</label>
+                                                <input ng-date-input name="start" type="date" class="form-control" id="start"
+                                                       ng-model="insDate.START"
+                                                       max="{{insDate.END | date:'yyyy-MM-dd'}}"
+                                                       min="{{module.DEBUT}}">
+                                                <label  class="my-1 mr-2 ml-2" for="end">au</label>
+                                                <input ng-date-input name="end" type="date" class="form-control" id="end"
+                                                       ng-model="insDate.END"
+                                                       max="{{module.FIN}}"
+                                                       min="{{insDate.START | date:'yyyy-MM-dd'}}">
+                                            </div>
+
+                                        </div>
+                                        <ng-seance  methods="seanceMethodes" ng-repeat="seance in seances track by $index" seance="seance" salles='salles' types-seances='liste_types_seances' index="$index+1" template-url='app/Modules/SessionsModule/Resources/views/seance_card.html'></ng-seance>
+                                    </div>
+                                    <div class="row col-md-12" style="margin-top: 20px;">
+                                        <button ng-click="SaveSeances(insDate.START,insDate.END)" type="button" class="col-md-5 float-left btn btn-primary">
+                                            Enregistrer
+                                        </button>
+                                        <button ng-click="Close()" type="button" class="col-md-5 float-left btn btn-primary">
+                                            Annuler
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div uib-accordion-group class="mt-1" heading="Gestion Des Prix " template-url="app/Modules/SessionsModule/Resources/views/accordion_dates_prix.html">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-auto">
+                                    <div class="card">
+                                        <div class="card-body pt-20 pr-10 pb-20 pl-10">
+                                            <ul class="nav-pills">
+                                                <li ng-repeat="type_prix in liste_types_prix"><a ng-click="ChangePrixModule(type_prix.ID_TYPE_PRIX,module,$event)" ng-class="PrixModule ==  type_prix.ID_TYPE_PRIX?'active':''" class="nav-link nav-user" href="#"> <span>{{type_prix.NOM}}</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="type_prix in liste_types_prix" class="col-12 col-lg-8 step" ng-show="PrixModule == type_prix.ID_TYPE_PRIX">
+                                    <ng-form  autocomplete="off" name="form" novalidate>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Description <span>*</span></label>
+                                                    <input  ng-model="insPrix.NOM" type="text" name="nom" parsley-trigger="change"
+                                                            placeholder="Entrer description" class="form-control" required>
+                                                    <div ng-show="(form.$submitted && form.nom.$touched) && form.nom.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                                        <ul class="parsley-errors-list error" >
+                                                            <li class="parsley-required">Veuillez entrer une description.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>Prix <span>*</span></label>
+                                                    <input ng-input-mask mask="decimal" id="prix_{{module.ID_MODULE+type_prix.ID_TYPE_PRIX}}" ng-model="insPrix.PRIX" type="text" name="prix" parsley-trigger="change"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>TVA %     <span>*</span></label>
+                                                    <input ng-input-mask mask="decimal" id="tva_{{module.ID_MODULE+type_prix.ID_TYPE_PRIX}}" ng-model="insPrix.TVA" type="text" name="tva" parsley-trigger="change"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Modalités prix <span>*</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mt-2 my-2" ng-repeat="tarif_prix in liste_tarifs_prix track by $index" >
+                                                            <button ng-class="tarif_prix.ID_TARIF == insPrix.ID_TARIF ? 'active':''" ng-click="ChangeTarif(tarif_prix.ID_TARIF,$event)" type="button" class="tarif float-left btn btn-primary btn-block" >
+                                                                {{tarif_prix.NOM}}
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div ng-show="form.$submitted && insPrix.ID_TARIF==(0 || undefined || null)"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                                        <ul class="parsley-errors-list error" >
+                                                            <li class="parsley-required">Veuillez choisir une modalité.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group text-right mb-0" style="margin-top: 20px;">
+                                                <button ng-click="form.$valid?SavePrix(insPrix):void" ng-disabled="form.$invalid" type="submit" class="btn btn-primary waves-effect waves-light mr-1" >
+                                                    Enregistrer
+                                                </button>
+                                            </div>
+                                            <div class="form-group text-right mb-0" style="margin-top: 20px;">
+                                                <button ng-if="ShowDelete" ng-click="DeletePrix(module)" type="button" class="btn btn-primary waves-effect waves-light mr-1" >
+                                                    Supprimer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ng-form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-accordion>
+        </div>
+    </div>
+</div>
+<style>
+    .type_seance.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }
+    .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+        pointer-events: auto;
+    }
+    .folder-item:not(:last-child)::after {
+        background: transparent;
+    }
+
+    .tarif.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }
+        .btn-crud {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: center;
+            line-height: 1px;
+            background: rgb(0 0 0);
+            border-radius: 3px;
+            color: rgb(255 255 255);
+            margin-right: 5px;
+            font-size: 12px;
+            padding: 15px;
+            height: 0px;
+            font-weight: 500;
+            border: none;
+        }
+        .btn-crud:hover{
+            background: rgb(255 255 255) !important;
+            color: rgb(0 0 0) !important;
+            border: 1px solid #dbdbdb !important;
+        }
+
+    .card-collapse .card-body {
+        background: #fff;
+    }
+    .date_crud {
+        width:50%;
+        opacity: 0;
+        padding-left: 10px;
+        display: none;
+    }
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+
+
+</style>

@@ -1,0 +1,48 @@
+<div class="folder">
+    <div class="folder-summary">
+        <div class="folder-summary__details" style="min-width: 100%;">
+            <div class="row ns-block">
+                <div class="col-1">
+                    <div style="background:url({{item.PHOTO?(item.TYPE=='Admin'?'public/uploads/users/admins/':'public/uploads/users/formateurs/')+item.PHOTO:'public/uploads/default.png'}}); width: 100px; height: 100px; background-size: cover; background-repeat: no-repeat;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="folder-summary__details__name title-folder-header">
+
+                        <h6 class="title-folder">
+							<span class="user-name">{{ item.PRENOM }}&nbsp;</span>
+						</h6>
+
+						<h6 class="title-folder">
+						<span class="user-name">{{ item.NOM }}</span>
+						</h6>
+
+
+                        <div style="position: relative; float: right; display: flex;">
+
+                            <button ng-click="methods.Add(item.ID_INTERVENANT)" class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+                                <i class="ri-add-line" style="position: relative; left: -3px; top: -3px;"></i> Ajouter
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="folder-item__details__name"> Type </div>
+                    <div class="folder-item__details__date">{{ item.TYPE }}</div>
+                </div>
+                <div class="col-4">
+                    <div class="folder-item__details__name"> Email </div>
+                    <div class="folder-item__details__date">{{ item.email }}</div>
+                </div>
+                <div class="col-4">
+                    <div class="folder-item__details__name"> Téléphone </div>
+                    <div class="folder-item__details__date">{{ item.TELEPHONE }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,235 @@
+<div class="col-md-12" ng-controller="CrudSuiviApprenantsSessionsController">
+    <div id="send-loading" style="display: none">
+        <div class="send-loading">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Suivi Apprenants</li>
+        </ol>
+    </nav>
+    <div class="col-md-12 bg-white py-2 my-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="iq-search-bar">
+                    <div class="searchbox" style="width: 100%">
+                        <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                               placeholder="Recherche apprenants..."
+                               ng-model="search">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                    <div uib-dropdown ng-if="liste_data.length>0">
+
+                        <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                            Certifications
+                        </button>
+                        <div class="dropdown-menu suivi" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                            <div class="col-md-12" ng-show="liste_data.length>0">
+                                <div style="overflow: hidden auto;max-height: 470px;width: 400px">
+                                    <div class="col-md-12">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input"
+                                                       placeholder="Recherche apprenants..."
+                                                       ng-model="search_certif">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="searched_certif.length>0" >
+                                        <button ng-click="toggleAllCertif(searched_certif,selected_certif)" class="btn btn-primary" style="width: 100%" >
+                                            <i class="ri-check-double-line"></i> {{!isChecked(selected_certif) ? 'Sélectionner': 'Désélectionner'}} tout
+                                        </button>
+                                        <div class="demo-select-all-checkboxes" ng-repeat="apprenant in searched_certif = (liste_data|filter:search_certif)| orderBy: 'NOM' track by $index">
+                                            <md-checkbox ng-checked="exists(apprenant.ID_APPRENANT, selected_certif)" ng-click="toggle(apprenant.ID_APPRENANT, selected_certif)">
+                                                {{apprenant.NOM}} {{apprenant.PRENOM}}
+                                            </md-checkbox>
+                                        </div>
+                                        <div class="row p-0">
+                                            <div class="col-md-6 p-0">
+                                                <button ng-disabled="selected_certif.length==0 && searched_certif.length>0" ng-click="DownloadCertifMultiple(selected_certif)"  class="btn btn-primary" style="width: 100%">
+                                                    <i class="ri-download-2-line"></i> Télecharger
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 p-0">
+                                                <button ng-disabled="selected_certif.length==0 && searched_certif.length>0" ng-click="SendCertifMultiple(selected_certif)"  class="btn btn-primary" style="width: 100%">
+                                                    <i class="ri-mail-send-line"></i> Envoyer
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-12" ng-show="liste_data.length==0">
+                                Veuillez ajouter des apprenants
+                            </div>
+                            <div class="col-md-12" ng-show="searched_certif.length==0 && liste_data.length>0">
+                                Aucun apprenants trouvés
+                            </div>
+
+                        </div>
+                    </div>
+                    <div uib-dropdown ng-if="liste_data.length>0">
+
+                        <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                            Attestations d'assiduités
+                        </button>
+                        <div class="dropdown-menu suivi" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                            <div class="col-md-12" ng-show="liste_data.length>0">
+                                <div class="row" style="overflow: hidden auto;max-height: 470px;width: 400px">
+                                    <div class="col-md-12">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input"
+                                                       placeholder="Recherche apprenants..."
+                                                       ng-model="search_attest">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="searched_attest.length>0" >
+                                        <button ng-click="toggleAllAttest(searched_attest,selected_attest)" class="btn btn-primary" style="width: 100%" >
+                                            <i class="ri-check-double-line"></i> {{!isChecked(selected_attest) ? 'Sélectionner': 'Désélectionner'}} tout
+                                        </button>
+                                        <div class="demo-select-all-checkboxes" ng-repeat="apprenant in searched_attest = (liste_data|filter:search_attest)| orderBy: 'NOM' track by $index">
+                                            <md-checkbox ng-checked="exists(apprenant.ID_APPRENANT, selected_attest)" ng-click="toggle(apprenant.ID_APPRENANT, selected_attest)">
+                                                {{apprenant.NOM}} {{apprenant.PRENOM}}
+                                            </md-checkbox>
+                                        </div>
+
+                                        <div class="row p-0">
+                                            <div class="col-md-6 p-0">
+                                                <button ng-disabled="selected_attest.length==0 && searched_attest.length>0" ng-click="DownloadAttestationMultiple(selected_attest)"  class="btn btn-primary" style="width: 100%">
+                                                    <i class="ri-download-2-line"></i> Télecharger
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 p-0">
+                                                <button ng-disabled="selected_attest.length==0 && searched_attest.length>0" ng-click="SendAttestationMultiple(selected_attest)"  class="btn btn-primary" style="width: 100%">
+                                                    <i class="ri-mail-send-line"></i> Envoyer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-12" ng-show="liste_data.length==0">
+                                Veuillez ajouter des apprenants
+                            </div>
+                            <div class="col-md-12" ng-show="searched_attest.length==0 && liste_data.length>0">
+                                Aucun apprenants trouvés
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div infinite-scroll="loadMore()">
+
+        <div class="col-md-4" ng-repeat="apprenant in  searched = ((liste_data|filter:search)| filter:searchType)| orderBy: '-DATE'| limitTo:infiniteLimit">
+            <div  class="iq-card " style="cursor: pointer">
+                <div class="iq-card-body ">
+                    <div  class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3">
+                        <div style="background:url({{apprenant.PHOTO?'public/uploads/users/stagiaires/'+apprenant.PHOTO:'public/uploads/default.png'}});width: 50px;height: 50px;background-size: cover;background-repeat: no-repeat;border-radius: 50%;"></div>
+                        <h5  class="text-white">{{ apprenant.NOM }} {{ apprenant.PRENOM }}</h5>
+                        <div uib-dropdown>
+
+                            <i style="cursor: pointer" uib-dropdown-toggle tooltip-placement="top" uib-tooltip="Certification" ng-click="$event.stopPropagation();" class="ri-ball-pen-line font-size-18" role="button" tabindex="0"></i>
+                            <div class="dropdown-menu p-0" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                                <div class="col-md-12 p-0">
+                                    <div style="overflow: hidden auto;max-height: 470px;width: 200px">
+                                        <button ng-click="methods.SendCertif(apprenant)" class="btn btn-primary mt-1" style="width: 100%" >
+                                            <i class="ri-mail-send-line"></i> Envoyer
+                                        </button>
+                                        <button ng-click="methods.DownloadCertif(apprenant)" class="btn btn-primary mt-1" style="width: 100%" >
+                                            <i class="ri-download-2-line"></i> Télécharger
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div uib-dropdown>
+                            <i style="cursor: pointer" uib-dropdown-toggle tooltip-placement="top" uib-tooltip=" Attestation d'assiduité" ng-click="$event.stopPropagation();" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+
+                            <div class="dropdown-menu p-0" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                                <div class="col-md-12 p-0">
+                                    <div style="overflow: hidden auto;max-height: 470px;width: 200px">
+                                        <button ng-click="methods.SendAttestation(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                            <i class="ri-mail-send-line"></i> Envoyer
+                                        </button>
+                                        <button ng-click="methods.DownloadAttestation(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                            <i class="ri-download-2-line"></i> Télécharger
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <svg class="radial-progress" data-percentage="{{apprenant.PERCENT === null ? 0 : apprenant.PERCENT}}" viewBox="0 0 80 80">
+                            <circle class="incomplete" cx="40" cy="40" r="35"></circle>
+                            <circle class="complete" cx="40" cy="40" r="35" style="stroke-dashoffset: 39.58406743523136;"></circle>
+                            <text class="percentage" x="50%" y="57%" transform="matrix(0, 1, -1, 0, 80, 0)">{{apprenant.PERCENT === null ? 0 : apprenant.PERCENT}}%</text>
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Email</b><br><span class="span-header">{{ apprenant.EMAIL }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Téléphone</b><br><span class="span-header">{{ apprenant.TELEPHONE }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Session</b><br><span class="span-header">{{ apprenant.NOM_SESSION }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Présence</b><br><span class="span-header">{{ apprenant.DUREE_TOTALE  === null ? 0 : apprenant.DUREE_TOTALE}}h</span></p>
+
+                    </div>
+                </div>
+            </div>
+<!--        <folder ng-repeat="apprenant in  searched = ((liste_data|filter:search)| filter:searchType)| orderBy: '-DATE'| limitTo:infiniteLimit" data="apprenant" diplomes-data="liste_diplomes" apprenants-data="liste_data" actions-data="liste_actions" template-url="app/Modules/SessionsModule/Resources/views/folder-suivi-apprenants.html"  methods="methods"></folder>-->
+    </div>
+
+
+</div>
+<style>
+    .searchFilter.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }
+    .dropdown-menu.suivi  {
+        left: -110%;
+    }
+    svg.radial-progress {
+        height: auto;
+        position: relative;
+        /*top: -10px;*/
+        max-width: 60px;
+        padding: 0;
+        transform: rotate(
+            -90deg);
+        width: 100%;
+    }
+    svg.radial-progress text {
+        fill: var(--iq-white);
+        font: 900 1.1em/1 'Oswald', sans-serif;
+        text-anchor: middle;
+        padding: 0;
+    }
+    svg.radial-progress circle { stroke: var(--iq-white); }
+</style>

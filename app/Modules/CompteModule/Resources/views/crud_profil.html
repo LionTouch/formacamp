@@ -1,0 +1,457 @@
+<div class="col-md-12" ng-controller="CrudProfilController">
+
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col-12 col-lg-auto">
+                <div class="card">
+                    <div class="card-body pt-20 pr-10 pb-20 pl-10">
+                        <ul class="nav-pills">
+                            <li><a ng-click="GoToStep(1)" ng-class="step == 1?'active':''" class="nav-link nav-user active" href="#"> <span>Identité</span></a></li>
+                            <li><a ng-click="GoToStep(2)" ng-class="step == 2?'active':''" class="nav-link nav-user" href="#"> <span>Entreprise</span></a></li>
+                            <li><a ng-click="GoToStep(3)" ng-class="step == 3?'active':''" class="nav-link nav-user" href="#"> <span>Informations de contact</span></a></li>
+                            <li><a ng-click="GoToStep(4)" ng-class="step == 4?'active':''" class="nav-link nav-user" href="#"> <span>Certification & Créneaux</span></a></li>
+                            <li><a ng-click="GoToStep(5)" ng-class="step == 5?'active':''" class="nav-link nav-user" href="#"> <span>Réglementation</span></a></li>
+                            <li><a ng-click="GoToStep(6)" ng-class="step == 6?'active':''" class="nav-link nav-user" href="#"> <span>Configuration</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-12">
+                                <label>Photo</label>
+                                <a class="rui-profile-photo" href="#" >
+                                    <img style="border-radius: 50%" class="avatar-130 img-fluid photo-rui" src="{{ins.PHOTO ? 'public/uploads/users/admins/'+ins.PHOTO:'resources/assets/images/avatar-1-profile.png'}}" alt="">
+                                </a>
+                                <div id="drag-drop-photo"></div>
+                            </div>
+                            <div class="col-12">
+                                <label for="nom">Nom</label>
+                                <input ng-model="ins.NOM" type="text" class="form-control" id="nom" placeholder="Nom de famille">
+                            </div>
+                            <div class="col-12">
+                                <label for="prenom">Prénom</label>
+                                <input ng-model="ins.PRENOM" type="text" class="form-control" id="prenom" placeholder="Prénom">
+                            </div>
+                            <div class="col-12">
+                                <label for="email">Email <span>*</span></label>
+                                <input name="email" ng-model="ins.email" type="email" class="form-control" id="email"  placeholder="Email" required>
+                                <div ng-show="(form.$submitted || form.email.$touched) && form.email.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez entrer un email.</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <label for="pwd">Mot de passe <span>*</span></label>
+                                <input name="pwd" ng-model="ins.password" type="password" class="form-control" id="pwd"  placeholder="Mot de passe" ng-required="ins.ID_USER == undefined">
+                                <div ng-show="(form.$submitted || form.pwd.$touched) && form.pwd.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li ng-show="form.pwd.$error.required" class="parsley-required">Veuillez entrer un mot de passe.</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="button" ng-click="GoToStep(2)">Suivant</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-12">
+                                <label>Logo</label>
+                                <a class="rui-profile-img rui-profile-logo" href="#">
+                                    <img class="avatar-130 img-fluid logo-rui " style="border-radius: 50%" ng-src="{{ins.LOGO ? 'public/uploads/users/admins/'+ins.PHOTO:'resources/assets/images/avatar-1-profile.png'}}" alt="">
+                                </a>
+                                <div id="drag-drop-logo"></div>
+                            </div>
+                            <div class="col-12">
+                                <label for="nom_entreprise">Nom de l'entreprise</label>
+                                <input ng-model="ins.NOM_ENTREPRISE" type="text" class="form-control" id="nom_entreprise" placeholder="Nom de l'entreprise">
+                            </div>
+                            <div class="col-12">
+                                <label for="linkedin">Linkedin Company ID</label>
+                                <input ng-model="ins.ID_ENTREPRISE_LINKEDIN" type="text" class="form-control" id="linkedin" placeholder="Linkedin Company ID">
+                            </div>
+                            <div class="col-12">
+                                <label for="linkedin">Couleur de votre marque</label>
+                                <div class="rui-colorpicker" data-pickr-offset="-12,12" data-pickr-representation="HEXA">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <div class="rui-colorpicker-addon"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto"><button class="btn btn-secondary" type="button" ng-click="GoToStep(1)">Précédent</button></div>
+                            <div class="col-auto"><button class="btn btn-primary" type="button" ng-click="GoToStep(3)">Suivant</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-6">
+                                <label for="telephone">Numéro de téléphone</label>
+                                <input ng-model="ins.TELEPHONE" type="text" class="form-control" id="telephone" placeholder="Numéro de téléphone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="voie">Numéro de la voie</label>
+                                <input ng-model="ins.NUM_VOIE" type="text" class="form-control" id="voie" placeholder="Numéro de la voie">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="indice">Indice de répétition</label>
+                                <select ng-model="ins.ID_REPETITION" class="custom-select" id="indice">
+                                    <option value="0">Indice de répétition</option>
+                                    <option ng-repeat="ind in liste_indices track by $index" ng-value="ind.ID_REPETITION">{{ind.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="type_voie">Type de la voie</label>
+                                <select ng-model="ins.ID_TYPE_VOIE" class="custom-select" id="type_voie">
+                                    <option value="0">Type de la voie</option>
+                                    <option ng-repeat="tv in liste_type_voie track by $index" ng-value="tv.ID_TYPE_VOIE">{{tv.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="libelle">Libellé de la voie</label>
+                                <input ng-model="ins.LIBELLE_VOIE" type="text" class="form-control" id="libelle" placeholder="Libellé de la voie">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="zip">Code postal</label>
+                                <input ng-model="ins.ZIP" type="text" class="form-control" id="zip" placeholder="Code postal">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ville">Ville</label>
+                                <input ng-model="ins.VILLE" type="text" class="form-control" id="ville" placeholder="Ville">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="pays">Pays</label>
+                                <input ng-model="ins.PAYS" type="text" class="form-control" id="pays" placeholder="Pays">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="lieu">Lieu dit ou service particulier de distribution – Poste restante, boite postale, etc.</label>
+                                <input ng-model="ins.LIEU_SERVICE" type="text" class="form-control" id="lieu" placeholder="Lieu dit ou service particulier de distribution – Poste restante, boite postale, etc.">
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label for="telephone">Fuseau horaire</label>
+                                <select ng-model="ins.ID_FUSEAU_HORAIRE" class="custom-select">
+                                    <option value="0">Fuseau horaire</option>
+                                    <option ng-repeat="fs in liste_fuseaux track by $index" ng-value="fs.ID_FUSEAU_HORAIRE">{{fs.TITRE}}</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input ng-true-value="1"  ng-false-value="0" ng-model="ins.REGLEMENT" type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label customCheck1" for="customCheck1">Conformité réglementaire de l'accès aux personnes à mobilité réduite</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="nom">Description de l'équipe pédagogique</label>
+                                <textarea ng-model="ins.DESCRIPTION" type="text" class="form-control" id="description" placeholder="Description de l'équipe pédagogique"></textarea>
+                            </div>
+                            <div class="col-auto"><button class="btn btn-secondary" type="button" ng-click="GoToStep(2)">Précédent</button></div>
+                            <div class="col-auto"><button class="btn btn-primary" type="button" ng-click="GoToStep(4)">Suivant</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row  justify-content-end">
+                            <div class="col-6">
+                                <div id="drag-drop-area"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="col-12">
+                                    <label for="certif">Résumé des certifications</label>
+                                    <input ng-model="ins.RESUME_CERTIF" type="text" class="form-control" id="certif" placeholder="Résumé des certifications">
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Matin</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" uib-timepicker ng-model="ins.HDM" ng-change="" hour-step="1" minute-step="15" show-meridian="false"></div>
+                                    <div class="col-md-6" uib-timepicker ng-model="ins.HFM" ng-change="" hour-step="1" minute-step="15" show-meridian="false"></div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Après-midi</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" uib-timepicker ng-model="ins.HD" ng-change="" hour-step="1" minute-step="15" show-meridian="false"></div>
+                                    <div class="col-md-6" uib-timepicker ng-model="ins.HF" ng-change="" hour-step="1" minute-step="15" show-meridian="false"></div>
+
+                                </div>
+                             </div>
+                            <div class="col-auto"><button class="btn btn-secondary" type="button" ng-click="GoToStep(3)">Précédent</button></div>
+                            <div class="col-auto"><button class="btn btn-primary" type="button" ng-click="GoToStep(5)">Suivant</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12">
+                            <div class="row  justify-content-end">
+
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.FONCTION" type="checkbox" class="custom-control-input" id="customCheck2">
+                                        <label class="custom-control-label customCheck1" for="customCheck2">Activer les fonctions de gestion de la réglementation  française</label>
+                                    </div>
+
+                                </div>
+
+                                <div ng-show="ins.FONCTION == true" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="num_act">Numéro de déclaration d'activité</label>
+                                            <input ng-model="ins.NUM_DEC" type="text" class="form-control" id="num_act" placeholder="Numéro de déclaration d'activité">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="aqui">Région d'acquisition</label>
+                                            <input ng-model="ins.REGION_ACQUISITON" type="text" class="form-control" id="aqui" placeholder="Région d'acquisition">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="dpc">N° organisme DPC (secteur santé uniquement)</label>
+                                            <input ng-model="ins.NUM_DPC" type="text" class="form-control" id="dpc" placeholder="N° organisme DPC (secteur santé uniquement)">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="telephone">Form Juridique</label>
+                                            <select ng-model="ins.ID_FORM_JURIDIQUE" class="custom-select">
+                                                <option value="0">Form Juridique</option>
+                                                <option ng-repeat="fj in liste_form_juridique track by $index" ng-value="fj.ID_FORM_JURIDIQUE">{{fj.TITRE}}</option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="siret">SIRET</label>
+                                            <input ng-model="ins.SIRET" type="text" class="form-control" id="siret" placeholder="SIRET">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="ape">Code APE/NAF</label>
+                                            <input ng-model="ins.CODE_APE_NAF" type="text" class="form-control" id="ape" placeholder="Code APE/NAF">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="capital">Capital social</label>
+                                            <input ng-model="ins.CAPITAL_SOCIAL" type="text" class="form-control" id="capital" placeholder="Capital social">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="ins.EXONERATION" type="checkbox" class="custom-control-input" id="customCheck3">
+                                                <label class="custom-control-label customCheck1" for="customCheck3">Exonération de TVA par validation du <a href="https://www.service-public.fr/professionnels-entreprises/vosdroits/R19113" target="_blank">formulaire fiscal N°3511</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="ins.MICRO_ENTREPRISE" type="checkbox" class="custom-control-input" id="customCheck4">
+                                                <label class="custom-control-label customCheck1" for="customCheck4"><a href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F23267" target="_blank">Micro entreprise</a>  avec franchise de TVA</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto"><button class="btn btn-secondary" type="button" ng-click="GoToStep(4)">Précédent</button></div>
+                                <div class="col-auto"><button class="btn btn-primary" type="button" ng-click="GoToStep(6)">Suivant</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input ng-true-value="1"  ng-false-value="0" ng-model="ins.FACTURATION" type="checkbox" class="custom-control-input" id="customCheck5">
+                                    <label class="custom-control-label customCheck1" for="customCheck5"> Facturation active</label>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="telephone">Monnaie</label>
+                                <select ng-model="ins.ID_MONNAIE" class="custom-select">
+                                    <option value="0">Monnaie</option>
+                                    <option ng-repeat="m in liste_monnaie track by $index" ng-value="m.ID_MONNAIE">{{m.TITRE}}</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sigle">Sigle de taxe sur la valeur ajoutée</label>
+                                <input ng-model="ins.SIGLE_TAXE" type="text" class="form-control" id="sigle" placeholder="Sigle de taxe sur la valeur ajoutée">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tva">Numéro de TVA</label>
+                                <input ng-model="ins.NUM_TVA" type="text" class="form-control" id="tva" placeholder="Numéro de TVA">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tva">Taux de TVA</label>
+                                <input ng-model="ins.TAUX_TVA" type="text" class="form-control" id="taux" placeholder="Taux de TVA">
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cloture">Date de clôture comptable</label>
+                                <input ng-model="ins.DATE_CLOTURE_COMTBLE" type="month" class="form-control" id="cloture">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="code_j">Code journal</label>
+                                <input ng-model="ins.CODE_JOURNAL" type="text" class="form-control" id="code_j" placeholder="Code journal">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_client">Compte client par défaut</label>
+                                <input ng-model="ins.COMPTE_CLIENT" type="text" class="form-control" id="cpt_client" placeholder="Compte client par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_tva">Compte TVA par défaut</label>
+                                <input ng-model="ins.COMPTE_TVA" type="text" class="form-control" id="cpt_tva" placeholder="Compte TVA par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_bpf">Compte produit des formations BPF par défaut</label>
+                                <input ng-model="ins.COMPTE_PRODUIT_BPF" type="text" class="form-control" id="cpt_bpf" placeholder="Compte produit des formations BPF par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_p">Compte produit des formations par défaut</label>
+                                <input ng-model="ins.COMPTE_PRODUIT_FORMATION" type="text" class="form-control" id="cpt_p" placeholder="Compte produit des formations par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_prc">Compte produit du consulting par défaut</label>
+                                <input ng-model="ins.COMPTE_PRODUIT_CONSULTING" type="text" class="form-control" id="cpt_prc" placeholder="Compte produit du consulting par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_f">Compte frais annexes des formations BPF par défaut</label>
+                                <input ng-model="ins.COMPTE_FRAIS_BPF" type="text" class="form-control" id="cpt_f" placeholder="Compte frais annexes des formations BPF par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_fd">Compte frais annexes des formations par défaut</label>
+                                <input ng-model="ins.COMPTE_FRAIS_FORMATION" type="text" class="form-control" id="cpt_fd" placeholder="Compte frais annexes des formations par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_fc">Compte frais annexes du consulting par défaut</label>
+                                <input ng-model="ins.COMPTE_FRAIS_CONSULTING" type="text" class="form-control" id="cpt_fc" placeholder="Compte frais annexes du consulting par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_o">Compte outils pédagogiques des formations BPF par défaut</label>
+                                <input ng-model="ins.COMPTE_OUTILS_BPF" type="text" class="form-control" id="cpt_o" placeholder="Compte outils pédagogiques des formations BPF par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_op">Compte outils pédagogiques des formations par défaut</label>
+                                <input ng-model="ins.COMPTE_OUTILS_FORMATION" type="text" class="form-control" id="cpt_op" placeholder="Compte outils pédagogiques des formations par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cpt_oc">Compte outils pédagogiques du consulting par défaut</label>
+                                <input ng-model="ins.COMPTE_OUTILS_CONSULTING" type="text" class="form-control" id="cpt_oc" placeholder="Compte outils pédagogiques du consulting par défaut">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Identité bancaire insérée sur les modèles de factures
+                    </div>
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                            <div class="col-md-2">
+                                <label for="banque">Code banque</label>
+                                <input ng-model="ins.CODE_BANQUE" type="text" class="form-control" id="banque" placeholder="Code banque">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="guichet">Code guichet</label>
+                                <input ng-model="ins.CODE_GUICHET" type="text" class="form-control" id="guichet" placeholder="Code guichet">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="compte">N° de compte</label>
+                                <input ng-model="ins.NUM_COMPTE_BANQUE" type="text" class="form-control" id="compte" placeholder="N° de compte">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="RIB">Clé RIB</label>
+                                <input ng-model="ins.RIB" type="text" class="form-control" id="RIB" placeholder="Clé RIB">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="IBAN">IBAN</label>
+                                <input ng-model="ins.IBAN" type="text" class="form-control" id="IBAN" placeholder="IBAN">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="BIC">BIC</label>
+                                <input ng-model="ins.BIC" type="text" class="form-control" id="BIC" placeholder="BIC">
+                            </div>
+                            <div class="col-auto"><button class="btn btn-secondary" type="button" ng-click="GoToStep(5)">Précédent</button></div>
+                            <div class="col-auto"><button class="btn btn-primary" type="submit" ng-click="Save()">Enregistrer</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

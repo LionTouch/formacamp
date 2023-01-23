@@ -1,0 +1,253 @@
+<div class="col-md-12" ng-controller="CrudIntervenantsSessionsController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Intervenants</li>
+        </ol>
+    </nav>
+
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12 step">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-12 bg-white py-2 my-2">
+                            <div class="iq-search-bar">
+                                <div class="searchbox" style="width: 100%">
+                                    <input type="text" class="text search-input" ng-change="infiniteLimit = 5" type="search_inter"
+                                           placeholder="Recherche intervenants..."
+                                           ng-model="search">
+                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row scroll-list">
+                            <div class="col-md-12" ng-repeat="intervenant in  searched_inter = (liste_intervenants|filter:search_inter) track by $index">
+                                <div class="iq-card " style="cursor: pointer">
+                                    <div class="iq-card-body ">
+                                        <div  class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3">
+                                            <div style="background:url({{intervenant.PHOTO?(intervenant.TYPE=='Admin'?'public/uploads/users/admins/':'public/uploads/users/formateurs/')+intervenant.PHOTO:'public/uploads/default.png'}});width: 50px;height: 50px;background-size: cover;background-repeat: no-repeat;border-radius: 50%;"></div>
+                                            <h5  class="text-white">{{ intervenant.NOM }} {{intervenant.PRENOM}}</h5>
+                                            <div>
+                                                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Ajouter" ng-click="$event.stopPropagation();Add(intervenant.ID_INTERVENANT)" class="ri-add-circle-line font-size-18" role="button" tabindex="0"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <p  style="display: inline-flex;" class="font-size-12 mb-0 col-md-12"><b><i class="ri-community-line mr-1"></i> TYPE : </b><br><span class="span-header"> {{intervenant.TYPE}}</span></p>
+                                            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Email</b><br><span class="span-header">{{ intervenant.email  }}</span></p>
+                                            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Téléphone</b><br><span class="span-header">{{ intervenant.TELEPHONE }}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body" ng-show="searched_inter.length == 0">
+                                        Aucun intervenant trouvé
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-7">
+                        <div class="col-md-12 bg-white py-2 my-2">
+                            <div class="iq-search-bar">
+                                <div class="searchbox" style="width: 100%">
+                                    <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                           placeholder="Recherche intervenants..."
+                                           ng-model="search_inter_session">
+                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row scroll-list">
+
+                            <div class="col-md-12">
+                                <uib-accordion close-others="true">
+                                    <div ng-repeat="inter in  searched_inter_session = (liste_session_intervenants|filter:search_inter_session) track by $index" uib-accordion-group class="mt-1 bg-white" style="box-shadow: 0 2px 8px #bcbcbc;border-radius: 15px;" template-url="app/Modules/SessionsModule/Resources/views/accordion_intervenants.html">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 ns-block">
+                                                        <div class="row mb-20" >
+                                                            <div class="col-6 form-inline my-1 p-0">
+                                                                <div class="form-group">
+                                                                    <label class="my-1 mr-2" for="start">Du</label>
+                                                                    <input ng-change="CheckSelected(inter)" ng-date-input ng-model="inter.DEBUT" type="date" class="form-control" id="start" max="{{inter.MAX}}" min="{{inter.MIN}}">
+                                                                    <label class="my-1 mr-2 ml-2" for="end">au</label>
+                                                                    <input ng-change="CheckSelected(inter)" ng-date-input ng-model="inter.FIN" type="date" class="form-control" id="end" max="{{inter.MAX}}" min="{{inter.MIN}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-2 p-0">
+                                                                <button ng-class="inter.AllSelected ? 'active':''" type="button" class="float-left btn btn-primary w-175" ng-click="ToggleSeances(inter.ID_INTERVENANT,'all',inter)">
+                                                                    {{inter.AllSelected? 'Deselectionner':'Selectionner'}} Tout
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-2 p-0" ng-repeat="type_seance in liste_types_seances">
+                                                                <button ng-class="inter['Selected-'+type_seance.ID_TYPE_SEANCE] ? 'active':''" type="button" class="float-left btn btn-primary w-75" ng-click="ToggleSeances(inter.ID_INTERVENANT,type_seance.ID_TYPE_SEANCE,inter)">
+                                                                    {{type_seance.NOM}}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="table-responsive">
+                                                            <table role="table" class="table b-table" id="__BVID__1220">
+                                                                <thead role="rowgroup" class="">
+                                                                <th role="rowheader" scope="row" class="">Module</th>
+                                                                <th role="rowheader" scope="row" class="">Type Seance</th>
+                                                                <th role="rowheader" scope="row" class="">Date</th>
+                                                                <th role="rowheader" scope="row" class="">Debut</th>
+                                                                <th role="rowheader" scope="row" class="">Fin</th>
+                                                                <th role="rowheader" scope="row" class="">Action</th>
+                                                                </thead>
+                                                                <tbody role="rowgroup">
+                                                                <tr ng-repeat-start="module in inter.modules track by $index"></tr>
+                                                                <tr ng-repeat-end role="row" ng-repeat="seance in module.seances_intervenants track by $index">
+                                                                    <td ng-if="$first" role="cell" class="" rowspan="{{(module.seances_intervenants | filter:{'ID_MODULE':seance.ID_MODULE}:true).length}}">
+                                                                        {{module.NOM}}
+                                                                    </td>
+                                                                    <td role="cell" class="">
+                                                                        {{seance.NOM_TYPE_SEANCE}}
+                                                                    </td>
+                                                                    <td role="cell" class="">
+                                                                        {{seance.DATE}}
+                                                                    </td>
+                                                                    <td role="cell" class="">
+                                                                        {{seance.HD}}
+                                                                    </td>
+                                                                    <td role="cell" class="">
+                                                                        {{seance.HF}}
+                                                                    </td>
+                                                                    <td role="cell" class="">
+                                                                        <button type="button" class="float-left btn btn-primary" ng-class="seance.SELECTED ? 'active':''" ng-click="ToggleSeance(inter,seance)">
+                                                                            {{seance.SELECTED? 'Deselectionner':'Selectionner'}}
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </uib-accordion>
+                                <div class="card">
+                                    <div class="card-body" ng-show="liste_session_intervenants.length == 0">
+                                        Aucun intervenant séléctionné
+                                    </div>
+                                    <div class="card-body" ng-show="liste_session_intervenants.length > 0 && searched_inter_session.length == 0">
+                                        Aucun intervenant trouvé
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<style>
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+</style>

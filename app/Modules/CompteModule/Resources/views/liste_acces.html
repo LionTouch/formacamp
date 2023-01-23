@@ -1,0 +1,33 @@
+<div class="col-md-12" ng-controller="CompteAccesController">
+    <div class="folder-summary__details" style="padding: 0;">
+        <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="folder-summary__details__name">
+                        <input ng-change="infiniteLimit = 5" class="form-control form-control-sm" placeholder="Recherche administrateur..." aria-controls="project-table" ng-model="search" >
+                        <a class="search-link" href="#" style="position: absolute; right: 30px; top: 4px;"><i class="ri-search-line"></i></a>
+                    </div>
+                    <div class="folder-summary__details__share" style="margin-top: 0;">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button ng-click="GoTo('GestionCompte/AjoutCompteAcces')" type="button" class="float-right btn btn-primary" >
+                        <i class="ri-user-add-line mr-2"></i> Ajouter un compte d'acces
+                    </button>
+                    <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                        <i class="ri-computer-line br-2"></i>
+                        {{ searched.length }} acces
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div infinite-scroll="loadMore()">
+        <folder ng-repeat="user in  searched = (liste_data|filter:search)| orderBy: '-DATE'| limitTo:infiniteLimit" data="user" template-url="app/Modules/CompteModule/Resources/views/folder-acces.html"  methods="folderMethodes"></folder>
+    </div>
+
+
+</div>

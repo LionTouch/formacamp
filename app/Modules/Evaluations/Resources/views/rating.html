@@ -1,0 +1,6 @@
+<div class="ratting">
+    <ul class="ratting-item d-flex p-0 m-0" ng-mouseleave="reset()" ng-keydown="onKeydown($event)" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="{{range.length}}" aria-valuenow="{{value}}" aria-valuetext="{{title}}">
+        <li style="cursor: pointer" ng-repeat="r in range track by $index" class="full"><i ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" ng-class="$index < value && (r.stateOn || 'ri-star-fill') || (r.stateOff || 'ri-star-line')" ng-attr-title="{{r.title}}"></i></li>
+
+    </ul>
+</div>

@@ -1,0 +1,70 @@
+<div class="folder">
+    <div class="folder-summary">
+        <div class="folder-summary__details" style="min-width: 100%;">
+            <div class="row ns-block">
+                <div class="col-1">
+                    <div style="background:url({{item.PHOTO?'public/uploads/lieux/'+item.PHOTO:'public/uploads/default.png'}}); width: 100px; height: 100px; background-size: cover; background-repeat: no-repeat;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="folder-summary__details__name title-folder-header">
+
+                        <h6 class="title-folder">
+							<span class="user-name">{{ item.PRENOM }}&nbsp;</span>
+						</h6>
+
+						<h6 class="title-folder">
+						<span class="user-name">{{ item.NOM }}</span>
+						</h6>
+
+
+                        <div style="position: relative; float: right; display: flex;">
+                            <button class="folder-collapse-button btn-ns-description" id="js_folder-collapse-button">
+								Ajouté {{ item.DATE | date_filter_sh }}
+                            </button>
+							<button ng-click="methods.Edit(item.ID_LIEU_FORMATION)" class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+							<i class="ri-pencil-line" style="position: relative; left: -3px; top: -3px;"></i> Modifier
+							</button>
+							<button ng-click="methods.Delete(item.ID_LIEU_FORMATION)" class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+							<i class="ri-delete-bin-line" style="position: relative; left: -3px; top: -3px;"></i> Supprimer
+							</button>
+						</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-item__details__name"> Organisme </div>
+                    <div class="folder-item__details__date">{{ item.NOM_ORGANISME }}</div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-summary__details__name"> Nom </div>
+                    <div class="folder-summary__details__share"> {{item.NOM}} </div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-item__details__name"> Email </div>
+                    <div class="folder-item__details__date">{{ item.EMAIL_CONTACT }}</div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-item__details__name"> Téléphone </div>
+                    <div class="folder-item__details__date">{{ item.TELEPHONE_CONTACT }}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>

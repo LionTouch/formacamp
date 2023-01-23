@@ -1,0 +1,46 @@
+<div class="col-md-12 card">
+    <hr>
+    <h6><i ng-click="methods.DeleteSeance(index-1)" class="ri-delete-bin-line mr-3" style="position: relative; left: -3px; top: -3px;cursor: pointer"></i> Séance {{index}}</h6>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 my-1">
+                <div class="form-group">
+                    <div class="row">
+                        <button ng-repeat="type_seance in types_seances" ng-class="type_seance.ID_TYPE_SEANCE == seance.ID_TYPE_SEANCE ? 'active':''"
+                                ng-click="
+                                    seance.ID_TYPE_SEANCE = type_seance.ID_TYPE_SEANCE;
+                                    seance.MIN=type_seance.DEBUT;
+                                    seance.MAX=type_seance.FIN;
+                                    seance.HD=type_seance.DEBUT;
+                                    seance.HF=type_seance.FIN"
+                                type="button" class="col-md-6 type_seance float-left btn btn-primary">
+                            {{type_seance.NOM}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-inline my-1">
+
+                <div class="form-group">
+                    <label class="my-1 mr-2" for="hd">De</label>
+                    <input time-input ng-model="seance.HD" type="time" class="form-control" id="hd"
+                           ng-change="methods.ReinitTime(seance,'hd')">
+                    <label class="my-1 mr-2 ml-2" for="hf">A</label>
+                    <input time-input ng-model="seance.HF" type="time" class="form-control" id="hf"
+                           ng-change="methods.ReinitTime(seance,'hf')">
+                </div>
+
+            </div>
+            <div class="col-md-12 my-1">
+                <label for="salle">Salle</label>
+                <select name="salle" ng-model="seance.ID_SALLE" class="custom-select" id="salle">
+                    <option ng-repeat="salle in salles track by $index" ng-value="salle.ID_SALLE">{{salle.NOM}}</option>
+
+                </select>
+
+            </div>
+        </div>
+    </div>
+
+</div>

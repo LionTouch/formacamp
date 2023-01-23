@@ -1,0 +1,31 @@
+<button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddProfil(prf.type)"><i class="ri-add-line pr-0"></i></button>
+<ul dnd-list="prf.data" dnd-allowed-types="prf.type" class="col-md-12">
+    <li ng-repeat="profil in prf.data"
+        dnd-draggable="profil"
+        dnd-type="profil.type"
+        dnd-disable-if="profil.type == 'unknown'"
+        dnd-moved="prf.data.splice($index, 1)" class="col-md-12">
+        <dnd-nodrag class="row">
+            <div class="col-md-1">
+                <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input ng-model="profil.TEXT" type="text" class="form-control" id="nom{{index}}" placeholder="">
+
+                </div>
+            </div>
+            <button ng-click="DeleteProfil($index)" class="col-md-2 btn-todo btn btn-primary">
+                <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+            </button>
+            <hr>
+        </dnd-nodrag>
+    </li>
+
+    <li class="dndPlaceholder col-md-12">
+        <hr>
+        <p class="text-center">Deplacer ici</p>
+        <hr>
+    </li>
+
+</ul>

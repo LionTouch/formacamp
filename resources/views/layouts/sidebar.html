@@ -1,0 +1,497 @@
+<!-- Sidebar  -->
+<div ng-controller="SideBarController" class="iq-sidebar">
+    <script type="text/ng-template" id="item-template.html">
+        <a href="{{url}}" class="iq-waves-effect" ng-click="!isOpen ? toggleOpen():void">
+            <span class="yay-icon">
+                <span class="icon-home">
+                    <img ng-src="{{icon}}" alt="" class="icon-home-img">
+                </span>
+            </span>
+            <span>{{heading}}</span>
+        </a>
+    </script>
+    <script type="text/ng-template" id="group-template.html">
+
+        <a href="{{url}}" class="iq-waves-effect"  ng-click="!hassub && isOpen ? void:toggleOpen()" uib-accordion-transclude="heading">
+            <span class="yay-icon">
+                <span class="icon-home">
+                    <img ng-src="{{icon}}" alt="" class="icon-home-img">
+                </span>
+            </span>
+            <span uib-accordion-header >{{heading}}</span>
+            <i ng-if="hassub" class="ri-arrow-right-s-line iq-arrow-right"></i>
+        </a>
+
+
+        <ul class="iq-submenu"  uib-collapse="!isOpen" ng-transclude></ul>
+    </script>
+    <script type="text/ng-template" id="nav-template.html">
+        <nav class="iq-sidebar-menu" ng-transclude>
+        </nav>
+    </script>
+    <div id="sidebar-scrollbar" uib-accordion template-url="nav-template.html">
+        <ul id="iq-sidebar-toggle" class="iq-menu">
+            <li class="iq-menu-title">
+			<!-- <span>Menu navigation</span> -->
+			</li>
+            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/010-launching.webp" url="/Dashboard" heading="Tableau de bord" acces="Dashboard" class="menu-item" ng-nav module="Dashboard" width="40px" height="40px">
+
+            </li>
+            <li ng-nav module="Sessions" uib-accordion-group template-url="group-template.html" hassub="{{session_id}}" url="{{session_id?'#':'/Sessions'}}" icon="resources/assets/images/010-session.webp" is-open="isSessionOpen" heading="Sessions" class="menu-hassub" width="40px" height="40px">
+
+                <ul ng-show="session_id">
+                    <li acces="Sessions">
+                        <a href="/Sessions">Toutes les sessions</a>
+                    </li>
+                    <li class="iq-menu-title"><span>{{session_name}}</span></li>
+                    <li acces="Sessions" ng-nav module="Modules">
+                        <a href="/Sessions/{{session_id}}/Modules">Modules</a>
+                    </li>
+                    <li ng-show="module_id" acces="Sessions" ng-nav module="Dates&Prix">
+                        <a href="/Sessions/{{session_id}}/Modules/{{module_id}}/Dates&Prix">Modules</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Apprenants">
+                        <a href="/Sessions/{{session_id}}/Apprenants">Apprenants</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Intervenants">
+                        <a href="/Sessions/{{session_id}}/Intervenants">Intervenants</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Programme">
+                        <a href="/Sessions/{{session_id}}/Programme">Programme</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Evaluations">
+                        <a href="/Sessions/{{session_id}}/Evaluations">Evaluations</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Suivi">
+                        <a href="/Sessions/{{session_id}}/Suivi">Suivi</a>
+                    </li>
+                    <li acces="Sessions" ng-nav module="Emargements">
+                        <a href="/Sessions/{{session_id}}/Emargements">Emargements</a>
+                    </li>
+                </ul>
+
+            </li>
+
+            <li ng-nav module="Donnees" uib-accordion-group template-url="group-template.html" is-open="isDonneesOpen" hassub="true" icon="resources/assets/images/013-employer.webp" heading="Données" class="menu-hassub" width="40px" height="40px">
+
+                <ul>
+                    <li acces="Organismes" ng-nav module="Organismes"><a href="/GestionDonnees/Organismes">Organismes</a></li>
+                    <li acces="Utilisateurs" ng-nav module="Utilisateurs"><a href="/GestionDonnees/Utilisateurs">Utilisateurs</a></li>
+                    <li acces="Stagiaires" ng-nav module="Stagiaires"><a href="/GestionDonnees/Stagiaires">Stagiaires</a></li>
+                    <li acces="Clients" ng-nav module="Clients"><a href="/GestionDonnees/Clients">Clients</a></li>
+                    <li acces="Formateurs" ng-nav module="Formateurs"><a href="/GestionDonnees/Formateurs">Formateurs</a></li>
+                    <li acces="Financeurs externes" ng-nav module="FinanceursExternes"><a href="/GestionDonnees/FinanceursExternes">Financeurs externes</a></li>
+                    <li acces="Lieux de formation" ng-nav module="LieuxDeFormation"><a href="/GestionDonnees/LieuxDeFormation">Lieux de formation</a></li>
+                    <li acces="Domaines" ng-nav module="Domaines"><a href="/GestionDonnees/Domaines">Domaines de formation</a></li>
+                    <li acces="Actions" ng-nav module="Actions"><a href="/GestionDonnees/Actions">Actions de formation</a></li>
+                    <li acces="Diplomes" ng-nav module="Diplomes"><a href="/GestionDonnees/Diplomes">Diplomes de formation</a></li>
+                    <li acces="Salles" ng-nav module="Salles"><a href="/GestionDonnees/Salles">Salles</a></li>
+                </ul>
+
+            </li>
+            <li ng-nav module="Bibliotheque" uib-accordion-group template-url="group-template.html" is-open="isBibliothequeOpen" hassub="true" icon="resources/assets/images/006-diploma.webp" heading="Bibliothèques" class="menu-hassub" width="40px" height="40px">
+
+                <ul>
+                    <li acces="Programmes" ng-nav module="Programmes"><a href="/Bibliotheque/Programmes">Programmes</a></li>
+                </ul>
+
+            </li>
+            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/003-calendar.webp" url="/Agenda" heading="Agenda" acces="Agenda" class="menu-item" ng-nav module="Agenda" width="40px" height="40px">
+
+
+            </li>
+            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/010-suivi3.webp" url="/SuiviCommercial" heading="Suivi Commercial" acces="SuiviCommercial" class="menu-item" ng-nav module="SuiviCommercial" width="40px" height="40px">
+
+
+            </li>
+
+            <li ng-nav module="Rapports" uib-accordion-group template-url="group-template.html" hassub="true" icon="resources/assets/images/010-suivi.webp" heading="Rapports d'activité" is-open="isRapportOpen" class="menu-hassub" width="40px" height="40px">
+
+                <ul>
+                    <li acces="Suivi de l\'activité" ng-nav module="SuiviActivite">
+                        <a href="/RapportActivite/SuiviActivite">
+                            Suivi de l'activité
+                        </a>
+                    </li>
+                    <li acces="Suivi des factures" ng-nav module="SuiviFactures">
+                        <a href="/RapportActivite/SuiviFactures">
+                            Suivi des factures
+                        </a>
+                    </li>
+                    <li acces="Suivi des devis" ng-nav module="SuiviDevis">
+                        <a href="/RapportActivite/SuiviDevis">
+                            Suivi des devis
+                        </a>
+                    </li>
+                    <li acces="Bilan Pédagogique" ng-nav module="BilanPedagogique">
+                        <a href="/RapportActivite/BilanPedagogique">
+                            Bilan Pédagogique
+                        </a>
+                    </li>
+                    <li acces="Suivi Qualité" ng-nav module="SuiviQualite">
+                        <a href="/RapportActivite/SuiviQualite">
+                            Suivi Qualité
+                        </a>
+                    </li>
+                    <li acces="Incidents Qualité" ng-nav module="IncidentQualite">
+                        <a href="/RapportActivite/IncidentQualite">
+                            Incidents Qualité
+                        </a>
+                    </li>
+                </ul>
+
+            </li>
+            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/010-profile.webp" url="/GestionCompte/Profil" heading="Compte" acces="Profil" class="menu-item" ng-nav module="Profil"  width="40px" height="40px">
+
+
+            </li>
+            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/002-bell.webp" url="/Notifications" heading="Notifications" acces="Notifications" class="menu-item" ng-nav module="Notifications"  width="40px" height="40px">
+
+
+            </li>
+<!--            <li  uib-accordion-group template-url="item-template.html" icon="resources/assets/images/007-messenger.webp" url="/Messagerie" heading="Messagerie" acces="Messagerie" class="menu-item" ng-nav module="Messagerie">-->
+
+<!--            </li>-->
+
+        </ul>
+
+        <div class="p-3"></div>
+    </div>
+</div>
+<!-- TOP Nav Bar -->
+
+<div ng-controller="NavBarController" class="iq-top-navbar">
+    <div class="iq-navbar-custom">
+        <div class="iq-sidebar-logo">
+            <div class="top-logo">
+                <a href="#" class="logo">
+                    <img src="resources/assets/images/logo.gif" class="img-fluid" alt="" width="100%" height="55px">
+                    <span>vito</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light p-0">
+            <div class="iq-sidebar-logo d-flex justify-content-between">
+                <a href="#">
+                    <img src="resources/assets/images/logo-01.webp" class="img-fluid" alt="">
+                </a>
+                <div class="iq-menu-bt-sidebar">
+                    <div class="iq-menu-bt align-self-center">
+                        <div class="wrapper-menu">
+                            <div class="main-circle"><i class="ri-menu-3-line"></i></div>
+                            <div class="hover-circle"><i class="ri-menu-2-line"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-left">
+
+                <div class="iq-search-bar">
+                    <form action="#" class="searchbox">
+                        <input type="text" class="text search-input" placeholder="Type here to search...">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                        <div class="searchbox-datalink">
+                            <h6 class="pl-3 pt-3">Pages</h6>
+                            <ul class="m-0 pl-3 pr-3 pb-3">
+                                <li class="iq-bg-primary-hover rounded"><a href="#" class="nav-link router-link-exact-active router-link-active pr-2"><i class="ri-home-4-line pr-2"></i>Dashboard</a></li>
+                                <li class="iq-bg-primary-hover rounded"><a href="#" class="nav-link router-link-exact-active router-link-active pr-2"><i class="ri-home-3-line pr-2"></i>Dashboard</a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
+                <i class="ri-menu-3-line"></i>
+            </button>
+            <!-- <div class="iq-menu-bt align-self-center"> -->
+                <!-- <div class="wrapper-menu"> -->
+                    <!-- <div class="main-circle"><i class="ri-arrow-left-s-line"></i></div> -->
+                    <!-- <div class="hover-circle"><i class="ri-arrow-right-s-line"></i></div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-list">
+
+
+                    <li class="nav-item">
+                        <a href="#" class="search-toggle iq-waves-effect">
+                            <div id="lottie-beil"></div>
+                            <span class="bg-danger dots"></span>
+                        </a>
+                        <div class="iq-sub-dropdown">
+                            <div class="iq-card shadow-none m-0">
+                                <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white">All Notifications<small class="badge  badge-light float-right pt-1">4</small></h5>
+                                    </div>
+
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/01.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Emma Watson Nik</h6>
+                                                <small class="float-right font-size-12">Just Now</small>
+                                                <p class="mb-0">95 MB</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/02.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">New customer is join</h6>
+                                                <small class="float-right font-size-12">5 days ago</small>
+                                                <p class="mb-0">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/03.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Two customer is left</h6>
+                                                <small class="float-right font-size-12">2 days ago</small>
+                                                <p class="mb-0">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/04.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">New Mail from Fenny</h6>
+                                                <small class="float-right font-size-12">3 days ago</small>
+                                                <p class="mb-0">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="search-toggle iq-waves-effect">
+                            <div id="lottie-mail"></div>
+                            <span class="bg-primary count-mail"></span>
+                        </a>
+                        <div class="iq-sub-dropdown">
+                            <div class="iq-card shadow-none m-0">
+                                <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white">All Messages<small class="badge  badge-light float-right pt-1">5</small></h5>
+                                    </div>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/01.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</h6>
+                                                <small class="float-left font-size-12">13 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/02.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
+                                                <small class="float-left font-size-12">20 Apr</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/03.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Why do we use it?</h6>
+                                                <small class="float-left font-size-12">30 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/04.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Variations Passages</h6>
+                                                <small class="float-left font-size-12">12 Sep</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded" src="resources/assets/images/user/05.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum generators</h6>
+                                                <small class="float-left font-size-12">5 Dec</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <ul class="navbar-list">
+                <li class="">
+                    <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
+                        <img src="resources/assets/images/user/1.jpg" class="img-fluid rounded mr-3" alt="user">
+                        <div class="caption">
+                            <h6 class="mb-0 line-height text-white">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</h6>
+                            <span class="font-size-12 text-white">Available</span>
+                        </div>
+                    </a>
+                    <div class="iq-sub-dropdown iq-user-dropdown">
+                        <div class="iq-card shadow-none m-0">
+                            <div class="iq-card-body p-0 ">
+                                <div class="bg-primary p-3">
+                                    <h5 class="mb-0 text-white line-height">{{CurrentUser.NOM}} {{CurrentUser.PRENOM}}</h5>
+                                    <span class="text-white font-size-12">Available</span>
+                                </div>
+                                <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <div class="media align-items-center">
+                                        <div class="rounded iq-card-icon iq-bg-primary">
+                                            <i class="ri-file-user-line"></i>
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">My Profile</h6>
+                                            <p class="mb-0 font-size-12">View personal profile details.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <div class="media align-items-center">
+                                        <div class="rounded iq-card-icon iq-bg-primary">
+                                            <i class="ri-profile-line"></i>
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">Edit Profile</h6>
+                                            <p class="mb-0 font-size-12">Modify your personal details.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <div class="media align-items-center">
+                                        <div class="rounded iq-card-icon iq-bg-primary">
+                                            <i class="ri-account-box-line"></i>
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">Account settings</h6>
+                                            <p class="mb-0 font-size-12">Manage your account parameters.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <div class="media align-items-center">
+                                        <div class="rounded iq-card-icon iq-bg-primary">
+                                            <i class="ri-lock-line"></i>
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">Privacy Settings</h6>
+                                            <p class="mb-0 font-size-12">Control your privacy parameters.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="d-inline-block w-100 text-center p-3">
+                                    <form method="POST" action="logout">
+
+                                        <a href="#" id="logout"  onclick="event.preventDefault();
+                                                this.closest('form').submit();" class="bg-primary iq-sign-btn">
+                                            <i class="ri-login-box-line ml-2"></i>
+                                            <span>Exit</span>
+                                            <span class="rui-nav-circle"></span>
+                                        </a>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+
+    </div>
+</div>
+<!-- TOP Nav Bar END -->
+<style>
+
+    .icon-home {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        opacity: inherit !important;
+        display: inherit !important;
+        /* border-radius: 100%;*/
+    }
+
+    .icon-home-img {
+		height: 40px;
+		width: 40px;
+        opacity: inherit;
+        display: inherit;
+    }
+    body.sidebar-main .iq-sidebar .iq-sidebar-menu .iq-menu li a span.yay-icon {
+        opacity: 1;
+        display: inline-block;
+        transition: all 0.45s ease 0s;
+    }
+    .iq-sidebar-menu .iq-menu li.active >a .iq-arrow-right {
+        transform: rotate(90deg);
+        transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+    }
+    .iq-submenu{
+        padding: 0 !important;
+    }
+    .iq-sidebar-menu .iq-menu li.active>a {
+        color: var(--iq-white);
+        text-decoration: none;
+        background: var(--iq-primary-light);;
+    }
+
+    .iq-sidebar-menu .iq-menu li .iq-submenu li a:hover, .iq-sidebar-menu .iq-menu li .iq-submenu li.active>a {
+        color: var(--iq-white)!important;
+        text-decoration: none;
+        background: var(--iq-primary-light)!important;
+        border-radius: 0 15px 15px 0!important;
+    }
+	.iq-sidebar-logo img {
+		height: 55px;
+		width: 100%;
+	}
+	span.yay-icon {
+		margin-right: 10px;
+	}
+	.iq-top-navbar.ng-scope {
+		left: 0 !important;
+		right: 0 !important;
+	}
+	@media (max-width: 557px){
+	.iq-top-navbar .navbar-toggler {
+		right: 100px;
+		display: none;
+		}
+	}
+</style>

@@ -1,0 +1,101 @@
+<div class="col-md-12" ng-controller="ListeSessionsController">
+    <div id="send-loading" style="display: none">
+        <div class="send-loading">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+    <div class="col-md-12 bg-white py-2 my-2">
+        <div class="iq-search-bar">
+            <div class="searchbox" style="width: 100%">
+                <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                       placeholder="Recherche sessions..."
+                       ng-model="search">
+                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="bg-transparent shadow-none col-md-3 iq-card ">
+            <div class="iq-card-header d-flex justify-content-between bg-primary">
+                <div class="iq-header-title">
+                    <h5 class="text-white">Projets</h5>
+                </div>
+                <div class="iq-card-header-toolbar d-flex align-items-center" tooltip-placement="top" uib-tooltip="Ajouter Projet"><i ng-click="GoTo('/Sessions/AjoutProjet')" class="ri-add-box-line add-ps mr-0 font-size-18" role="button" tabindex="0"></i></div>
+            </div>
+            <div class="iq-card-body pro-bg-card scroll-list" infinite-scroll="loadMore(searched1,infiniteLimit1)">
+                    <folder ng-click="Gerer(session.ID_SESSION)" ng-repeat="session in  searched1 = ((liste_data|filter:search)| filter:{TYPE : 0})| orderBy: '-DATE'| limitTo:infiniteLimit1" data="session" diplomes-data="liste_diplomes" apprenants-data="liste_apprenants" actions-data="liste_actions" template-url="app/Modules/SessionsModule/Resources/views/folder-sessions.html"  methods="folderMethodes"></folder>
+            </div>
+
+        </div>
+        <div class="bg-transparent shadow-none col-md-3 iq-card ">
+            <div class="iq-card-header d-flex justify-content-between bg-warning">
+                <div class="iq-header-title">
+                    <h5 class="text-white">Planification en cours</h5>
+                </div>
+                <div class="iq-card-header-toolbar d-flex align-items-center" tooltip-placement="top" uib-tooltip="Ajouter Session"><i ng-click="GoTo('/Sessions/Ajout')" class="ri-add-box-line add-ps mr-0 font-size-18" role="button" tabindex="0"></i></div>
+            </div>
+            <div class="iq-card-body pro-bg-card scroll-list" infinite-scroll="loadMore(searched2,infiniteLimit2)">
+                    <folder ng-click="Gerer(session.ID_SESSION)" ng-repeat="session in  searched2 = ((liste_data|filter:search)| filter:{TYPE : 1})| orderBy: '-DATE'| limitTo:infiniteLimit" data="session" diplomes-data="liste_diplomes" apprenants-data="liste_apprenants" actions-data="liste_actions" template-url="app/Modules/SessionsModule/Resources/views/folder-sessions.html"  methods="folderMethodes"></folder>
+            </div>
+
+        </div>
+        <div class="bg-transparent shadow-none col-md-3 iq-card ">
+            <div class="iq-card-header d-flex justify-content-between bg-success">
+                <div class="iq-header-title">
+                    <h5 class="text-white">Planifiées</h5>
+                </div>
+            </div>
+            <div class="iq-card-body pro-bg-card scroll-list" infinite-scroll="loadMore(searched3,infiniteLimit3)">
+                    <folder ng-click="Gerer(session.ID_SESSION)" ng-repeat="session in  searched3 = ((liste_data|filter:search)| filter:{TYPE:2, TERMINEE:0})| orderBy: '-DATE'| limitTo:infiniteLimit" data="session" diplomes-data="liste_diplomes" apprenants-data="liste_apprenants" actions-data="liste_actions" template-url="app/Modules/SessionsModule/Resources/views/folder-sessions.html"  methods="folderMethodes"></folder>
+            </div>
+
+        </div>
+        <div class="bg-transparent shadow-none col-md-3 iq-card ">
+            <div class="iq-card-header d-flex justify-content-between bg-danger">
+                <div class="iq-header-title">
+                    <h5 class="text-white">Terminées</h5>
+                </div>
+            </div>
+            <div class="iq-card-body pro-bg-card scroll-list" infinite-scroll="loadMore(searched4,infiniteLimit4)">
+                    <folder ng-click="Gerer(session.ID_SESSION)" ng-repeat="session in  searched4 = ((liste_data|filter:search)| filter:{TYPE:2, TERMINEE:1})| orderBy: '-DATE'| limitTo:infiniteLimit" data="session" template-url="app/Modules/SessionsModule/Resources/views/folder-sessions.html"  methods="folderMethodes"></folder>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<style>
+    .add-ps{
+        cursor: pointer;
+    }
+    .add-ps:hover{
+        cursor: pointer;
+    }
+    .scroll-list {
+        height: 65vh;
+        overflow: hidden auto;
+        padding:10px;
+    }
+    .searchFilter.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }
+    .send-loading {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        -webkit-animation: rotation 1s infinite;
+        animation: rotation 1s infinite;
+        left: 50%;
+        top: 33%;
+    }
+</style>

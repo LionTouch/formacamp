@@ -1,0 +1,369 @@
+<div class="col-md-12" ng-controller="CrudProgrammesController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Bibliotheque/Programmes"><i class="ri-menu-3-line mr-1 float-left"></i>Programmes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Programme</li>
+        </ol>
+    </nav>
+
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <label for="titre">Titre Programme</label>
+                            <input ng-model="programme.TITRE" type="text" class="form-control" id="titre">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <uib-accordion close-others="true">
+                            <div uib-accordion-group class="mt-1" heading="Description du programme" is-open="true" template-url="app/Modules/ProgrammesModule/Resources/views/accordion.html">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="description">Description du programme</label>
+                                                <textarea ng-model="programme.DESCRIPTION" type="text" class="form-control" id="description" placeholder="Description du programme"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div uib-accordion-group class="mt-1" heading="Objectifs pédagogiques" template-url="app/Modules/ProgrammesModule/Resources/views/accordion.html">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddObjectif()"><i class="ri-add-line pr-0"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <ul dnd-list="programme.objectifs" class="col-md-12">
+                                                <li ng-repeat="objectif in programme.objectifs"
+                                                    dnd-draggable="objectif"
+                                                    dnd-moved="programme.objectifs.splice($index, 1)" class="col-md-12">
+                                                    <dnd-nodrag class="row">
+                                                        <div class="col-md-1">
+                                                            <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="form-group">
+                                                                <input ng-model="objectif.TEXT" type="text" class="form-control" placeholder="">
+
+                                                            </div>
+                                                        </div>
+                                                        <button ng-click="DeleteObjectif($index)" class="col-md-2 btn-todo btn btn-primary">
+                                                            <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                        </button>
+                                                        <hr>
+                                                    </dnd-nodrag>
+                                                </li>
+
+                                                <li class="dndPlaceholder col-md-12">
+                                                    <hr>
+                                                    <p class="text-center">Deplacer ici</p>
+                                                    <hr>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div uib-accordion-group class="mt-1" heading="Profil des apprenants" template-url="app/Modules/ProgrammesModule/Resources/views/accordion.html">
+                                    <div class="card" style="margin-bottom: 35px;">
+                                        <div class="card-header">
+                                            <h4>Clients potentiels</h4>
+                                            <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddPotentiel()"><i class="ri-add-line pr-0"></i></button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul dnd-list="programme.potentiels" class="col-md-12" dnd-allowed-types="['pot']">
+                                                        <li ng-repeat="potentiel in programme.potentiels"
+                                                            dnd-draggable="potentiel"
+                                                            dnd-type="'pot'"
+                                                            dnd-moved="programme.potentiels.splice($index, 1)" class="col-md-12">
+                                                            <dnd-nodrag class="row">
+                                                                <div class="col-md-1">
+                                                                    <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <div class="form-group">
+                                                                        <input ng-model="potentiel.TEXT" type="text" class="form-control" placeholder="">
+
+                                                                    </div>
+                                                                </div>
+                                                                <button ng-click="DeletePotentiel($index,potentiel)" class="col-md-2 btn-todo btn btn-primary">
+                                                                    <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                                </button>
+                                                                <hr>
+                                                            </dnd-nodrag>
+                                                        </li>
+
+                                                        <li class="dndPlaceholder col-md-12">
+                                                            <hr>
+                                                            <p class="text-center">Deplacer ici</p>
+                                                            <hr>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="card" style="margin-bottom: 35px;">
+                                    <div class="card-header">
+                                        <h4>Pré-requis</h4>
+                                        <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddPrerequi()"><i class="ri-add-line pr-0"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <ul dnd-list="programme.prerequis" class="col-md-12" dnd-allowed-types="['prereq']">
+                                                    <li ng-repeat="prerequi in programme.prerequis"
+                                                        dnd-draggable="prerequi"
+                                                        dnd-type="'prereq'"
+                                                        dnd-moved="programme.prerequis.splice($index, 1)" class="col-md-12">
+                                                        <dnd-nodrag class="row">
+                                                            <div class="col-md-1">
+                                                                <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group">
+                                                                    <input ng-model="prerequi.TEXT" type="text" class="form-control" placeholder="">
+
+                                                                </div>
+                                                            </div>
+                                                            <button ng-click="DeletePrerequi($index,prerequi)" class="col-md-2 btn-todo btn btn-primary">
+                                                                <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                            </button>
+                                                            <hr>
+                                                        </dnd-nodrag>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div uib-accordion-group class="mt-1" heading="Contenu de la formation (progression pédagogique)" template-url="app/Modules/ProgrammesModule/Resources/views/accordion.html">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddFormation()"><i class="ri-add-line pr-0"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <ul class="col-md-12" dnd-list="programme.formations"
+                                                dnd-allowed-types="['0']">
+                                                <li class="col-md-12" ng-repeat="formation in programme.formations"
+                                                    dnd-draggable="formation"
+                                                    dnd-type="'0'"
+                                                    dnd-moved="programme.formations.splice($index, 1)">
+                                                    <dnd-nodrag class="row">
+                                                        <div  class="col-md-1">
+                                                            <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="form-group">
+                                                                <input ng-model="formation.TEXT" type="text" class="form-control" placeholder="">
+
+                                                            </div>
+                                                        </div>
+                                                        <button ng-click="DeleteFormation($index,formation.TYPE)" class="col-md-2 btn-todo btn btn-primary">
+                                                            <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                        </button>
+                                                        <hr>
+                                                    </dnd-nodrag>
+                                                    <div class="offset-1 col-md-9" style="margin-bottom: 50px;">
+                                                        <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddSousFormation(formation)"><i class="ri-add-line pr-0"></i></button>
+
+                                                    </div>
+                                                    <ul dnd-list="formation.sous_formations"
+                                                        dnd-allowed-types="['1']" class="offset-1 col-md-9">
+                                                        <li class="col-md-12" ng-repeat="sous_formation in formation.sous_formations"
+                                                            dnd-draggable="sous_formation"
+                                                            dnd-type="'1'"
+                                                            dnd-moved="formation.sous_formations.splice($index, 1)">
+                                                            <dnd-nodrag class="row">
+                                                                <div  class="col-md-1">
+                                                                    <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <div class="form-group">
+                                                                        <input ng-model="sous_formation.TEXT" type="text" class="form-control" placeholder="">
+
+                                                                    </div>
+                                                                </div>
+                                                                <button ng-click="DeleteSousFormation(formation,$index)" class="col-md-2 btn-todo btn btn-primary">
+                                                                    <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                                </button>
+                                                                <hr>
+                                                            </dnd-nodrag>
+                                                        </li>
+                                                        <li class="dndPlaceholder col-md-12">
+                                                            <hr>
+                                                            <p class="text-center">Deplacer ici</p>
+                                                            <hr>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dndPlaceholder col-md-12">
+                                                    <hr>
+                                                    <p class="text-center">Deplacer ici</p>
+                                                    <hr>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--                            <div class="card-footer">-->
+                                    <!--                                <button class="btn-todo float-left btn btn-primary" ng-click="Save()">Enregistrer</button>-->
+                                    <!--                            </div>-->
+                                </div>
+                            </div>
+
+                            <div uib-accordion-group class="mt-1" heading="Modalités de certifications" template-url="app/Modules/ProgrammesModule/Resources/views/accordion.html">
+                                <div class="card" >
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="resultat">Résultats attendus à l'issue de la formation</label>
+                                                <input ng-model="programme.RESULTAT" type="text" class="form-control" id="resultat">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="obtention">Modalités d'obtention</label>
+                                                <input ng-model="programme.OBTENTION" type="text" class="form-control" id="obtention">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="certification">Détails sur la certification</label>
+                                                <input ng-model="programme.CERTIFICATION" type="text" class="form-control" id="certification">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="validite">Durée de validité</label>
+                                                <input ng-model="programme.VALIDITE" type="text" class="form-control" id="validite" placeholder="année(s)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--                            <div class="card-footer">-->
+                                    <!--                                <button class="btn-todo float-left btn btn-primary" ng-click="SaveProgramme()">Enregistrer</button>-->
+                                    <!--                            </div>-->
+                                </div>
+                            </div>
+                        </uib-accordion>
+                        <div class="card-footer">
+                            <button class="btn-todo float-left btn btn-primary" ng-click="Save()">Enregistrer</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<style>
+
+    .card-collapse .card-body {
+        background: #fff;
+    }
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+</style>

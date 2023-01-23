@@ -1,0 +1,77 @@
+<div class="folder">
+    <div class="folder-summary">
+        <div class="folder-summary__details" style="min-width: 100%;">
+            <div class="row ns-block">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="folder-summary__details__name title-folder-header">
+
+						<h6 class="title-folder">
+						    <span class="user-name">{{ item.TITRE }}</span>
+						</h6>
+
+                        <div style="position: relative; float: right; display: flex;">
+
+						</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-item__details__name"> Référence </div>
+                    <div class="folder-item__details__date">{{ item.REF }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .item-dropdown.active{
+        background: #0000006e;
+        color: #fff;
+    }
+    .folder-summary{
+        height: 130px!important;
+    }
+
+    .folder-item__details__name {
+        color: #393738;
+        font-size: .975rem;
+        font-weight: 500;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .more-btn {
+        background: none;
+        border: 0 none;
+        line-height: normal;
+        overflow: visible;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        width: 100%;
+        text-align: left;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .more-dot {
+        background-color: #aab8c2;
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+    }
+
+
+    .more-btn:hover .more-dot,
+    .show-more-menu .more-dot {
+        background-color: #516471;
+    }
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+</style>

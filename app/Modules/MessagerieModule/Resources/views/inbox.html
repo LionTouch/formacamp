@@ -1,0 +1,551 @@
+<div class="row" ng-controller="InboxController">
+    <div class="col-lg-3">
+        <div class="iq-card">
+            <div class="iq-card-body">
+                <div class="">
+                    <div class="iq-email-list">
+                        <button ng-click="NewMail()" class="btn btn-primary btn-lg btn-block mb-3 font-size-16 p-3" ><i class="ri-send-plane-line mr-2"></i>Nouveau Message</button>
+                        <div class="iq-email-ui nav flex-column nav-pills">
+                            <li class="mail nav-link active" ng-click="ActiveMail(1,$event)"><a href="#"><i class="ri-mail-line"></i>Inbox<span ng-show="unseen!=0" class="badge badge-primary ml-2">{{unseen}}</span></a></li>
+                            <li class="mail nav-link" ng-click="ActiveMail(2,$event)"><a href="#"><i class="ri-mail-send-line"></i>Mail envoyé</a></li>
+                            <li class="mail nav-link" ng-click="ActiveMail(3,$event)"><a href="#"><i class="ri-delete-bin-line"></i>Corbeille</a></li>
+                            <li class="mail signature-link nav-link" ng-click="ShowSignature()"><a href="#"><i class="ri-delete-bin-line"></i>Signature</a></li>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 mail-box-detail">
+        <div id="compose-email-popup" class="compose-popup modal modal-sticky-bottom-right modal-sticky-lg">
+            <div class="iq-card iq-border-radius-20 mb-0" ng-controller="NewReplyController">
+                <div class="iq-card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="text-primary float-left"><i class="ri-pencil-fill"></i> Répondre</h5>
+                            <button type="submit" class="float-right close-popup" data-dismiss="modal"><i class="ri-close-fill"></i></button>
+                        </div>
+                    </div>
+                    <form class="email-form">
+                        <div class="form-group row">
+                            <label  class="col-sm-2 col-form-label">Message:</label>
+                            <div class="col-md-10" id="editor2">
+
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <div class="d-flex flex-grow-1 align-items-center">
+
+                                <div class="send-panel">
+                                    <label class="ml-2 mb-0 iq-bg-primary rounded" for="file2"> <input ng-model="files" onchange="angular.element(this).scope().UpdateFiles(this)" type="file" id="file2" style="display: none" multiple> <a ng-click="UploadFile('file2')"><i class="ri-attachment-line"></i> </a> </label>
+                                    <div ng-repeat="file in files">
+                                        <p class="iq-bg-dark pl-3 pr-3 pt-2 pb-2 rounded mb-0">{{file.name}} <i style="cursor: pointer" ng-click="RemoveFile(file)" class="text-danger ri-close-circle-line danger"></i></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex mr-3 align-items-center">
+                                <div class="send-btn pl-3">
+                                    <button ng-click="Send()" type="submit" class="btn btn-primary">Envoyer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="iq-card">
+            <div class="iq-card-body p-0">
+
+                <div ng-show="ShowMail == 1" class="">
+                    <div class="iq-email-to-list p-3">
+                        <div class="d-flex justify-content-between">
+
+                            <ul>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck10">
+                                        <label class="custom-control-label" for="customCheck10"></label>
+                                    </div>
+
+                                </li>
+                                <li uib-tooltip="Reload" tooltip-placement="'top'"><a ng-click="ReloadData()" href="#"><i class="ri-restart-line"></i></a></li>
+                                <li uib-tooltip="Delete" tooltip-placement="'top'"><a href="#"><i class="ri-delete-bin-line"></i></a></li>
+                            </ul>
+                            <div class="iq-email-search d-flex">
+                                <form class="mr-3 position-relative">
+                                    <div class="form-group mb-0">
+                                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Search" ng-model="search">
+                                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                    </div>
+                                </form>
+                                <ul class="float-right" style="margin-top: 0" uib-pagination direction-links="true" boundary-links="false" total-items="searched.length" ng-model="current_grid" items-per-page="data_limit" max-size="1" template-url="app/Modules/MessagerieModule/Resources/views/pagination.html">
+                                </ul>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-email-listbox">
+                        <ul class="iq-email-sender-list">
+                            <li ng-click="ReadMail(mail,'All Mail')" ng-repeat="mail in  searched = (liste_data|filter:search) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit" class="iq-unread">
+
+                                <div class="d-flex align-self-center">
+                                    <div class="iq-email-sender-info">
+                                        <div class="iq-checkbox-mail">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <label class="custom-control-label" ></label>
+                                            </div>
+                                        </div>
+                                        <span class="ri-star-line iq-star-toggle text-warning"></span>
+                                        <a href="javascript: void(0);" class="iq-email-title three-dots">{{mail.subject}}</a>
+                                    </div>
+                                    <div class="iq-email-content">
+                                        <a href="javascript: void(0);" class="iq-email-subject">{{mail.from.full_address}}</a>
+                                        <div class="iq-email-date">{{mail.date}}</div>
+                                    </div>
+                                    <ul class="iq-social-media">
+                                        <li><a href="#"><i class="ri-delete-bin-2-line"></i></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div ng-show="ShowMail == 2" class="">
+                    <div class="iq-email-to-list p-3">
+                        <div class="d-flex justify-content-between">
+
+                            <ul>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck11">
+                                        <label class="custom-control-label" for="customCheck11"></label>
+                                    </div>
+
+                                </li>
+                                <li uib-tooltip="Reload" tooltip-placement="'top'"><a ng-click="ReloadData()" href="#"><i class="ri-restart-line"></i></a></li>
+                                <li uib-tooltip="Delete" tooltip-placement="'top'"><a href="#"><i class="ri-delete-bin-line"></i></a></li>
+                            </ul>
+                            <div class="iq-email-search d-flex">
+                                <form class="mr-3 position-relative">
+                                    <div class="form-group mb-0">
+                                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Search" ng-model="search">
+                                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                    </div>
+                                </form>
+                                <ul class="float-right" style="margin-top: 0" uib-pagination direction-links="true" boundary-links="false" total-items="searched.length" ng-model="current_grid" items-per-page="data_limit" max-size="1" template-url="app/Modules/MessagerieModule/Resources/views/pagination.html">
+                                </ul>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-email-listbox">
+                        <ul class="iq-email-sender-list">
+
+
+                            <li ng-click="ReadMail(mail,'All Mail')" ng-repeat="mail in  searched = (liste_data_sent|filter:search) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit" class="iq-unread">
+
+                                <div class="d-flex align-self-center">
+                                    <div class="iq-email-sender-info">
+                                        <div class="iq-checkbox-mail">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <label class="custom-control-label" ></label>
+                                            </div>
+                                        </div>
+                                        <span class="ri-star-line iq-star-toggle text-warning"></span>
+                                        <a href="javascript: void(0);" class="iq-email-title three-dots">{{mail.subject}}</a>
+                                    </div>
+                                    <div class="iq-email-content">
+                                        <a href="javascript: void(0);" class="iq-email-subject">{{mail.from.full_address}}</a>
+                                        <div class="iq-email-date">{{mail.date}}</div>
+                                    </div>
+                                    <ul class="iq-social-media">
+                                        <li><a href="#"><i class="ri-delete-bin-2-line"></i></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div ng-show="ShowMail == 3" class="">
+                    <div class="iq-email-to-list p-3">
+                        <div class="d-flex justify-content-between">
+
+                            <ul>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck12">
+                                        <label class="custom-control-label" for="customCheck12"></label>
+                                    </div>
+
+                                </li>
+                                <li uib-tooltip="Reload" tooltip-placement="'top'"><a ng-click="ReloadData()" href="#"><i class="ri-restart-line"></i></a></li>
+                                <li uib-tooltip="Delete" tooltip-placement="'top'"><a href="#"><i class="ri-delete-bin-line"></i></a></li>
+                            </ul>
+                            <div class="iq-email-search d-flex">
+                                <form class="mr-3 position-relative">
+                                    <div class="form-group mb-0">
+                                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Search" ng-model="search">
+                                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                    </div>
+                                </form>
+                                <ul class="float-right" style="margin-top: 0" uib-pagination direction-links="true" boundary-links="false" total-items="searched.length" ng-model="current_grid" items-per-page="data_limit" max-size="1" template-url="app/Modules/MessagerieModule/Resources/views/pagination.html">
+                                </ul>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-email-listbox">
+                        <ul class="iq-email-sender-list">
+                            <li ng-click="ReadMail(mail,'Trash')" ng-repeat="mail in  searched = (liste_data_corbeille|filter:search) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit" class="iq-unread">
+
+                                <div class="d-flex align-self-center">
+                                    <div class="iq-email-sender-info">
+                                        <div class="iq-checkbox-mail">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <label class="custom-control-label" ></label>
+                                            </div>
+                                        </div>
+                                        <span class="ri-star-line iq-star-toggle text-warning"></span>
+                                        <a href="javascript: void(0);" class="iq-email-title three-dots">{{mail.subject}}</a>
+                                    </div>
+                                    <div class="iq-email-content">
+                                        <a href="javascript: void(0);" class="iq-email-subject">{{mail.from.full_address}}</a>
+                                        <div class="iq-email-date">{{mail.date}}</div>
+                                    </div>
+                                    <ul class="iq-social-media">
+                                        <li><a href="#"><i class="ri-delete-bin-2-line"></i></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="email-app-details read-mail">
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="">
+                                <div class="iq-email-to-list p-3">
+                                    <div class="d-flex justify-content-between">
+                                        <ul>
+                                            <li class="mr-3">
+                                                <a href="javascript: void(0);" ng-click="CloseMail()">
+                                                    <h4 class="m-0"><i class="ri-arrow-left-line"></i></h4>
+                                                </a>
+                                            </li>
+                                            <li uib-tooltip="Répondre" tooltip-placement="'top'"><a href="#" data-target="#compose-email-popup" data-toggle="modal"><i class="ri-mail-open-line"></i></a></li>
+                                            <li uib-tooltip="Delete" tooltip-placement="'top'"><a href="#"><i class="ri-delete-bin-line"></i></a></li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="iq-inbox-subject p-3">
+                                    <h5 class="mt-0">{{openMail.subject}}</h5>
+                                    <div class="iq-inbox-subject-info">
+                                        <div class="iq-subject-info">
+                                            <img src="public/uploads/profile.png" class="img-fluid rounded-circle" alt="#">
+                                            <div class="iq-subject-status align-self-center">
+                                                <h6 class="mb-0"><a href="#">{{openMail.from.name=='FormaCamp'?Me:openMail.from.name}}</a></h6>
+                                                <div class="dropdown" uib-dropdown >
+                                                    <a class="dropdown-toggle" href="#" uib-dropdown-toggle>
+                                                        <span ng-repeat="to in openMail.to">To:{{to.name=='FormaCamp'?Me:to.name}}{{openMail.to.length>$index+1?', ':''}}</span>
+                                                    </a>
+                                                    <div class="dropdown-menu font-size-12" uib-dropdown-menu aria-labelledby="dropdownMenuButton">
+                                                        <table class="iq-inbox-details">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>from:</td>
+                                                                <td>{{openMail.from.address}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>to:</td>
+                                                                <td><span ng-repeat="to in openMail.to">{{to.address}}{{openMail.to.length>$index+1?', ':''}}</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>date:</td>
+                                                                <td>{{openMail.date}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>subject:</td>
+                                                                <td>{{openMail.subject}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <span class="float-right align-self-center">{{openMail.date}}</span>
+                                        </div>
+                                        <div class="iq-inbox-body mt-5" ng-bind-html="openMail.body | trustAsHtml">
+
+                                        </div>
+                                        <hr>
+                                        <div class="attegement" ng-if="openMail.attachments.length>0">
+                                            <h6 class="mb-2">ATTACHED FILES:</h6>
+                                            <ul>
+                                                <li class="icon icon-attegment" ng-repeat="attachment in openMail.attachments">
+                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> <span ng-click="OpenAttachment(attachment.file)" class="ml-1">{{attachment.filename}}</span>
+                                                    <img ng-if="FileType(attachment.filetype)=='Image'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}">
+                                                    <audio controls ng-if="FileType(attachment.filetype)=='Audio'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}"></audio>
+                                                    <video controls ng-if="FileType(attachment.filetype)=='Video'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}"></video>
+                                                    <iframe ng-if="FileType(attachment.filetype)=='Application'" src="{{'data:application/pdf;base64, '+ attachment.file | trustAsResourceUrl}}"></iframe>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                        <div class="iq-inbox-subject p-3" ng-repeat="reply in openMail.replies">
+<!--                                            <hr class="mt-0">-->
+                                            <h5 class="mt-0">{{reply.subject}}</h5>
+                                            <div class="iq-inbox-subject-info">
+                                                <div class="iq-subject-info">
+                                                    <img src="public/uploads/profile.png" class="img-fluid rounded-circle" alt="#">
+                                                    <div class="iq-subject-status align-self-center">
+                                                        <h6 class="mb-0"><a href="#">{{reply.from.name=='FormaCamp'?Me:reply.from.name}}</a></h6>
+                                                        <div class="dropdown" uib-dropdown >
+                                                            <a class="dropdown-toggle" href="#" uib-dropdown-toggle>
+                                                                <span ng-repeat="to in reply.to">To:{{to.name=='FormaCamp'?Me:to.name}}{{reply.to.length>$index+1?', ':''}}</span>
+                                                            </a>
+                                                            <div class="dropdown-menu font-size-12" uib-dropdown-menu aria-labelledby="dropdownMenuButton">
+                                                                <table class="iq-inbox-details">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>from:</td>
+                                                                        <td>{{reply.from.address}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>to:</td>
+                                                                        <td><span ng-repeat="to in reply.to">{{to.address}}{{reply.to.length>$index+1?', ':''}}</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>date:</td>
+                                                                        <td>{{reply.date}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>subject:</td>
+                                                                        <td>{{reply.subject}}</td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <span class="float-right align-self-center">{{reply.date}}</span>
+                                                </div>
+                                                <div class="iq-inbox-body mt-5" ng-bind-html="reply.body | trustAsHtml">
+
+                                                </div>
+                                                <hr>
+                                                <div class="attegement" ng-if="reply.attachments.length>0">
+                                                    <h6 class="mb-2">ATTACHED FILES:</h6>
+                                                    <ul>
+                                                        <li class="icon icon-attegment" ng-repeat="attachment in reply.attachments">
+                                                            <i class="fa fa-file-text-o" aria-hidden="true"></i> <span ng-click="OpenAttachment(attachment.file)" class="ml-1">{{attachment.filename}}</span>
+                                                            <img ng-if="FileType(attachment.filetype)=='Image'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}">
+                                                            <audio controls ng-if="FileType(attachment.filetype)=='Audio'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}"></audio>
+                                                            <video controls ng-if="FileType(attachment.filetype)=='Video'" ng-src="data:{{FileType(attachment.filetype)}}/{{attachment.filetype}};base64, {{attachment.file}}"></video>
+                                                            <iframe ng-if="FileType(attachment.filetype)=='Application'" src="{{'data:application/pdf;base64, '+ attachment.file | trustAsResourceUrl}}"></iframe>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="email-app-details new-mail">
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="">
+                                <div class="iq-email-to-list p-3">
+                                    <div class="d-flex justify-content-between">
+                                        <ul>
+                                            <li class="mr-3">
+                                                <a href="javascript: void(0);" ng-click="CloseMail()">
+                                                    <h4 class="m-0"><i class="ri-arrow-left-line"></i> Nouveau Message</h4>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="iq-inbox-subject p-3">
+                                    <div class="iq-inbox-subject-info">
+                                        <div ng-controller="NewMessageController" class="col-md-12">
+                                                    <form class="email-form">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">À:</label>
+                                                            <div class="col-sm-10">
+                                                                <ui-select  ng-model="ins.To" multiple theme="selectize">
+                                                                    <ui-select-match >{{$item.email}}</ui-select-match>
+                                                                    <ui-select-choices repeat="user in liste_emails | filter: $select.search">
+                                                                        <div ng-bind-html="user.NOM | highlight: $select.search"></div>
+                                                                        <small ng-bind-html="user.email | highlight: $select.search"></small>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="subject" class="col-sm-2 col-form-label">Objet:</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text"  ng-model="ins.Subject"  id="subject" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label  class="col-sm-2 col-form-label">Message:</label>
+                                                            <div class="col-md-10" id="editor">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row align-items-center">
+                                                            <div class="d-flex flex-grow-1 align-items-center">
+
+                                                                <div class="send-panel">
+                                                                    <label class="ml-2 mb-0 iq-bg-primary rounded" for="file"> <input ng-model="files" onchange="angular.element(this).scope().UpdateFiles(this)" type="file" id="file" style="display: none" multiple> <a ng-click="UploadFile('file')"><i class="ri-attachment-line"></i> </a> </label>
+                                                                    <div ng-repeat="file in files">
+                                                                        <p class="iq-bg-dark pl-3 pr-3 pt-2 pb-2 rounded mb-0">{{file.name}} <i style="cursor: pointer" ng-click="RemoveFile(file)" class="text-danger ri-close-circle-line danger"></i></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex mr-3 align-items-center">
+                                                                <div class="send-btn pl-3">
+                                                                    <button ng-click="Send()" type="submit" class="btn btn-primary">Envoyer</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="email-app-details signature-mail">
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="">
+                                <div class="iq-email-to-list p-3">
+                                    <div class="d-flex justify-content-between">
+                                        <ul>
+                                            <li class="mr-3">
+                                                <a href="javascript: void(0);" ng-click="CloseMail()">
+                                                    <h4 class="m-0"><i class="ri-arrow-left-line"></i> Signature</h4>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="iq-inbox-subject p-3">
+                                    <div class="iq-inbox-subject-info">
+                                        <div ng-controller="SignatureMessageController" class="col-md-12">
+                                            <form class="signature-form">
+                                                <div class="form-group row">
+                                                    <label  class="col-sm-2 col-form-label">Signature:</label>
+                                                    <div class="col-md-10" id="editor-signature">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-center">
+                                                    <div class="d-flex mr-3 align-items-center">
+                                                        <div class="send-btn pl-3">
+                                                            <button ng-click="Save()" type="submit" class="btn btn-primary">Enregistrer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: none" class="send-loading">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                    <div class="shape shape-4"></div>
+                </div>
+<!--                <div ng-show="Loading" class="loading">-->
+<!--                    <img src="public/uploads/loading.gif">-->
+<!--                </div>-->
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<style>
+    .send-loading {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        -webkit-animation: rotation 1s infinite;
+        animation: rotation 1s infinite;
+        left: 50%;
+        top: 33%;
+    }
+    .loading{
+        position: absolute;
+        top: 0;
+        background: rgb(255 255 255 / 50%);
+        width: calc(100% - 30px);
+        text-align: center;
+        height: 100%;
+    }
+    .loading img{
+
+    }
+    .three-dots{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 190px;
+    }
+    .iq-email-content .iq-email-date {
+        right: 20px;
+        width: 300px;
+        text-align: right;
+        padding-left: 10px;
+        color: #374948;
+    }
+    li.disabled{
+        background: var(--iq-white)!important; cursor: not-allowed; pointer-events: none; -webkit-box-shadow: none; box-shadow: none;
+    }
+    a.disabled{
+    background: var(--iq-white)!important; cursor: not-allowed; pointer-events: none; -webkit-box-shadow: none; box-shadow: none;
+    }
+</style>

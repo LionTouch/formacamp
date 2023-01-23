@@ -1,0 +1,129 @@
+<div class="folder">
+
+    <div class="folder-summary">
+        <div class="folder-summary__details" style="min-width: 100%;">
+            <div class="row ns-block">
+                <div class="col-1">
+                    <div style="background:url({{item.PHOTO?'public/uploads/users/stagiaires/'+item.PHOTO:'public/uploads/default.png'}}); width: 100px; height: 100px; background-size: cover; background-repeat: no-repeat;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="folder-summary__details__name title-folder-header">
+
+                        <h6 class="title-folder">
+                            <span class="user-name">{{ item.PRENOM }}&nbsp;</span>
+                        </h6>
+
+                        <h6 class="title-folder">
+                            <span class="user-name">{{ item.NOM }}</span>
+                        </h6>
+
+
+                        <div style="position: relative; float: right; display: flex;">
+                            <div uib-dropdown>
+
+                                <button  uib-dropdown-toggle class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+                                   Certification
+                                </button>
+                                <div class="dropdown-menu p-0" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                                    <div class="col-md-12 p-0">
+                                        <div style="overflow: hidden auto;max-height: 470px;width: 200px">
+                                                <button ng-click="methods.SendCertif(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                                    <i class="ri-mail-send-line"></i> Envoyer
+                                                </button>
+                                                <button ng-click="methods.DownloadCertif(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                                    <i class="ri-download-2-line"></i> Télécharger
+                                                </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div uib-dropdown>
+
+                                <button  uib-dropdown-toggle class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+                                    Attestation d'assiduité
+                                </button>
+                                <div class="dropdown-menu p-0" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                                    <div class="col-md-12 p-0">
+                                        <div style="overflow: hidden auto;max-height: 470px;width: 200px">
+                                            <button ng-click="methods.SendAttestation(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                                <i class="ri-mail-send-line"></i> Envoyer
+                                            </button>
+                                            <button ng-click="methods.DownloadAttestation(item)" class="btn btn-primary mt-1" style="width: 100%" >
+                                                <i class="ri-download-2-line"></i> Télécharger
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-class="item.Add?'col-2':'col-6'">
+                    <div class="folder-item__details__name"> Email </div>
+                    <div class="folder-item__details__date">{{ item.EMAIL }}</div>
+                </div>
+                <div ng-class="item.Add?'col-3':'col-6'">
+                    <div class="folder-item__details__name"> Téléphone </div>
+                    <div class="folder-item__details__date">{{ item.TELEPHONE }}</div>
+                </div>
+                <div class="col-3">
+                    <div class="folder-item__details__name"> Session </div>
+                    <div class="folder-item__details__date">{{ item.NOM_SESSION }}</div>
+                </div>
+
+                <div class="col-2" ng-if="item.Add">
+                    <div class="folder-item__details__name"> Présence/H </div>
+                    <div class="folder-item__details__date text-center">{{ item.DUREE_TOTALE  === null ? 0 : item.DUREE_TOTALE}}h</div>
+                </div>
+                <div class="col-2">
+                    <svg class="radial-progress" data-percentage="{{item.PERCENT === null ? 0 : item.PERCENT}}" viewBox="0 0 80 80">
+                        <circle class="incomplete" cx="40" cy="40" r="35"></circle>
+                        <circle class="complete" cx="40" cy="40" r="35" style="stroke-dashoffset: 39.58406743523136;"></circle>
+                        <text class="percentage" x="50%" y="57%" transform="matrix(0, 1, -1, 0, 80, 0)">{{item.PERCENT === null ? 0 : item.PERCENT}}%</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .folder-collapse-button:hover::after{
+        opacity: 0!important;
+    }
+    span.user-name {
+        text-transform: lowercase;
+    }
+
+    h6::first-letter{
+        text-transform: uppercase;
+    }
+    svg.radial-progress {
+        height: auto;
+        position: absolute;
+        top: -10px;
+        max-width: 60px;
+        padding: 0;
+        transform: rotate(
+            -90deg);
+        width: 100%;
+    }
+    svg.radial-progress text {
+        fill: #a2ed56;
+        font: 900 1.1em/1 'Oswald', sans-serif;
+        text-anchor: middle;
+        padding: 0;
+    }
+
+</style>

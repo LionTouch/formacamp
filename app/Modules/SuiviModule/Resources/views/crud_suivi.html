@@ -1,0 +1,199 @@
+<div class="col-md-12" ng-controller="CrudSuiviController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/SuiviCommercial/Suivi"><i class="ri-menu-3-line mr-1 float-left"></i>Suivi Commercial</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ins.ID_SUIVI ? 'Modifier' : 'Ajouter'}} prospect entreprise</li>
+        </ol>
+    </nav>
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                            <div class="col-md-6">
+                                <label for="nom">Nom du projet</label>
+                                <input ng-model="ins.TITRE" type="text" class="form-control" id="nom" placeholder="Nom du projet">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="entreprise">Entreprise</label>
+<!--                                <input id="entreprise" type="text" ng-model="SelectedEntreprise" placeholder="Entreprise" uib-typeahead="entreprise as entreprise.NOM for entreprise in liste_entreprises | filter:{NOM:$viewValue}" typeahead-template-url="app/Modules/SuiviModule/Resources/views/item_select.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">-->
+                                <select ng-model="ins.ID_CLIENT" class="custom-select" id="entreprise">
+                                    <option value="0">--</option>
+                                    <option ng-repeat="entreprise in liste_entreprises track by $index" ng-value="entreprise.ID_CLIENT">{{entreprise.NOM}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6" ng-show="ins.SITUATION == 1">
+                                <label for="nbr_stagiaire">Nbre Stagiaires</label>
+                                <input ng-model="ins.NBR_STAGIAIRE" type="text" class="form-control" id="nbr_stagiaire" placeholder="Nbre Stagiaires">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.SITUATION" type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <label class="custom-control-label customCheck1" for="customCheck1">Situation de sous-traitance</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.DISPOSITIF" type="checkbox" class="custom-control-input" id="customCheck2">
+                                        <label class="custom-control-label customCheck2" for="customCheck2">Dispositif spécifique pour les personnes en recherche d’emploi</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.LIGNE_PRODUIT" type="checkbox" class="custom-control-input" id="customCheck3">
+                                        <label class="custom-control-label customCheck3" for="customCheck3">Ligne autres produits (13) du cadre C du BPF (clients étrangers...)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.LIGNE_STAGIAIRE" type="checkbox" class="custom-control-input" id="customCheck4">
+                                        <label class="custom-control-label customCheck4" for="customCheck4">Ligne autres stagiaires (e) du cadre F1 du BPF (Financement inconnu en situation de sous-traitance ou stagiaires non salariés d'un client entreprise, ...)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 30px" id="financeurs" class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label for="financeursExternes">Financeurs Externes</label>
+<!--                                                <input id="financeursExternes" type="text" ng-model="SelectedFinanceur" placeholder="Financeurs Externes" uib-typeahead="financeur as financeur.NOM for financeur in liste_financeurs | filter:{NOM:$viewValue}" typeahead-template-url="app/Modules/SuiviModule/Resources/views/item_select.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">-->
+                                                <select ng-model="insFinanceurs.ID_FINANCEUR" class="custom-select" id="financeursExternes">
+                                                    <option value="0">--</option>
+                                                    <option ng-repeat="financeur in liste_financeurs track by $index" ng-value="financeur.ID_FINANCEUR">{{financeur.NOM}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="montant">Montant</label>
+                                                <input ng-model="insFinanceurs.MONTANT" type="text" class="form-control" id="montant" placeholder="Montant">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="ref_accord">Référence d'accord de prise en charge</label>
+                                                <input ng-model="insFinanceurs.REF_ACCORD" type="text" class="form-control" id="ref_accord" placeholder="Référence d'accord de prise en charge">
+                                            </div>
+                                            <div class="col-md-6" ng-show="insFinanceurs.SUBROGATION == 1">
+                                                <label for="cpf">Code CPF</label>
+                                                <input ng-model="insFinanceurs.CODE_CPF" type="text" class="form-control" id="cpf" placeholder="Code CPF">
+                                            </div>
+                                            <div class="col-md-6" ng-show="insFinanceurs.SUBROGATION == 1">
+                                                <label for="duree">Durée</label>
+                                                <input ng-model="insFinanceurs.DUREE" type="text" class="form-control" id="duree" placeholder="Durée/heure">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.SUBROGATION" type="checkbox" class="custom-control-input" id="customCheck5">
+                                                <label class="custom-control-label customCheck5" for="customCheck5">Subrogation de paiement
+                                                <br>
+                                                <small>Cochez si vous facturez le financeur directement. Décochez si le client se fait rembourser de son côté par le financeur.</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.DEV_ENTREPRISE" type="checkbox" class="custom-control-input" id="customCheck6">
+                                                <label class="custom-control-label customCheck6" for="customCheck6">Plan de développement de l'entreprise</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.COMPTE_FORMATION" type="checkbox" class="custom-control-input" id="customCheck7">
+                                                <label class="custom-control-label customCheck7" for="customCheck7">Compte Personnel de Formation</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.CPF_TRANSITION" type="checkbox" class="custom-control-input" id="customCheck11">
+                                                <label class="custom-control-label customCheck11" for="customCheck11">CPF de transition</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.CONGE_INDIV" type="checkbox" class="custom-control-input" id="customCheck8">
+                                                <label class="custom-control-label customCheck8" for="customCheck8">Congé Individuel de Formation</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.CONTRAT_PROF" type="checkbox" class="custom-control-input" id="customCheck10">
+                                                <label class="custom-control-label customCheck10" for="customCheck10">Contrat de Professionnalisation</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input ng-true-value="1"  ng-false-value="0" ng-model="insFinanceurs.PERIODE_PROF" type="checkbox" class="custom-control-input" id="customCheck12">
+                                                <label class="custom-control-label customCheck12" for="customCheck12">Période de Professionnalisation</label>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+<!--                            <div class="col-md-12">-->
+<!--                              <button class="btn btn-primary"><i class="ri-add-line"></i> Ajouter Financeur Externe</button>-->
+<!--                            </div>-->
+
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="button" ng-click="Save()">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

@@ -1,0 +1,253 @@
+<div class="col-md-12" ng-controller="CrudClientsController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/GestionDonnees/Clients"><i class="ri-menu-3-line mr-1 float-left"></i>Clients</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ins.ID_CLIENT ? 'Modifier' : 'Ajouter'}} Client</li>
+        </ol>
+    </nav>
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col-12 col-lg-auto">
+                <div class="card">
+                    <div class="card-body pt-20 pr-10 pb-20 pl-10">
+                        <ul class="nav-pills">
+                            <li><a ng-click="GoToStep(1)" ng-class="step == 1?'active':''" class="nav-link nav-user active" href="#"> <span>Identité</span></a></li>
+                            <li><a ng-click="GoToStep(2)" ng-class="step == 2?'active':''" class="nav-link nav-user" href="#"> <span>Informations contact</span></a></li>
+                            <li><a ng-click="GoToStep(3)" ng-class="step == 3?'active':''" class="nav-link nav-user" href="#"> <span>Information financeurs</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline">
+                                    <div class="custom-switch-inner">
+                                        <p class="mb-0"> Type de client </p>
+                                        <input  ng-true-value="2"  ng-false-value="1" ng-model="ins.ID_TYPE_CLIENT"  type="checkbox" class="custom-control-input bg-success" id="customSwitch-2" checked="">
+                                        <a ng-repeat-start="tp_client in liste_clients_type track by $index" href="#" ng-class="ins.ID_TYPE_CLIENT == tp_client.ID_TYPE_CLIENT ? 'active':''" ng-click="ins.ID_TYPE_CLIENT = tp_client.ID_TYPE_CLIENT" ng-if="$index == 0">{{tp_client.TITRE}}</a>
+                                        <label class="custom-control-label" for="customSwitch-2" ng-if="$index == 0">
+                                            <span class="switch-icon-left"><i class="fa fa-check"></i></span>
+                                            <span class="switch-icon-right"><i class="fa fa-check"></i></span>
+                                        </label>
+                                        <a ng-repeat-end ng-if="$index == 1" href="#" ng-class="ins.ID_TYPE_CLIENT == tp_client.ID_TYPE_CLIENT ? 'active':''"  ng-click="ins.ID_TYPE_CLIENT = tp_client.ID_TYPE_CLIENT">{{tp_client.TITRE}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="nom">Nom</label>
+                                <input ng-model="ins.NOM" type="text" class="form-control" id="nom" placeholder="Nom de famille">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="organisme">Organisme <span>*</span></label>
+                                <select name="organisme" ng-model="ins.ID_ORGANISME" class="custom-select" id="organisme" required>
+                                    <option value="">Organisme</option>
+                                    <option ng-repeat="org in liste_organismes track by $index" ng-value="org.ID_ORGANISME">{{org.NOM}}</option>
+                                </select>
+                                <div ng-show="(form.$submitted || form.organisme.$touched) && form.organisme.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez selectionner un organisme.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="grp">Groupe</label>
+                                <input ng-model="ins.GROUPE" type="text" class="form-control" id="grp" placeholder="Groupe">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="code_int">Code interne</label>
+                                <input ng-model="ins.CODE_INTERNE" type="text" class="form-control" id="code_int" placeholder="Code interne">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="adresse">Adresse</label>
+                                <input ng-model="ins.ADRESSE" type="text" class="form-control" id="adresse" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="zip">Code postal</label>
+                                <input ng-model="ins.ZIP" type="text" class="form-control" id="zip" placeholder="Code postal">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ville">Ville</label>
+                                <input ng-model="ins.VILLE" type="text" class="form-control" id="ville" placeholder="Ville">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="pays">Pays</label>
+                                <input ng-model="ins.PAYS" type="text" class="form-control" id="pays" placeholder="Pays">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="email">Email client</label>
+                                <input ng-model="ins.EMAIL" type="email" name="email" class="form-control" id="email" placeholder="Email client">
+                                <div ng-show="form.email.$touched && form.$error.email"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez entrer un email.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="telephone">Téléphone client</label>
+                                <input ng-model="ins.TELEPHONE" type="text" class="form-control" id="telephone" placeholder="Téléphone client">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="website">Site web</label>
+                                <input ng-model="ins.SITE" type="text" class="form-control" id="website" placeholder="Site web">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tva">N° TVA</label>
+                                <input ng-model="ins.NUM_TVA" type="text" class="form-control" id="tva" placeholder="N° TVA">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="siret">N° SIRET</label>
+                                <input ng-model="ins.NUM_SIRET" type="text" class="form-control" id="siret" placeholder="N° SIRET">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ape">Code APE</label>
+                                <input ng-model="ins.CODE_APE" type="text" class="form-control" id="ape" placeholder="Code APE">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="langue">Langue dans l'extranet</label>
+                                <select ng-model="ins.ID_LANGUE" class="custom-select" id="langue">
+                                    <option ng-repeat="lng in liste_langues track by $index" ng-value="lng.ID_LANGUE">{{lng.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="custom-control custom-checkbox">
+                                    <input ng-true-value="1"  ng-false-value="0" ng-model="ins.ETAT" type="checkbox" class="custom-control-input" id="customCheck5">
+                                    <label class="custom-control-label customCheck1" for="customCheck5"> Etat ou collectivité territoriale ou établissement public à caractère administratif</label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-right">
+                            <button class="btn btn-primary" type="button" ng-click="GoToStep(2)">Suivant</button>
+                        </div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                            <div class="col-md-12">
+                                <button ng-click="AddContact()" class="btn btn-outline-link mb-3"><i class="ri-add-circle-line"></i>Ajouter un contact</button>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="note">Notes libres</label>
+                                <textarea ng-model="ins.NOTES" type="text" class="form-control" id="note" placeholder="Notes libres pédagogique"></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="compte">N° de compte client en comptabilité</label>
+                                <input ng-model="ins.NUM_COMPTE_CLIENT" type="text" class="form-control" id="compte" placeholder="N° de compte client en comptabilité">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="num_tva">N° de compte TVA en comptabilité</label>
+                                <input ng-model="ins.NUM_COMPTE_TVA" type="text" class="form-control" id="num_tva" placeholder="N° de compte TVA en comptabilité">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(1)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(3)">Suivant</button></div>
+                        <div class="col-auto"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <label for="opco">OPCO</label>
+                                <input ng-model="ins.OPCO" type="text" class="form-control" id="opco" placeholder="OPCO">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="num_opco">Numéro d’adhérent à l’OPCO</label>
+                                <input ng-model="ins.NUM_OPCO" type="text" class="form-control" id="num_opco" placeholder="Numéro d’adhérent à l’OPCO">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="effectif">Effectifs de l’client</label>
+                                <input ng-model="ins.EFFECTIF" type="text" class="form-control" id="effectif" placeholder="Effectifs de l’client">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="idcc">IDCC</label>
+                                <input ng-model="ins.IDCC" type="text" class="form-control" id="idcc" placeholder="IDCC">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="nace">NACE</label>
+                                <input ng-model="ins.NACE" type="text" class="form-control" id="nace" placeholder="NACE">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(2)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

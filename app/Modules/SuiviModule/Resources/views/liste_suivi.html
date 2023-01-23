@@ -1,0 +1,55 @@
+<div class="col-md-12" ng-controller="ListeSuiviController">
+    <div class="col-md-12 bg-white py-2 my-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="iq-search-bar">
+                    <div class="searchbox" style="width: 100%">
+                        <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                               placeholder="Recherche suivi..."
+                               ng-model="search">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <button ng-click="GoTo('SuiviCommercial/AjoutSuiviClient')" type="button" class="float-right btn btn-primary" >
+                    <i class="ri-user-add-line mr-2"></i> Ajouter un prospect Client
+                </button>
+                <button ng-click="GoTo('SuiviCommercial/AjoutSuiviParticulier')" type="button" class="float-right btn btn-primary" >
+                    <i class="ri-user-add-line mr-2"></i> Ajouter un prospect particulier
+                </button>
+                <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                    <i class="ri-computer-line br-2"></i>
+                    {{ searched.length }} suivi commercial
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div infinite-scroll="loadMore()" class="row">
+
+        <div class="col-md-4" ng-repeat="suivi in  searched = (liste_data|filter:search)| orderBy: '-DATE'| limitTo:infiniteLimit" >
+            <div class="iq-card " style="cursor: pointer">
+                <div class="iq-card-body ">
+                    <div  class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3">
+                        <h5  class="text-white">Suivi {{ suivi.ID_CLIENT!=null ? 'Client': 'Formateur'}}: {{suivi.TITRE}}&nbsp;</h5>
+                        <div>
+                            <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Modifier" ng-click="$event.stopPropagation();Edit(suivi)" class="ri-pencil-line font-size-18" role="button" tabindex="0"></i>
+                            <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();Delete(suivi.ID_SUIVI)" class="ri-delete-bin-line font-size-18" role="button" tabindex="0"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> {{ suivi.ID_CLIENT!=null ? 'Client': 'FORMATEUR'}}</b><br><span class="span-header">{{ suivi.ID_CLIENT!=null ? suivi.NOM_Client: suivi.NOM_FORMATEUR}}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Situation</b><br><span class="span-header">{{ suivi.SITUATION==1?'Oui':'Non' }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Dispositif</b><br><span class="span-header">{{suivi.DISPOSITIF==1?'Oui':'Non'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

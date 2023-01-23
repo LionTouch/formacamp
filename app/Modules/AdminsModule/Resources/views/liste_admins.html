@@ -1,0 +1,61 @@
+<div class="col-md-12" ng-controller="ListeAdminsController">
+
+    <div class="col-md-12 bg-white py-2 my-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="iq-search-bar">
+                    <div class="searchbox" style="width: 100%">
+                        <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                               placeholder="Recherche utilisateurs..."
+                               ng-model="search">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <button ng-click="GoTo('GestionDonnees/AjoutUtilisateurs')" type="button" class="float-right btn btn-primary" >
+                    <i class="ri-user-add-line mr-2"></i> Ajouter un utilisateur
+                </button>
+                <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                    <i class="ri-computer-line br-2"></i>
+                    {{ searched.length }} utilisateurs
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div infinite-scroll="loadMore()" class="row">
+        <div class="col-md-4" ng-repeat="user in  searched = (liste_data|filter:search)| orderBy: '-DATE'| limitTo:infiniteLimit">
+            <div class="iq-card" style="cursor: pointer;padding: 0;" >
+                <div class="iq-card-body" style="box-shadow: 0 2px 8px #bcbcbc;border-radius: 15px;">
+                    <div class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3" style="background-color: rgb(255 255 255 / 38%) !important;">
+                        <div style="background:url({{user.PHOTO?'public/uploads/users/admins/'+user.PHOTO:'public/uploads/default.png'}});width: 50px;height: 50px;background-size: cover;background-repeat: no-repeat;border-radius: 50%;"></div>
+                        <h5 class="text-white">{{ user.NOM }} {{ user.PRENOM }}</h5>
+                        <div>
+                            <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Accès" ng-click="$event.stopPropagation();Acces(user.ID_USER)" class="ri-settings-2-line font-size-18" role="button" tabindex="0"></i>
+                            <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Modifier" ng-click="$event.stopPropagation();Edit(user.ID_USER)" class="ri-ball-pen-line font-size-18" role="button" tabindex="0"></i>
+                            <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();Delete(user.ID_USER)" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Organisme</b><br><span class="span-header">{{ user.NOM_ORGANISME }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Email </b><br><span class="span-header"> {{ user.email }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Téléphone </b><br><span class="span-header"> {{ user.TELEPHONE }}</span></p>
+                        <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Adresse service</b><br><span class="span-header">{{user.ADRESSE}}</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!--        <folder ng-repeat="organisme in  searched = (liste_data|filter:search)| orderBy: '-DATE'| limitTo:infiniteLimit" data="organisme" template-url="app/Modules/OrganismesModule/Resources/views/folder-organismes.html"  methods="folderMethodes"></folder>-->
+    <!--    <div infinite-scroll="loadMore()">-->
+<!--        <folder ng-repeat="user in  searched = (liste_data|filter:search)| orderBy: '-DATE'| limitTo:infiniteLimit" data="user" template-url="app/Modules/AdminsModule/Resources/views/folder-admins.html"  methods="folderMethodes"></folder>-->
+<!--    </div>-->
+
+
+</div>

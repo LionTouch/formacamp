@@ -1,0 +1,89 @@
+<div class="col-md-12" ng-controller="CrudAccesFormateursController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/GestionDonnees/Formateurs"><i class="ri-menu-3-line mr-1 float-left"></i>Formateur</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Acces Formateur</li>
+        </ol>
+    </nav>
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12"  ng-repeat="categ in liste_categories">
+                                <h4>{{categ.TITRE}}</h4>
+                                <div class="row" ng-repeat="module in categ.modules">
+                                    <div class="col-md-11">
+                                        <p>{{module.TITRE}}</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="custom-control custom-switch custom-switch-color custom-control-inline">
+                                            <input ng-model="module.selected" type="checkbox" class="custom-control-input bg-success" id="customSwitch{{module.ID_MODULES}}">
+                                            <label class="custom-control-label" for="customSwitch{{module.ID_MODULES}}"></label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():scrollTop()">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

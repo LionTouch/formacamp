@@ -1,0 +1,105 @@
+<div class="col-md-12" ng-controller="CrudCompteAccesController">
+
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+<!--                            <div class="col-12">-->
+<!--                                <label for="email">Email <span>*</span></label>-->
+<!--                                <input autocomplete="new-password" name="email" ng-model="ins.email" type="email" class="form-control" id="email"  placeholder="Email" required>-->
+<!--                                <div ng-show="(form.$submitted || form.email.$touched) && form.email.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">-->
+<!--                                    <ul class="parsley-errors-list error" >-->
+<!--                                        <li  class="parsley-required">Veuillez entrer un email.</li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+<!--                            <div class="col-12">-->
+<!--                                <label for="pwd">Mot de passe <span>*</span></label>-->
+<!--                                <input autocomplete="new-password" name="pwd" ng-model="ins.password" type="password" class="form-control" id="pwd"  placeholder="Mot de passe" ng-required="ins.ID_ACCES == undefined">-->
+<!--                                <div ng-show="(form.$submitted || form.pwd.$touched) && form.pwd.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">-->
+<!--                                    <ul class="parsley-errors-list error" >-->
+<!--                                        <li ng-show="form.pwd.$error.required" class="parsley-required">Veuillez entrer un mot de passe.</li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
+                            <div class="col-md-12"  ng-repeat="categ in liste_categories">
+                                <h4>{{categ.TITRE}}</h4>
+                                <div class="row" ng-repeat="module in categ.modules">
+                                    <div class="col-md-11">
+                                        <p>{{module.TITRE}}</p>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="custom-control custom-switch custom-switch-color custom-control-inline">
+                                            <input ng-model="module.selected" type="checkbox" class="custom-control-input bg-success" id="customSwitch{{module.ID_MODULES}}">
+                                            <label class="custom-control-label" for="customSwitch{{module.ID_MODULES}}"></label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():scrollTop()">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

@@ -1,0 +1,331 @@
+<div class="row" ng-controller="ProfilController">
+    <div class="col-sm-12">
+        <div class="iq-card">
+            <div class="iq-card-body profile-page p-0">
+                <div class="profile-header">
+                    <div class="cover-container">
+                        <img src="resources/assets/images/page-img/profile-bg.jpg" alt="profile-bg" class="rounded img-fluid"  style="width: 100%">
+                        <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
+                            <li><a href="#" ng-click="Edit(ins.ID_USER)"><i class="ri-pencil-line"></i></a></li>
+
+                        </ul>
+                    </div>
+                    <div class="profile-info p-4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="user-detail pl-5">
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="profile-img pr-4">
+                                            <img src="{{ins.PHOTO ? 'public/uploads/users/admins/'+ins.PHOTO:'resources/assets/images/avatar-1-profile.png'}}"  class="avatar-130 img-fluid"/>
+                                        </div>
+                                        <div class="profile-detail d-flex align-items-center">
+                                            <h3>{{ins.NOM}} {{ins.PRENOM}}</h3>
+                                            <p class="m-0 pl-3"> - {{ins.email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <ul class="nav nav-pills d-flex align-items-end float-right profile-feed-items p-0 m-0">
+                                    <li>
+                                        <a ng-click="ShowContent('profil')" class="nav-link active" data-toggle="pill" href="#">profil</a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="ShowContent('certif')" class="nav-link" data-toggle="pill" href="#">certification</a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="ShowContent('regle')" class="nav-link" data-toggle="pill" href="#">réglementation</a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="ShowContent('config')" class="nav-link" data-toggle="pill" href="#">configuration</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ShowProfil" class="col-sm-12">
+        <div class="row">
+            <div class="col-lg-5 profile-left">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Entreprise</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="d-flex flex-wrap align-items-center">
+
+
+                                <div class="col-3">
+                                    <img style="border-radius: 50%" class="avatar-130 img-fluid" src="{{ins.PHOTO ? 'public/uploads/users/admins/'+ins.PHOTO:'resources/assets/images/avatar-1-profile.png'}}" alt="">
+                                </div>
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col-6">Nom de l'entreprise:</div>
+                                        <div class="col-6">{{ins.NOM_ENTREPRISE}}</div>
+                                        <div class="col-6">Linkedin Company ID:</div>
+                                        <div class="col-6">{{ins.ID_ENTREPRISE_LINKEDIN}}</div>
+                                        <div class="col-4">Couleur de votre marque:</div>
+                                        <div class="col-6"><p class="color_marque" style="background:{{ins.COULEUR_MARQUE}}"></p></div>
+
+                                    </div>
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 profile-left">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Information de contact</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="row">
+                            <div class="col-6">Numéro de téléphone:</div>
+                            <div class="col-6">{{ins.TELEPHONE}}</div>
+                            <div class="col-6">Numéro de la voie:</div>
+                            <div class="col-6">{{ins.NUM_VOIE}}</div>
+                            <div class="col-6">Indice de répétition:</div>
+                            <div class="col-6">{{ins.TITRE_REPETITION}}</div>
+                            <div class="col-6">Type de la voie:</div>
+                            <div class="col-6">{{ins.TITRE_TYPE_VOIE}}</div>
+                            <div class="col-12">Libellé de la voie:</div>
+                            <div class="col-12">{{ins.LIBELLE_VOIE}}</div>
+                            <div class="col-6">Code postal:</div>
+                            <div class="col-6">{{ins.ZIP}}</div>
+                            <div class="col-6">Ville:</div>
+                            <div class="col-6">{{ins.VILLE}}</div>
+                            <div class="col-6">Pays:</div>
+                            <div class="col-6">{{ins.PAYS}}</div>
+                            <div class="col-6">Lieu dit ou service particulier de distribution – Poste restante, boite postale, etc.:</div>
+                            <div class="col-6">{{ins.LIEU_SERVICE}}</div>
+                            <div class="col-6">Fuseau horaire:</div>
+                            <div class="col-6">{{ins.TITRE_FUSEAU_HORAIRE}}</div>
+                            <div class="col-6">Conformité réglementaire de l'accès aux personnes à mobilité réduite:</div>
+                            <div class="col-6">{{ins.REGLEMENT==1?'Oui':'Non'}}</div>
+                            <div class="col-12">Description de l'équipe pédagogique:</div>
+                            <div class="col-12">{{ins.DESCRIPTION}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ShowCertif" class="col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 profile-left">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Certification & Créneaux</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="col-6">Résumé des certifications:</div>
+                        <div class="col-6">{{ins.RESUME_CERTIF}}</div>
+                        <div class="col-6">Matin:</div>
+                        <div class="col-6">{{ins.HDM}}-{{ins.HFM}}</div>
+                        <div class="col-6">Après-midi:</div>
+                        <div class="col-6">{{ins.HD}}-{{ins.HF}}</div>
+
+                        <div class="col-12 carousel slide" uib-carousel template-url="app/Modules/CompteModule/Resources/views/carousel/profil_carousel.html">
+                            <div uib-slide ng-repeat="certif in ins.certifications track by $index"  index="$index">
+                                <img ng-src="{{'public/uploads/certifications/'+certif.REF}}" style="margin:auto;">
+                                <div class="carousel-caption">
+                                    <h4>Certification {{$index+1}}</h4>
+                                    <p>{{certif.TITRE}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ShowRegle" class="col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 profile-left">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Réglementation</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="row">
+                        <div class="col-6">Activer les fonctions de gestion de la réglementation  française:</div>
+                        <div class="col-6">{{ins.FONCTION==1?'Oui':'Non'}}</div>
+
+
+                        <div class="col-6">Numéro de déclaration d'activité:</div>
+                        <div class="col-6">{{ins.NUM_DEC}}</div>
+
+
+                        <div class="col-6">Région d'acquisition:</div>
+                        <div class="col-6">{{ins.REGION_ACQUISITON}}</div>
+
+
+                        <div class="col-6">N° organisme DPC (secteur santé uniquement):</div>
+                        <div class="col-6">{{ins.NUM_DPC}}</div>
+
+
+                        <div class="col-6">Form Juridique:</div>
+                        <div class="col-6">{{ins.TITRE_FORME_JURIDIQUE}}</div>
+
+                        <div class="col-6">SIRET:</div>
+                        <div class="col-6">{{ins.SIRET}}</div>
+
+
+                        <div class="col-6">Code APE/NAF:</div>
+                        <div class="col-6">{{ins.CODE_APE_NAF}}</div>
+
+
+                        <div class="col-6">Capital social:</div>
+                        <div class="col-6">{{ins.CAPITAL_SOCIAL}}</div>
+
+
+                        <div class="col-6">Exonération de TVA par validation du <a href="https://www.service-public.fr/professionnels-entreprises/vosdroits/R19113" target="_blank">formulaire fiscal N°3511</a>:</div>
+                        <div class="col-6">{{ins.EXONERATION==1?'Oui':'Non'}}</div>
+
+
+                        <div class="col-6"><a href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F23267" target="_blank">Micro entreprise</a>  avec franchise de TVA :</div>
+                        <div class="col-6">{{ins.MICRO_ENTREPRISE==1?'Oui':'Non'}}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ShowConfig" class="col-sm-12">
+        <div class="row">
+            <div class="col-lg-12 profile-left">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Configuration</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="row">
+
+                            <div class="col-6">Facturation active:</div>
+                            <div class="col-6">{{ins.FACTURATION}}</div>
+
+
+                            <div class="col-6">Monnaie:</div>
+                            <div class="col-6">{{ins.TITRE_MONNAIE}}</div>
+
+
+                            <div class="col-6">Sigle de taxe sur la valeur ajoutée:</div>
+                            <div class="col-6">{{ins.ins.SIGLE_TAXE}}</div>
+
+
+                            <div class="col-6">Numéro de TVA:</div>
+                            <div class="col-6">{{ins.NUM_TVA}}</div>
+
+
+                            <div class="col-6">Taux de TVA:</div>
+                            <div class="col-6">{{ins.TAUX_TVA}}</div>
+
+
+                            <div class="col-6">Date de clôture comptable:</div>
+                            <div class="col-6">{{ins.DATE_CLOTURE_COMTBLE}}</div>
+
+
+                            <div class="col-6">Code journal:</div>
+                            <div class="col-6">{{ins.CODE_JOURNAL}}</div>
+
+
+                            <div class="col-6">Compte client par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_CLIENT}}</div>
+
+
+                            <div class="col-6">Compte TVA par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_TVA}}</div>
+
+
+                            <div class="col-6">Compte produit des formations BPF par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_PRODUIT_BPF}}</div>
+
+
+                            <div class="col-6">Compte produit des formations par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_PRODUIT_FORMATION}}</div>
+
+
+                            <div class="col-6">Compte produit du consulting par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_PRODUIT_CONSULTING}}</div>
+
+
+                            <div class="col-6">Compte frais annexes des formations BPF par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_FRAIS_BPF}}</div>
+
+
+                            <div class="col-6">Compte frais annexes des formations par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_FRAIS_FORMATION}}</div>
+
+
+                            <div class="col-6">Compte frais annexes du consulting par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_FRAIS_CONSULTING}}</div>
+
+
+                            <div class="col-6">Compte outils pédagogiques des formations BPF par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_OUTILS_BPF}}</div>
+
+
+                            <div class="col-6">Compte outils pédagogiques des formations par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_OUTILS_FORMATION}}</div>
+
+
+                            <div class="col-6">Compte outils pédagogiques du consulting par défaut:</div>
+                            <div class="col-6">{{ins.COMPTE_OUTILS_CONSULTING}}</div>
+
+
+                            <div class="col-6">Code banque:</div>
+                            <div class="col-6">{{ins.CODE_BANQUE}}</div>
+
+
+                            <div class="col-6">Code guichet:</div>
+                            <div class="col-6">{{ins.CODE_GUICHET}}</div>
+
+
+                            <div class="col-6">N° de compte:</div>
+                            <div class="col-6">{{ins.NUM_COMPTE_BANQUE}}</div>
+
+
+                            <div class="col-6">Clé RIB:</div>
+                            <div class="col-6">{{ins.RIB}}</div>
+
+
+                            <div class="col-6">IBAN:</div>
+                            <div class="col-6">{{ins.IBAN}}</div>
+
+                            <div class="col-6">BIC:</div>
+                            <div class="col-6">{{ins.BIC}}</div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .color_marque{
+        border-radius: 100%;
+        width: 15px;
+        padding: 15px;
+    }
+</style>

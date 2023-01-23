@@ -1,0 +1,81 @@
+<div class="row" ng-controller="DevisController">
+    <div class="k-loading">
+        <div class="spinner-border text-primary k-spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary float-right download" ng-click="Print()"><i class="ri-printer-line"></i>Imprimer</button>
+    <button type="button" class="btn btn-primary float-right print" ng-click="Download()"><i class="ri-file-pdf-line"></i>Télécharger</button>
+    <div class="col-sm-12"  id="constat">
+
+        <div class="iq-card prevent-split">
+
+            <div class="iq-card-header d-flex justify-content-between">
+                <div class="col-md-12 iq-header-title mx-auto">
+                    <h4 class="font-weight-bold text-center">Feuille d'émargement</h4>
+                </div>
+            </div>
+            <div class="iq-card-body">
+                <div class="col-md-12 border">
+                   <p>Nom du stagiaire: {{ins.NUM}}</p>
+                   <p>Nom de la formation: {{ins.DESTINATAIRE}}</p>
+                   <p>Date de la formation: {{ins.LIEU_DESTINATAIRE}}</p>
+                   <p>Lieu de la formation: {{ins.LIEU_DESTINATAIRE}}</p>
+                   <p>Durée: {{ins.LIEU_DESTINATAIRE}}</p>
+                   <p>Prestataire de la formation: {{ins.LIEU_DESTINATAIRE}}</p>
+                   <p>Client de la formation: {{ins.LIEU_DESTINATAIRE}}</p>
+                   <p>Formateurs: {{ins.LIEU_DESTINATAIRE}}</p>
+                </div>
+                 <div class="col-md-12 mt-3">
+                    <table class="table mb-0 table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col text-center">N°</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Durée</th>
+                            <th scope="col">Signature apprenant</th>
+                            <th scope="col">Signature intervenant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center">
+                               1
+                            </td>
+                            <td>8 novembre 2021 - matin</td>
+                            <td>3:30h 09:00 à 12:30</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                <p class="mt-1">Signature et tampon de l'organisme</p>
+                <p class="mt-1">Fait à FRC Technique - 4 Avenue de la Libération 60160 MONTATAIRE, le </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="x/kendo-template" id="page-template">
+    <div class="page-template" >
+        <div class="header">
+            <img src="../resources/assets/images/logo.png" style="width: 100%"/>
+            <div style="position:absolute;margin-left: 41%;top: 10px;color: white;text-align: left">
+                <p style="line-height: 1em">Siège social : 212 Avenue de Tivoli - 33110 Le Bouscat</p>
+                <p style="line-height: 1em">Numéro téléphone : 06.50.14.32.52</p>
+                <p style="line-height: 1em">Siren : 903.001.899</p>
+            </div>
+
+
+        </div>
+        <div class="footer" >
+            <div class="row">
+                FRC Technique | 4 Avenue de la Libération MONTATAIRE 60160 | Numéro SIRET: 88070475400022 | N° TVA: FR 47 880704754 | Numéro de déclaration d'activité: 11756003775 (Ile de France)
+            </div>
+            <div style="float: right">Page #: pageNum #</div>
+        </div>
+    </div>
+</script>

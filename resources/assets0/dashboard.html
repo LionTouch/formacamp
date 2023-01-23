@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FormaCamp | Tableau de bord</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400%7cOpen+Sans:300,400,600%7cPT+Serif:400i">
+    <link rel="stylesheet" href="assets/css/bootstrap-custom.css">
+    <link rel="stylesheet" href="assets/vendor/overlayscrollbars/css/OverlayScrollbars.css">
+    <link rel="stylesheet" href="assets/css/yaybar.css">
+    <link rel="stylesheet" href="assets/vendor/fancybox/dist/jquery.fancybox.css">
+    <link rel="stylesheet" href="assets/vendor/emojionearea/dist/emojionearea.css">
+    <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/vendor/chartist/dist/chartist.css">
+    <link rel="stylesheet" href="assets/vendor/jqvmap/dist/jqvmap.css">
+    <link rel="stylesheet" href="assets/css/rootui.css">
+    <link rel="stylesheet" href="assets/css/rootui-night.css" media="(night)" class="rui-nightmode-link">
+    <link rel="stylesheet" href="assets/css/custom.css"> </head>
+
+<body data-spy="scroll" data-target=".rui-page-sidebar" data-offset="140" class="rui-no-transition rui-navbar-autohide rui-section-lines">
+    <div class="rui-page-preloader" role="status">
+        <div class="rui-page-preloader-inner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="yaybar yay-hide-to-small yay-shrink yay-gestures rui-yaybar">
+        <div class="yay-wrap-menu">
+            <div class="yaybar-wrap">
+                <ul>
+                    <li class="yay-label">Menu navigation</li>
+                    <li class="yay-item-active">
+                        <a href="dashboard.html"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/010-launching.png" alt="" class="icon-home-img"> </span> </span> <span>Tableau de bord</span> </a>
+                    </li>
+                    <li class="">
+                        <a href="agenda.html"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/003-calendar.png" alt="" class="icon-home-img"> </span> </span> <span>Agenda</span> </a>
+                    </li>
+                    <li class="">
+                        <a href="#"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/010-session.png" alt="" class="icon-home-img"> </span> </span> <span>Sessions</span> </a>
+                    </li>
+                    <li class="">
+                        <a href="#" class="yay-sub-toggle"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/013-employer.png" alt="" class="icon-home-img"> </span> </span> <span>Données</span><span class="yay-icon-collapse"><span data-feather="chevron-right" class="rui-icon rui-icon-collapse rui-icon-stroke-1_5"></span></span>
+                        </a>
+                        <ul class="yay-submenu dropdown-triangle">
+                            <li><a href="#">Stagiaires</a></li>
+                            <li><a href="#">Entreprises</a></li>
+                            <li><a href="#">Intervenants</a></li>
+                            <li><a href="#">Financeurs externes</a></li>
+                            <li><a href="#">Lieux de formation</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="yay-sub-toggle"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/010-suivi3.png" alt="" class="icon-home-img"> </span> </span> <span>Suivi commercial</span><span class="yay-icon-collapse"><span data-feather="chevron-right" class="rui-icon rui-icon-collapse rui-icon-stroke-1_5"></span></span>
+                        </a>
+                        <ul class="yay-submenu dropdown-triangle">
+                            <li><a href="#">Suivi</a></li>
+                            <li><a href="#">Inscriptions catalogue</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="yay-sub-toggle"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/010-suivi.png" alt="" class="icon-home-img"> </span> </span> <span>Rapports d'activité</span><span class="yay-icon-collapse"><span data-feather="chevron-right" class="rui-icon rui-icon-collapse rui-icon-stroke-1_5"></span></span>
+                        </a>
+                        <ul class="yay-submenu dropdown-triangle">
+                            <li><a href="#">Suivi de l'activité</a></li>
+                            <li><a href="#">Suivi des factures</a></li>
+                            <li><a href="#">Suivi des devis</a></li>
+                            <li><a href="#">Bilan Pédagogique et Financier</a></li>
+                            <li><a href="#">Suivi Qualité</a></li>
+                            <li><a href="#">Incidents Qualité</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="yay-sub-toggle"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/010-profile.png" alt="" class="icon-home-img"> </span> </span> <span>Compte</span><span class="yay-icon-collapse"><span data-feather="chevron-right" class="rui-icon rui-icon-collapse rui-icon-stroke-1_5"></span></span>
+                        </a>
+                        <ul class="yay-submenu dropdown-triangle">
+                            <li><a href="#">Profil</a></li>
+                            <li><a href="#">Mon abonnement</a></li>
+                            <li><a href="#">Comptes d'accès</a></li>
+                            <li><a href="#">Extranet</a></li>
+                            <li><a href="#">Catalogue en ligne</a></li>
+                            <li><a href="#">Modèles de documents</a></li>
+                            <li><a href="#">Modèles d'emails</a></li>
+                            <li><a href="#">Modèles de listes des tâches</a></li>
+                            <li><a href="#">Gestion des compétences</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/002-bell.png" alt="" class="icon-home-img"> </span> </span> <span>Notifications</span> </a>
+                    </li>
+                    <li class="">
+                        <a href="#" data-fancybox data-keyboard="false" data-auto-focus="false" data-touch="false" data-close-existing="true" data-src="#messenger" href="javascript:;"> <span class="yay-icon"> <span class="icon-home"> <img src="assets/images/007-messenger.png" alt="" class="icon-home-img"> </span> </span> <span>Messagerie</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="rui-yaybar-icons">
+            <div class="row no-gutters justify-content-around">
+                <div class="col-auto"><a class="btn btn-custom-round" href="#"><span data-feather="settings" class="rui-icon"></span></a></div>
+                <div class="col-auto"><a class="btn btn-custom-round" href="#"><span data-feather="bell" class="rui-icon"></span></a></div>
+                <div class="col-auto d-flex">
+                    <div class="dropdown dropdown-hover dropdown-triangle dropdown-keep-open dropup"> <a class="btn btn-custom-round dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-30"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                        <ul class="dropdown-menu nav">
+                            <li><a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Create new Post</span> <span class="rui-nav-circle"></span></a></li>
+                            <li><a href="#" class="nav-link"><span data-feather="book" class="rui-icon rui-icon-stroke-1_5"></span> <span>Project</span> <span class="rui-nav-circle"></span></a></li>
+                            <li><a href="#" class="nav-link"><span data-feather="message-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Message</span> <span class="rui-nav-circle"></span></a></li>
+                            <li><a href="#" class="nav-link"><span data-feather="mail" class="rui-icon rui-icon-stroke-1_5"></span> <span>Mail</span> <span class="rui-nav-circle"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto"><a class="btn btn-custom-round" href="#"><span data-feather="clock" class="rui-icon rui-icon-stroke-1_5"></span></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="rui-yaybar-bg"></div>
+    <nav class="rui-navbar rui-navbar-top rui-navbar-sticky">
+        <div class="rui-navbar-brand">
+            <a href="dashboard.html" class="rui-navbar-logo"> <img src="assets/images/logo-01.png" data-src-night="./assets/images/logo-02.png" data-src-day="./assets/images/logo-01.png" alt="" style="width: 85%; padding: 0 5% 0 5%;"> </a><button class="yay-toggle rui-yaybar-toggle" type="button"><span></span></button>            </div>
+        <div class="container-fluid">
+            <div class="rui-navbar-content">
+                <div class="col-8"><input type="text" class="form-control" placeholder="Recherche..."></div>
+                <ul class="nav rui-navbar-right">
+                    <li class="dropdown dropdown-hover dropdown-triangle dropdown-keep-open">
+                        <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="0,12">
+                            <span class="btn btn-custom-round">
+                                <span data-feather="bell" class="rui-icon rui-icon-stroke-1_5 mr-0"></span>
+                            <span class="badge badge-circle badge-brand">3</span>
+                            </span>
+                        </a>
+                        <ul class="nav dropdown-menu rui-navbar-dropdown-notice">
+                            <li class="rui-navbar-dropdown-title mb-10">
+                                <div class="d-flex align-items-center">
+                                    <h2 class="h4 mb-0 mr-auto">Notifications</h2> <a class="btn btn-custom-round" href="#"><span data-feather="link-2" class="rui-icon rui-icon-stroke-1_5"></span></a> </div>
+                            </li>
+                            <li>
+                                <div class="media media-success media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img"><img src="assets/images/avatar-5.png" alt=""></span><span class="media-body"><span class="media-title">Amber Smith</span> <small class="media-subtitle">Bring abundantly creature great...</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img">C</span> <span class="media-body"><span class="media-title">Change Design</span> <small class="media-subtitle">Design</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img bg-transparent"><img src="assets/images/icon-zip.svg" class="icon-file" alt=""></span><span class="media-body"><span class="media-title">Added banner archive</span> <small class="media-subtitle">Commerce</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="d-flex" data-fancybox data-keyboard="false" data-auto-focus="false" data-touch="false" data-close-existing="true" data-src="#messenger" href="javascript:;"><span class="btn btn-custom-round"><span data-feather="message-circle" class="rui-icon rui-icon-stroke-1_5"></span></span></a></li>
+                    <li class="dropdown dropdown-hover dropdown-triangle dropdown-keep-open rui-dropdown-triangle-ready media media-success">
+                        <a class="dropdown-item rui-navbar-avatar mnr-6 media-img" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-10.png" alt=""></a>
+                        <ul class="nav dropdown-menu">
+                            <li>
+                                <div class="custom-control custom-switch dropdown-item-switch"><input type="checkbox" class="custom-control-input rui-nightmode-toggle" id="toggleNightMode"> <label class="dropdown-item custom-control-label" for="toggleNightMode"><span data-feather="moon" class="rui-icon rui-icon-stroke-1_5"></span> <span>Night Mode</span> <span class="rui-dropdown-circle"></span></label></div>
+                            </li>
+                            <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Conditions d'utilisation</span> <span class="rui-nav-circle"></span> </a> </li>
+                            <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Liste des fonctionnalités</span> <span class="rui-nav-circle"></span> </a> </li>
+                            <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>A propos</span> <span class="rui-nav-circle"></span> </a> </li>
+                            <li><a href="index.html" class="nav-link"><span data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span> <span>Exit</span> <span class="rui-nav-circle"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="rui-navbar rui-navbar-mobile">
+        <div class="rui-navbar-head"> <button class="rui-yaybar-toggle rui-yaybar-toggle-inverse yay-toggle" type="button" aria-label="Toggle side navigation"><span></span></button>
+            <a class="rui-navbar-logo mr-auto" href="dashboard.html"> <img src="assets/images/logo.svg" data-src-night="./assets/images/logo-02.png" data-src-day="./assets/images/logo-01.png" alt="" style="width: 55%; position: relative; margin: 0 auto;"></a>
+            <div class="dropdown dropdown-triangle">
+                <a class="dropdown-item rui-navbar-avatar" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-10.png" alt=""></a>
+                <ul class="nav dropdown-menu">
+                    <li>
+                        <div class="custom-control custom-switch dropdown-item-switch"><input type="checkbox" class="custom-control-input rui-nightmode-toggle" id="toggleNightMode"> <label class="dropdown-item custom-control-label" for="toggleNightMode"><span data-feather="moon" class="rui-icon rui-icon-stroke-1_5"></span> <span>Night Mode</span> <span class="rui-dropdown-circle"></span></label></div>
+                    </li>
+                    <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Conditions d'utilisation</span> <span class="rui-nav-circle"></span> </a> </li>
+                    <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Liste des fonctionnalités</span> <span class="rui-nav-circle"></span> </a> </li>
+                    <li> <a href="#" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>A propos</span> <span class="rui-nav-circle"></span> </a> </li>
+                    <li><a href="#" class="nav-link"><span data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span> <span>Exit</span> <span class="rui-nav-circle"></span></a></li>
+                </ul>
+            </div> <button class="navbar-toggler rui-navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation"><span></span></button> </div>
+        <div class="collapse navbar-collapse rui-navbar-collapse" id="navbarMobile">
+            <div class="rui-navbar-content">
+                <ul class="nav">
+                    <li class="dropdown dropdown-keep-open"> <a class="dropdown-item nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span data-feather="bell" class="rui-icon rui-icon-stroke-1_5"></span> <span>Notifications</span> <span class="badge badge-circle badge-brand">3</span> <span class="rui-dropdown-circle"></span></a>
+                        <ul class="nav dropdown-menu rui-navbar-dropdown-notice">
+                            <li class="rui-navbar-dropdown-title mb-10">
+                                <div class="d-flex align-items-center">
+                                    <h2 class="h4 mb-0 mr-auto">Notifications</h2> <a class="btn btn-custom-round" href="#"><span data-feather="link-2" class="rui-icon rui-icon-stroke-1_5"></span></a> </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="media media-success media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img"><img src="assets/images/avatar-5.png" alt=""></span><span class="media-body"><span class="media-title">Amber Smith</span> <small class="media-subtitle">Bring abundantly creature great...</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="media media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img">C</span> <span class="media-body"><span class="media-title">Change Design</span> <small class="media-subtitle">Design</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="media media-filled mnl-30 mnr-30"><a href="#" class="media-link"><span class="media-img bg-transparent"><img src="assets/images/icon-zip.svg" class="icon-file" alt=""></span><span class="media-body"><span class="media-title">Added banner archive</span> <small class="media-subtitle">Commerce</small> </span></a>
+                                    <a href="#" class="media-icon"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link d-flex" data-fancybox data-keyboard="false" data-auto-focus="false" data-touch="false" data-close-existing="true" data-src="#messenger" href="javascript:;"><span data-feather="message-circle" class="rui-icon rui-icon-stroke-1_5"></span> <span>Messenger</span> <span class="rui-nav-circle"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="rui-navbar-bg"></div>
+    <div class="rui-page content-wrap">
+
+        <div class="rui-page-content">
+            <div class="container-fluid">
+                <div class="row vertical-gap">
+
+                    <div class="col-lg-8">
+
+                        <div class="row vertical-gap">
+
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body" style="display: flex;">
+                                        <div style="display: block;">
+                                            <h5 class="card-title h1" style="font-weight: bold; color: #8e50d1;">416</h5>
+                                            <p class="card-text" style="font-weight: 600;">Factures en attente</p>
+                                        </div>
+                                        <img src="assets/images/010-suivi2.png" alt="" style="width: 100%; position: absolute; right: 12px; top: 12px; max-width: 60px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body" style="display: flex;">
+                                        <div style="display: block;">
+                                            <h5 class="card-title h1" style="font-weight: bold; color: #50add1;">416</h5>
+                                            <p class="card-text" style="font-weight: 600;">Factures à échéance</p>
+                                        </div>
+                                        <img src="assets/images/010-suivi2.png" alt="" style="width: 100%; position: absolute; right: 12px; top: 12px; max-width: 60px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-30">
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body" style="display: flex;">
+                                        <div style="display: block;">
+                                            <h5 class="card-title h1" style="font-weight: bold; color: #abd150;">416</h5>
+                                            <p class="card-text" style="font-weight: 600;">Devis acceptés</p>
+                                        </div>
+                                        <img src="assets/images/devis.png" alt="" style="width: 100%; position: absolute; right: 12px; top: 12px; max-width: 60px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body" style="display: flex;">
+                                        <div style="display: block;">
+                                            <h5 class="card-title h1" style="font-weight: bold; color: #d15074;">416</h5>
+                                            <p class="card-text" style="font-weight: 600;">Devis refusés</p>
+                                        </div>
+                                        <img src="assets/images/devis.png" alt="" style="width: 100%; position: absolute; right: 12px; top: 12px; max-width: 60px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body" style="display: flex;">
+                                        <div style="display: block;">
+                                            <h5 class="card-title h1" style="font-weight: bold; color: #d150a3;">416</h5>
+                                            <p class="card-text" style="font-weight: 600;">Devis émis</p>
+                                        </div>
+                                        <img src="assets/images/devis.png" alt="" style="width: 100%; position: absolute; right: 12px; top: 12px; max-width: 60px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-30">
+                            <div class="col-lg-12">
+                                <div class="rui-widget rui-widget-server">
+                                    <div class="rui-widget-head">
+                                        <h4 class="rui-widget-title">Indicateurs Facturations</h4>
+                                    </div>
+                                    <div class="rui-widget-server-chart">
+                                        <canvas id="chartJsLine" height="94"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="row vertical-gap">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <img src="assets/images/home.png" class="card-img-top" alt="">
+                                </div>
+                                <div class="card-body" style="position: absolute; bottom: 0; width: 100%; margin: 0 auto; left: 0; right: 0; text-align: center;">
+                                    <h5 class="card-title h2" style="margin: 0 auto; font-weight: 600;">Logiciel gestion de formation</h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="rui-widget rui-widget-server">
+                                    <div class="rui-widget-head">
+                                        <h4 class="rui-widget-title">Indicateurs chiffre d'affaires</h4>
+                                    </div>
+                                    <div class="rui-widget-server-chart">
+                                        <canvas id="chartJsBar" height="90"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="rui-gap-3"></div>
+            </div>
+        </div>
+        <footer class="rui-footer">
+            <div class="container-fluid">
+                <p class="mb-0">© 2021 <a href="#">FormaCamp</a> | All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h2" id="exampleModalPopupLabel">Modal title</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span></button> </div>
+                <div class="modal-body">
+                    <p class="mnb-2">I likeness fly one she'd won't winged Midst divide. Their second stars, be their. Make moving. Great saying fowl, heaven greater moving tree Multiply midst blessed was there, days days they're a tree dry let which they're.</p>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-brand">Save changes</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="rui-popup rui-popup-search container" id="search">
+        <div class="rui-search">
+            <div class="rui-search-head">
+                <form action="#">
+                    <div class="input-group"> <input type="search" class="form-control form-control-clean order-12" placeholder="Type to search...">
+                        <div class="input-group-prepend mnl-3 order-1"><button type="button" class="btn btn-clean btn-uniform btn-grey-5 mb-0 mnl-10"><span data-feather="search" class="rui-icon rui-icon-stroke-1_5"></span></button></div>
+                    </div>
+                </form>
+            </div>
+            <div class="rui-search-body">
+                <div class="row vertical-gap">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <h4>Members</h4> <a href="#" class="media media-success"><span class="media-img"><img src="assets/images/avatar-2.png" alt=""></span><span class="media-body"><span class="media-title">Helen Holt</span> <small class="media-subtitle">Content Manager</small> </span></a>
+                        <a href="#" class="media media-warning"><span class="media-img"><img src="assets/images/avatar-3.png" alt=""></span><span class="media-body"><span class="media-title">Avice Harris</span> <small class="media-subtitle">Support</small> </span>
+                            </a><a href="#" class="media media-success"><span class="media-img"><img src="assets/images/avatar-4.png" alt=""></span><span class="media-body"><span class="media-title">Anna Rice</span> <small class="media-subtitle">Programmer</small></span></a>                        </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <h4>Articles</h4> <a href="#" class="media"><span class="media-img">M</span> <span class="media-body"><span class="media-title">Minimal Design</span> <small class="media-subtitle">Be life tree every behold fish</small> </span></a>
+                        <a href="#" class="media"><span class="media-img"><span data-feather="heart" class="rui-icon rui-icon-stroke-1_5"></span></span> <span class="media-body"><span class="media-title">Admin Dashboard</span> <small class="media-subtitle">Fruit their us also rule one multiply</small>                            </span>
+                            </a><a href="#" class="media"><span class="media-img">R</span> <span class="media-body"><span class="media-title">Responsive Design</span> <small class="media-subtitle">Behold, to all own, one all fruitful let</small></span></a>                        </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <h4>Files</h4> <a href="#" class="media"><span class="media-img bg-transparent"><img src="assets/images/icon-zip.svg" class="icon-file" alt=""></span><span class="media-body"><span class="media-title">Dashboard</span> <small class="media-subtitle">Admin &amp; Dashboard</small> </span></a>
+                        <a href="#" class="media"><span class="media-img bg-transparent"><img src="assets/images/icon-jpg.svg" class="icon-file" alt=""></span><span class="media-body"><span class="media-title">Application</span> <small class="media-subtitle">Application</small>                            </span>
+                            </a><a href="#" class="media"><span class="media-img bg-transparent"><img src="assets/images/icon-png.svg" class="icon-file" alt=""></span><span class="media-body"><span class="media-title">Marketing</span> <small class="media-subtitle">Landing &amp; Corporate</small></span></a>                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rui-popup rui-popup-messenger" id="messenger">
+        <form class="rui-messenger rui-messenger-mini">
+            <div class="rui-messenger-head">
+                <div class="input-group rui-messenger-search"><button type="button" class="btn btn-clean btn-uniform btn-grey-5" data-toggle="button" aria-pressed="false"><span data-feather="search" class="rui-icon rui-icon-stroke-1_5"></span></button> <input type="search" class="form-control form-control-clean"
+                        placeholder="Type to search..." data-toggle="input" autocomplete="off"></div>
+                <h4 class="mnb-2">Messenger</h4>
+            </div>
+            <div class="rui-messenger-list rui-scrollbar"> <a class="btn rui-messenger-collapse-btn" data-toggle="collapse" href="#collapseOnline" role="button" aria-expanded="false" aria-controls="collapseOnline">Online <span data-feather="chevron-right" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                <div class="collapse show" id="collapseOnline">
+                    <div class="rui-messenger-collapse">
+                        <div class="media media-success media-filled"><a href="#" class="media-link rui-messenger-item"><span class="media-img"><img src="assets/images/avatar-5.png" alt=""></span><span class="media-body"><span class="media-title">Amber Smith</span> <small class="media-subtitle">Bring abundantly creature great behold...</small> </span></a>
+                            <a href="#" class="media-icon"><span class="rui-icon rui-icon-stroke-1_5"></span></a>
+                        </div>
+                        <div class="media media-success media-filled"><a href="#" class="media-link rui-messenger-item"><span class="media-img">F</span> <span class="media-body"><span class="media-title">Frank Eaton</span> <small class="media-subtitle">Porttitor facilisis quisque ultrices...</small> </span></a>
+                            <a href="#" class="media-icon"><span class="rui-icon rui-icon-stroke-1_5"></span></a>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn rui-messenger-collapse-btn" data-toggle="collapse" href="#collapseOffline" role="button" aria-expanded="false" aria-controls="collapseOffline">Offline <span data-feather="chevron-right" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                <div class="collapse show" id="collapseOffline">
+                    <div class="rui-messenger-collapse">
+                        <div class="media media-warning media-filled"><a href="#" class="media-link rui-messenger-item"><span class="media-img"><img src="assets/images/avatar-2.png" alt=""></span><span class="media-body"><span class="media-title">Helen Holt</span> <small class="media-subtitle">Upon us after sixth, under is appear...</small> </span></a>
+                            <a href="#" class="media-icon"><span class="rui-icon rui-icon-stroke-1_5"></span></a>
+                        </div>
+                        <div class="media media-warning media-filled"><a href="#" class="media-link rui-messenger-item"><span class="media-img">S</span> <span class="media-body"><span class="media-title">Steven Cross</span> <small class="media-subtitle">Us earth our sixth cattle great without...</small> </span></a>
+                            <a href="#" class="media-icon"><span class="rui-icon rui-icon-stroke-1_5"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rui-messenger-chat">
+                <div class="rui-messenger-head"> <a href="#" class="btn btn-clean btn-uniform btn-grey-5 rui-messenger-back"><span data-feather="chevron-left" class="rui-icon rui-icon-stroke-1_5"></span></a>
+                    <h4 class="mnb-4">Amber Smith</h4>
+                    <div class="rui-messenger-head-empty"></div>
+                </div>
+                <div class="rui-messenger-body rui-scrollbar">
+                    <div>
+                        <div class="rui-messenger-message rui-messenger-message-structure">
+                            <ul>
+                                <li></li>
+                            </ul>
+                            <div class="rui-messenger-message-edit"><a href="#" class="btn"><span data-feather="edit-2" class="rui-icon rui-icon-stroke-1_5"></span></a> <a href="#" class="btn"><span data-feather="trash" class="rui-icon rui-icon-stroke-1_5"></span></a></div> <small class="rui-messenger-message-time"></small>                            </div> <small class="rui-messenger-message-datetime">2 days ago</small>
+                        <div class="rui-messenger-message rui-messenger-message-incoming">
+                            <ul>
+                                <li>The last album.</li>
+                                <li>I can’t open the last album!</li>
+                            </ul> <small class="rui-messenger-message-time">10:19</small> </div>
+                        <div class="rui-messenger-message rui-messenger-message-incoming">
+                            <ul>
+                                <li>Gues, I can’t open the last album...</li>
+                            </ul> <small class="rui-messenger-message-time">10:20</small> </div> <small class="rui-messenger-message-datetime">Today</small>
+                        <div class="rui-messenger-message">
+                            <ul>
+                                <li>123</li>
+                            </ul> <small class="rui-messenger-message-time">10:29</small>
+                            <div class="rui-messenger-message-edit"><a href="#" class="btn"><span data-feather="edit-2" class="rui-icon rui-icon-stroke-1_5"></span></a> <a href="#" class="btn"><span data-feather="trash" class="rui-icon rui-icon-stroke-1_5"></span></a></div>
+                        </div>
+                        <div class="rui-messenger-message">
+                            <ul>
+                                <li>Haha Amber! You are so nice! :smile:</li>
+                            </ul> <small class="rui-messenger-message-time">10:30</small>
+                            <div class="rui-messenger-message-edit"><a href="#" class="btn"><span data-feather="edit-2" class="rui-icon rui-icon-stroke-1_5"></span></a> <a href="#" class="btn"><span data-feather="trash" class="rui-icon rui-icon-stroke-1_5"></span></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rui-messenger-footer">
+                    <div class="input-group mnt-10 mnb-10">
+                        <div class="input-group-prepend mnl-2"><input type="file" class="rui-messenger-custom-file" id="customFileLang" lang="es"> <label class="btn btn-clean btn-uniform btn-grey-5 mb-0" for="customFileLang"><span data-feather="paperclip" class="rui-icon rui-icon-stroke-1_5"></span></label></div>
+                        <textarea class="form-control form-control-clean rui-messenger-textarea" placeholder="Write a message..."></textarea>
+                        <div class="input-group-append ml-2"><a href="#" class="btn btn-clean btn-uniform btn-grey-5 rui-messenger-send"><span data-feather="send" class="rui-icon rui-icon-stroke-1_5"></span></a></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/feather-icons/dist/feather.min.js"></script>
+    <script src="assets/vendor/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="assets/js/yaybar.js"></script>
+    <script src="assets/vendor/object-fit-images/dist/ofi.min.js"></script>
+    <script src="assets/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script src="assets/vendor/emojione/lib/js/emojione.min.js"></script>
+    <script src="assets/vendor/emojionearea/dist/emojionearea.min.js"></script>
+    <script src="assets/vendor/moment/min/moment.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="assets/vendor/chartist/dist/chartist.min.js"></script>
+
+
+    <script class="rui-page-additional-js">
+        (function() {
+            // Line and Bar
+            const data = {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                datasets: [{
+                    label: 'Chart 1',
+                    backgroundColor: 'rgba(94, 119, 255, 0.8)',
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    pointRadius: 3,
+                    pointHoverRadius: 3,
+                    pointHitRadius: 100,
+                    pointBackgroundColor: 'transparent',
+                    pointHoverBackgroundColor: 'rgba(94, 119, 255, 1)',
+                    data: [0, 9, 15, 10, 30, 15, 25, 18, 20],
+                }, {
+                    label: 'Chart 2',
+                    backgroundColor: 'rgba(171, 184, 255, 0.8)',
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    pointRadius: 3,
+                    pointHoverRadius: 3,
+                    pointHitRadius: 100,
+                    pointBackgroundColor: 'transparent',
+                    pointHoverBackgroundColor: 'rgba(171, 184, 255, 1)',
+                    data: [0, 10, 10, 13, 10, 20, 10, 10, 25],
+                }],
+            };
+            // Line
+            const optionsLine = {
+                type: 'line',
+                data: data,
+
+                options: {
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false,
+                        backgroundColor: '#393f49',
+                        titleMarginBottom: 8,
+                        titleFontSize: 14,
+                        titleFontColor: '#f8f9fa',
+                        titleFontFamily: "'Open Sans', sans-serif",
+                        bodyFontSize: 11,
+                        bodyFontColor: '#d7d9e0',
+                        bodyFontFamily: "'Open Sans', sans-serif",
+                        footerMarginTop: 10,
+                        footerFontSize: 11,
+                        footerFontColor: '#f8f9fa',
+                        footerFontFamily: "'Open Sans', sans-serif",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 5,
+                        cornerRadius: 4,
+                    },
+                    legend: {
+                        labels: {
+                            padding: 30,
+                            fontSize: 14,
+                            fontColor: '#6c757d',
+                            fontFamily: "'Open Sans', sans-serif",
+                            boxWidth: 14,
+                        },
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                lineWidth: 0,
+                                color: 'transparent',
+                                zeroLineWidth: 0,
+                                zeroLineColor: 'transparent',
+                            },
+                            ticks: {
+                                fontSize: 12,
+                                fontColor: '#bcbec0',
+                                fontFamily: "'Open Sans', sans-serif",
+                            },
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                lineWidth: 0,
+                                color: 'transparent',
+                                zeroLineWidth: 0,
+                                zeroLineColor: 'transparent',
+                            },
+                            ticks: {
+                                fontSize: 12,
+                                fontColor: '#bcbec0',
+                                fontFamily: "'Open Sans', sans-serif",
+                            },
+                        }],
+                    },
+                },
+            };
+            // Bar
+            const optionsBar = {
+                type: 'bar',
+                data: data,
+
+                options: {
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: true,
+                        backgroundColor: '#393f49',
+                        titleMarginBottom: 8,
+                        titleFontSize: 14,
+                        titleFontColor: '#f8f9fa',
+                        titleFontFamily: "'Open Sans', sans-serif",
+                        bodyFontSize: 11,
+                        bodyFontColor: '#d7d9e0',
+                        bodyFontFamily: "'Open Sans', sans-serif",
+                        footerMarginTop: 10,
+                        footerFontSize: 11,
+                        footerFontColor: '#f8f9fa',
+                        footerFontFamily: "'Open Sans', sans-serif",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 5,
+                        cornerRadius: 4,
+                    },
+                    legend: {
+                        labels: {
+                            padding: 30,
+                            fontSize: 14,
+                            fontColor: '#6c757d',
+                            fontFamily: "'Open Sans', sans-serif",
+                            boxWidth: 14,
+                        },
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                lineWidth: 0,
+                                color: 'transparent',
+                                zeroLineWidth: 0,
+                                zeroLineColor: 'transparent',
+                            },
+                            ticks: {
+                                fontSize: 12,
+                                fontColor: '#bcbec0',
+                                fontFamily: "'Open Sans', sans-serif",
+                            },
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                lineWidth: 0,
+                                color: 'transparent',
+                                zeroLineWidth: 0,
+                                zeroLineColor: 'transparent',
+                            },
+                            ticks: {
+                                fontSize: 12,
+                                fontColor: '#bcbec0',
+                                fontFamily: "'Open Sans', sans-serif",
+                            },
+                        }],
+                    },
+                },
+            };
+            // Pie
+            const dataPie = {
+                labels: ['Jan', 'Feb', 'Mar'],
+                datasets: [{
+                    label: 'Chart Example',
+                    backgroundColor: [
+                        'rgba(142, 159, 255, 1)',
+                        'rgba(171, 184, 255, 1)',
+                        'rgba(202, 210, 255, 1)',
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 0,
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: 'rgba(114, 94, 195, 1)',
+                    data: [5, 3, 4],
+                }],
+            };
+            const optionsPie = {
+                type: 'pie',
+                data: dataPie,
+                options: {
+                    tooltips: {
+                        backgroundColor: '#393f49',
+                        titleMarginBottom: 8,
+                        titleFontSize: 14,
+                        titleFontColor: '#f8f9fa',
+                        titleFontFamily: "'Open Sans', sans-serif",
+                        bodyFontSize: 11,
+                        bodyFontColor: '#d7d9e0',
+                        bodyFontFamily: "'Open Sans', sans-serif",
+                        footerMarginTop: 10,
+                        footerFontSize: 11,
+                        footerFontColor: '#f8f9fa',
+                        footerFontFamily: "'Open Sans', sans-serif",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretSize: 0,
+                        cornerRadius: 4,
+                    },
+                    legend: {
+                        labels: {
+                            padding: 30,
+                            fontSize: 14,
+                            fontColor: '#6c757d',
+                            fontFamily: "'Open Sans', sans-serif",
+                            boxWidth: 14,
+                        },
+                    },
+                    scales: {
+                        display: false,
+                    },
+                },
+            };
+
+            const chartLine = new Chart(document.getElementById('chartJsLine').getContext('2d'), optionsLine);
+            const chartBar = new Chart(document.getElementById('chartJsBar').getContext('2d'), optionsBar);
+
+        }());
+    </script>
+
+
+
+
+    <script src="assets/js/rootui.js"></script>
+    <script src="assets/js/rootui-init.js"></script>
+</body>
+
+</html>

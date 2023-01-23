@@ -1,0 +1,22 @@
+<div class="col-md-12 card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1">
+                {{index}}
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <input ng-model="ins.NOM" type="text" class="form-control" id="nom{{index}}" placeholder="">
+
+                </div>
+            </div>
+            <button ng-click="methods.Delete(index-1)" class="col-md-2 btn-todo btn btn-primary">
+                <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+            </button>
+
+
+        </div>
+    </div>
+    <hr>
+
+</div>

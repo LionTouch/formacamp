@@ -1,0 +1,310 @@
+<div class="col-md-12" ng-controller="CrudFormateursController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/GestionDonnees/Formateurs"><i class="ri-menu-3-line mr-1 float-left"></i>Formateurs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ins.ID_FORMATEUR ? 'Modifier' : 'Ajouter'}} Formateur</li>
+        </ol>
+    </nav>
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col-12 col-lg-auto">
+                <div class="card">
+                    <div class="card-body pt-20 pr-10 pb-20 pl-10">
+                        <ul class="nav-pills">
+                            <li><a ng-click="GoToStep(1)" ng-class="step == 1?'active':''" class="nav-link nav-user active" href="#"> <span>Identité</span></a></li>
+                            <li><a ng-click="GoToStep(2)" ng-class="step == 2?'active':''" class="nav-link nav-user" href="#"> <span>Informations personnelles</span></a></li>
+                            <li><a ng-click="GoToStep(3)" ng-class="step == 3?'active':''" class="nav-link nav-user" href="#"> <span>Informations de contact</span></a></li>
+                            <li><a ng-click="GoToStep(4)" ng-class="step == 4?'active':''" class="nav-link nav-user" href="#"> <span>Statut</span></a></li>
+                            <li><a ng-click="GoToStep(5)" ng-class="step == 5?'active':''" class="nav-link nav-user" href="#"> <span>Information financeurs</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <label for="organisme">Organisme <span>*</span></label>
+                                <select name="organisme" ng-model="ins.ID_ORGANISME" class="custom-select" id="organisme" required>
+                                    <option value="">Organisme</option>
+                                    <option ng-repeat="org in liste_organismes track by $index" ng-value="org.ID_ORGANISME">{{org.NOM}}</option>
+                                </select>
+                                <div ng-show="(form.$submitted || form.organisme.$touched) && form.organisme.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez selectionner un organisme.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="civilite">Civilité</label>
+                                <select ng-model="ins.CIVILITE" class="custom-select" id="civilite">
+                                    <option value="0">--</option>
+                                    <option ng-repeat="civ in liste_civilites track by $index" ng-value="civ.CIVILITE">{{civ.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="nom">Nom</label>
+                                <input ng-model="ins.NOM" type="text" class="form-control" id="nom" placeholder="Nom de famille">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="prenom">Prénom</label>
+                                <input ng-model="ins.PRENOM" type="text" class="form-control" id="prenom" placeholder="Prénom">
+                            </div>
+                            <div class="col-12">
+                                <label for="email">Email <span>*</span></label>
+                                <input autocomplete="new-password" name="email" ng-model="ins.email" type="email" class="form-control" id="email"  placeholder="Email" required>
+                                <div ng-show="(form.$submitted || form.email.$touched) && form.email.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez entrer un email.</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <label for="pwd">Mot de passe <span>*</span></label>
+                                <input autocomplete="new-password" name="pwd" ng-model="ins.password" type="password" class="form-control" id="pwd"  placeholder="Mot de passe" ng-required="ins.ID_USER == undefined">
+                                <div ng-show="(form.$submitted || form.pwd.$touched) && form.pwd.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li ng-show="form.pwd.$error.required" class="parsley-required">Veuillez entrer un mot de passe.</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <label for="code_int">Code Interne</label>
+                                <input ng-model="ins.CODE_INTERNE" type="text" class="form-control" id="code_int" placeholder="Code Interne">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(2)">Suivant</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-6">
+                                <label for="nationalite">Nationalité</label>
+                                <input ng-model="ins.NATIONALITE" type="text" class="form-control" id="nationalite" placeholder="Nationalité">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nom_naiss">Nom de naissance</label>
+                                <input ng-model="ins.NOM_NAISS" type="text" class="form-control" id="nom_naiss" placeholder="Nom de naissance">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ville_naiss">Ville de naissance</label>
+                                <input ng-model="ins.VILLE_NAISS" type="text" class="form-control" id="ville_naiss" placeholder="Ville de naissance">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="region_naiss">Département de naissance</label>
+                                <input ng-model="ins.DEPARTEMENT_NAISS" type="text" class="form-control" id="region_naiss" placeholder="Region de naissance">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="date_naiss">Date de naissance</label>
+                                <input ng-model="ins.DATE_NAISS" type="date" class="form-control" id="date_naiss">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="langue">Langue</label>
+                                <select ng-model="ins.ID_LANGUE" class="custom-select" id="langue">
+                                    <option ng-repeat="lng in liste_langues track by $index" ng-value="lng.ID_LANGUE">{{lng.TITRE}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(1)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(3)">Suivant</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-6">
+                                <label for="adresse">Adresse</label>
+                                <input ng-model="ins.ADRESSE" type="text" class="form-control" id="adresse" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="zip">Code postal</label>
+                                <input ng-model="ins.ZIP" type="text" class="form-control" id="zip" placeholder="Code postal">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ville">Ville</label>
+                                <input ng-model="ins.VILLE" type="text" class="form-control" id="ville" placeholder="Ville">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pays">Pays</label>
+                                <input ng-model="ins.PAYS" type="text" class="form-control" id="pays" placeholder="Pays">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telephone">Téléphone</label>
+                                <input ng-model="ins.TELEPHONE" type="text" class="form-control" id="telephone" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sec">N° sécurité sociale</label>
+                                <input ng-model="ins.NUM_SEC_SOCIALE" type="text" class="form-control" id="sec" placeholder="N° sécurité sociale">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(2)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(4)">Suivant</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-4">
+                                <label for="fonction">Numéro de déclaration d'activité</label>
+                                <input ng-model="ins.NUM_DECLARATION" type="text" class="form-control" id="fonction" placeholder="Numéro de déclaration d'activité">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="client">client</label>
+                                <select id="client" ng-model="ins.ID_CLIENT" class="custom-select">
+                                    <option value="0">--</option>
+                                    <option ng-repeat="ent in liste_clients track by $index" ng-value="ent.ID_CLIENT">{{ent.NOM}}</option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="siret">N° SIRET</label>
+                                <textarea ng-model="ins.NUM_SIRET" type="text" class="form-control" id="siret" placeholder="N° SIRET"></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="mention">N° assurance</label>
+                                <input ng-model="ins.NUM_ASSURANCE" type="text" class="form-control" id="mention" placeholder="N° assurance">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="statut">Statut</label>
+                                <select id="statut" ng-model="ins.STATUT" class="custom-select">
+                                    <option ng-repeat="st in liste_statuts track by $index" ng-value="st.ID_STATUT">{{st.TITRE}}</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tarif">Tarif par défaut</label>
+                                <input ng-model="ins.TARIF" type="text" class="form-control" id="tarif" placeholder="Tarif par défaut">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tp_tarif">Type de tarification</label>
+                                <select id="tp_tarif" ng-model="ins.ID_TYPE_TARIF" class="custom-select">
+                                    <option ng-repeat="tt in liste_type_tarif track by $index" ng-value="tt.ID_TYPE_TARIF">{{tt.TITRE}}</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tva">TVA</label>
+                                <input ng-model="ins.TVA" type="text" class="form-control" id="tva" placeholder="TVA">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="numcompte">N° de compte en comptabilité</label>
+                                <input ng-model="ins.NUM_COMPTE" type="text" class="form-control" id="numcompte" placeholder="N° de compte en comptabilité">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(3)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(5)">Suivant</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12">
+                            <div class="row  justify-content-end">
+                                <div class="col-md-6">
+                                    <label for="bio">Bio</label>
+                                    <textarea ng-model="ins.BIO" type="text" class="form-control" id="bio" placeholder="Bio"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dip">Diplômes</label>
+                                    <textarea ng-model="ins.DIPLOMES" type="text" class="form-control" id="dip" placeholder="Diplômes"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="note">Notes libres</label>
+                                    <textarea ng-model="ins.NOTE" type="text" class="form-control" id="note" placeholder="Notes libres"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="comp">Notes sur les compétences</label>
+                                    <textarea ng-model="ins.NOTE_COMPETENCES" type="text" class="form-control" id="comp" placeholder="Notes sur les compétences"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="drag-drop-area"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button ng-click="AddCompetence()" class="btn btn-outline-link mb-3"><i class="ri-add-circle-line"></i>Ajouter une compétence</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(4)">Précédent</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

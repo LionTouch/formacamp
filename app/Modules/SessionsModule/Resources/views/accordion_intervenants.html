@@ -1,0 +1,57 @@
+<div ng-click="toggleOpen()" ng-class="isOpen?'active':''">
+    <div class="iq-card" style="cursor: pointer;padding: 0;"  uib-accordion-transclude="heading">
+        <div class="iq-card-body" style="box-shadow: 0 2px 8px #bcbcbc;border-radius: 15px;"  uib-accordion-header>
+            <div class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3" style="background-color: rgb(255 255 255 / 38%) !important;">
+                <div style="background:url({{$parent.inter.PHOTO?($parent.inter.TYPE=='Admin'?'public/uploads/users/admins/':'public/uploads/users/formateurs/')+$parent.inter.PHOTO:'public/uploads/default.png'}});width: 50px;height: 50px;background-size: cover;background-repeat: no-repeat;border-radius: 50%;"></div>
+                <h5 class="text-white">{{ $parent.inter.NOM }} {{ $parent.inter.PRENOM }}</h5>
+                <div>
+                    <!--                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Seances" ng-click="$event.stopPropagation();methods.Modifier($parent.inter.ID_INTERVENANT);animationCtrl.ExpandFolder()" class="ri-settings-2-line font-size-18" role="button" tabindex="0"></i>-->
+                    <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();$parent.Delete($parent.inter.ID_INTERVENANT)" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+                </div>
+
+            </div>
+            <div class="row">
+                <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Type</b><br><span class="span-header">{{ $parent.inter.TYPE }}</span></p>
+                <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Email </b><br><span class="span-header"> {{ $parent.inter.email }}</span></p>
+                <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-community-line mr-1"></i> Téléphone </b><br><span class="span-header"> {{ $parent.inter.TELEPHONE }}</span></p>
+                <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Adresse service</b><br><span class="span-header">{{$parent.inter.ADRESSE}}</span></p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card-collapse collapse" uib-collapse="!isOpen">
+    <div class="card-body" ng-transclude></div>
+</div>
+<style>
+    /*.card-header.accordion-header{*/
+    /*    cursor: pointer;*/
+    /*    background: #fff;*/
+    /*    color: #827af3;*/
+    /*    padding: 1.75rem 1.25rem; font-size: 20px; font-weight: 600;*/
+    /*}*/
+    /*.card-header.accordion-header:hover{*/
+    /*    color: #fff;*/
+    /*    background-color: rgba(149, 72, 179, 0.85);*/
+    /*    border-color: rgba(149, 72, 179, 0.85);*/
+    /*}*/
+    /*.card-header.accordion-header:hover a {*/
+    /*    color: #fff;*/
+    /*    text-decoration: none;*/
+    /*}*/
+    /*.card-header.accordion-header a:hover {*/
+    /*    color: #fff;*/
+    /*    text-decoration: none;*/
+    /*}*/
+    /*.card-header.accordion-header.active{*/
+    /*    color: #fff;*/
+    /*    background-color: rgba(149, 72, 179);*/
+    /*    border-color: rgba(149, 72, 179);*/
+    /*}*/
+    /*.card-header.accordion-header.active a{*/
+    /*    color: #fff;*/
+    /*}*/
+</style>

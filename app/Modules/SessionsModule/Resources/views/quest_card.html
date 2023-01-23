@@ -1,0 +1,156 @@
+<div class="col-md-12 card">
+    <hr>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 my-1">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 1">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2"><i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i>{{index}}</label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Question ?" required>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-radio" ng-repeat="reponse in quest.reponses track by $index">
+
+                                            <i class="ri-close-circle-line icn-reponse" ng-click="methods.RemoveReponse(quest,reponse,$index)" style="cursor:pointer;"></i>
+                                            <input type="radio" class="custom-control-input" disabled>
+                                            <label class="custom-control-label w-100 border-bottom pl-3" style="cursor:auto;" ng-model="reponse.TEXT"  contenteditable="true" > </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button ng-click="methods.AddReponse(quest)" type="button" class="btn btn-primary" >
+                                Ajouter une réponse
+                            </button>
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 2">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">
+                                    <i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i> {{index}}
+                                </label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Question ?" required>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-checkbox" ng-repeat="reponse in quest.reponses track by $index">
+                                            <i class="ri-close-circle-line icn-reponse" ng-click="methods.RemoveReponse(quest,reponse,$index)" style="cursor:pointer;"></i>
+                                            <input type="checkbox" class="custom-control-input" disabled>
+                                            <label class="custom-control-label w-100 border-bottom pl-3" style="cursor:auto;" ng-model="reponse.TEXT" contenteditable="true"  > </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button ng-click="methods.AddReponse(quest)" type="button" class="btn btn-primary" >
+                                Ajouter une réponse
+                            </button>
+
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 3">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2"><i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i>{{index}}</label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Question ?" required>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-checkbox iq-bg-secondary" style="min-height: 130px;">
+                                            <textarea class="custom-control-input" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 4">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">
+                                    <i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i>{{index}}
+                                </label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Titre" required>
+                            </div>
+                            <div class="col-md-12">
+                                <table>
+                                    <thead>
+                                        <th class="col-md-5"></th>
+                                        <th class="col-md-1" ng-repeat="reponse in quest.reponses track by $index" class="text-center" style="white-space: nowrap;">
+                                            <i class="ri-close-circle-line" ng-click="methods.RemoveReponse(quest,reponse,$index)" style="cursor:pointer;"></i>
+                                            <label class="w-100 border-bottom pl-3" style="cursor:auto;" contenteditable="true"  ng-model="reponse.TEXT" ></label>
+                                        </th>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sub_quest in quest.sub_quests track by $index">
+                                            <td>
+                                                <i class="ri-close-circle-line" ng-click="methods.RemoveSubQuest(quest,sub_quest,$index)" style="cursor:pointer;position: absolute;"></i>
+                                                <label class="w-100 border-bottom pl-3" style="cursor:auto;" contenteditable="true"  ng-model="sub_quest.TEXT"></label>
+                                            </td>
+                                            <td ng-repeat="reponse in quest.reponses track by $index" class="text-center"><i class="ri-check-line"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button ng-click="methods.AddSubQuest(quest)" type="button" class="btn btn-primary" >
+                                    Ajouter une question
+                                </button>
+                                <button ng-click="methods.AddReponse(quest)" type="button" class="btn btn-primary" >
+                                    Ajouter une réponse
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 5">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2"><i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i>{{index}}</label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Question ?" required>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="ratting">
+                                            <ul class="ratting-item d-flex p-0 m-0">
+                                                <li ng-repeat="i in [0,1,2,3,4] track by $index" class="blank">
+                                                    <i class="ri-star-line"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 6">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2"><i class="ri-close-circle-line" ng-click="methods.RemoveQuest(quest,index)" style="cursor:pointer;"></i>{{index}}</label>
+                                <input class="input-quest form-control" type="text" ng-model="quest.TEXT" placeholder="Question ?" required>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="ratting">
+                                            <ul class="ratting-item d-flex p-0 m-0">
+                                                <li ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10] track by $index" class="blank">
+                                                    <button type="button" class="btn btn-primary rounded-pill btn-rate-num mb-3">
+                                                        {{i}}</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    .icn-reponse{
+        position: absolute;
+        left: -20px;
+    }
+</style>

@@ -1,0 +1,60 @@
+<div class="folder">
+    <div class="folder-summary">
+        <div class="folder-summary__details" style="min-width: 100%;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="folder-summary__details__name title-folder-header">
+
+                        <h6 class="title-folder">
+							<span class="user-name">Suivi {{ item.ID_CLIENT!=null ? 'Client': 'Formateur'}}: {{item.TITRE}}&nbsp;</span>
+						</h6>
+
+<!--						<h6 class="title-folder">-->
+<!--						<span class="user-name">{{ item.NOM }}</span>-->
+<!--						</h6>-->
+
+
+                        <div style="position: relative; float: right; display: flex;">
+                            <button class="folder-collapse-button btn-ns-description" id="js_folder-collapse-button">
+								Ajouté {{ item.DATE | date_filter_sh }}
+                            </button>
+							<button ng-click="methods.Edit(item)" class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+							<i class="ri-pencil-line" style="position: relative; left: -3px; top: -3px;"></i> Modifier
+							</button>
+							<button ng-click="methods.Delete(item.ID_SUIVI)" class="folder-collapse-button btn-ns-folder" id="js_folder-collapse-button">
+							<i class="ri-delete-bin-line" style="position: relative; left: -3px; top: -3px;"></i> Supprimer
+							</button>
+						</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="folder-item__details__name"> {{ item.ID_CLIENT!=null ? 'Client': 'FORMATEUR'}} </div>
+                    <div class="folder-item__details__date">{{ item.ID_CLIENT!=null ? item.NOM_Client: item.NOM_FORMATEUR}}</div>
+                </div>
+                <div class="col-4">
+                    <div class="folder-item__details__name"> Situation </div>
+                    <div class="folder-item__details__date">{{ item.SITUATION==1?'Oui':'Non' }}</div>
+                </div>
+                <div class="col-4">
+                    <div class="folder-summary__details__name"> Dispositif </div>
+                    <div class="folder-summary__details__share"> {{item.DISPOSITIF==1?'Oui':'Non'}} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>

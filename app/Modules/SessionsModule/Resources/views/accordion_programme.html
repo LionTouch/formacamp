@@ -1,0 +1,40 @@
+<div class="card-header accordion-header"  ng-click="toggleOpen()" ng-class="isOpen?'active':''">
+    <h4 class="card-title">
+        <a href tabindex="0" class="accordion-toggle" uib-accordion-transclude="heading">
+          <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+            {{heading}}
+          </span>
+        </a>
+    </h4>
+</div>
+<div class="card-collapse collapse" uib-collapse="!isOpen">
+    <div class="card-body" ng-transclude></div>
+</div>
+<style>
+    .card-header.accordion-header{
+        cursor: pointer;
+        background: #fff;
+        color: #827af3;
+    }
+    .card-header.accordion-header:hover{
+        color: #fff;
+        background-color: rgba(149, 72, 179, 0.85);
+        border-color: rgba(149, 72, 179, 0.85);
+    }
+    .card-header.accordion-header:hover a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .card-header.accordion-header a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+    .card-header.accordion-header.active{
+        color: #fff;
+        background-color: rgba(149, 72, 179);
+        border-color: rgba(149, 72, 179);
+    }
+    .card-header.accordion-header.active a{
+        color: #fff;
+    }
+</style>

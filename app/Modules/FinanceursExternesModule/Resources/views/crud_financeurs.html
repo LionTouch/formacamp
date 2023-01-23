@@ -1,0 +1,187 @@
+<div class="col-md-12" ng-controller="CrudFinanceursExternesController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/GestionDonnees/FinanceursExternes"><i class="ri-menu-3-line mr-1 float-left"></i>Financeurs Externes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ins.ID_FINANCEUR ? 'Modifier' : 'Ajouter'}} Financeur Externe</li>
+        </ol>
+    </nav>
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col-12 col-lg-auto">
+                <div class="card">
+                    <div class="card-body pt-20 pr-10 pb-20 pl-10">
+                        <ul class="nav-pills">
+                            <li><a ng-click="GoToStep(1)" ng-class="step == 1?'active':''" class="nav-link nav-user active" href="#"> <span>Identité</span></a></li>
+                            <li><a ng-click="GoToStep(2)" ng-class="step == 2?'active':''" class="nav-link nav-user" href="#"> <span>Informations personnelles</span></a></li>
+                            <li><a ng-click="GoToStep(3)" ng-class="step == 3?'active':''" class="nav-link nav-user" href="#"> <span>Notes</span></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <label for="nom">Nom</label>
+                                <input ng-model="ins.NOM" type="text" class="form-control" id="nom" placeholder="Nom de famille">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="civilite">Type</label>
+                                <select ng-model="ins.ID_TYPE_FINANCEUR" class="custom-select" id="civilite">
+                                    <option ng-repeat="tp_fin in liste_type_financeurs track by $index" ng-value="tp_fin.ID_TYPE_FINANCEUR">{{tp_fin.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Email</label>
+                                <input name="email" ng-model="ins.EMAIL" type="email" name="email" class="form-control" id="email"  placeholder="Email" >
+
+                            </div>
+                            <div class="col-md-5">
+                                <label for="code_int">Code interne</label>
+                                <input ng-model="ins.CODE_INTERNE" type="text" class="form-control" id="code_int" placeholder="Code interne">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="siret">SIRET</label>
+                                <input ng-model="ins.SIRET" type="text" class="form-control" id="siret" placeholder="SIRET">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="langue">Langue dans l'extranet</label>
+                                <select ng-model="ins.ID_LANGUE" class="custom-select" id="langue">
+                                    <option ng-repeat="lng in liste_langues track by $index" ng-value="lng.ID_LANGUE">{{lng.TITRE}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="organisme">Organisme <span>*</span></label>
+                                <select name="organisme" ng-model="ins.ID_ORGANISME" class="custom-select" id="organisme" required>
+                                    <option value="">Organisme</option>
+                                    <option ng-repeat="org in liste_organismes track by $index" ng-value="org.ID_ORGANISME">{{org.NOM}}</option>
+                                </select>
+                                <div ng-show="(form.$submitted || form.organisme.$touched) && form.organisme.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                    <ul class="parsley-errors-list error" >
+                                        <li  class="parsley-required">Veuillez selectionner un organisme.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-right">
+                                <button class="btn btn-primary" type="button" ng-click="GoToStep(2)">Suivant</button>
+                        </div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-6">
+                                <label for="adresse">Adresse</label>
+                                <input ng-model="ins.ADRESSE" type="text" class="form-control" id="adresse" placeholder="Adresse">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="zip">Code postal</label>
+                                <input ng-model="ins.ZIP" type="text" class="form-control" id="zip" placeholder="Code postal">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ville">Ville</label>
+                                <input ng-model="ins.VILLE" type="text" class="form-control" id="ville" placeholder="Ville">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pays">Pays</label>
+                                <input ng-model="ins.PAYS" type="text" class="form-control" id="pays" placeholder="Pays">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telephone">Téléphone</label>
+                                <input ng-model="ins.TELEPHONE" type="text" class="form-control" id="telephone" placeholder="Téléphone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fax">Fax</label>
+                                <input ng-model="ins.FAX" type="text" class="form-control" id="fax" placeholder="Fax">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(1)">Précédent</button></div>
+                            <div class="col-auto float-right"><button class="btn btn-primary" type="button" ng-click="GoToStep(3)">Suivant</button></div>
+                        <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 step" ng-show="step == 3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+                            <div class="col-md-12">
+                                <label for="note">Notes libres</label>
+                                <textarea ng-model="ins.NOTES" type="text" class="form-control" id="note" placeholder="Notes libres pédagogique"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="compte">N° de compte client en comptabilité</label>
+                                <input ng-model="ins.NUM_COMPTE_CLIENT" type="text" class="form-control" id="compte" placeholder="N° de compte client en comptabilité">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-auto float-left"><button class="btn btn-primary-light" type="button" ng-click="GoToStep(2)">Précédent</button></div>
+                            <div class="col-auto float-right"><button class="btn btn-primary" type="submit" ng-click="form.$valid?Save():step=1">Enregistrer</button></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

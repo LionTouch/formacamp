@@ -1,0 +1,290 @@
+
+<div  class="iq-card " style="cursor: pointer">
+    <!---->
+    <div class="iq-card-body ">
+        <div  class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3">
+            <h5  class="text-white">{{ item.NOM }}</h5>
+            <div>
+                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Modifier" ng-click="$event.stopPropagation();methods.Edit(item.ID_MODULE)" class="ri-ball-pen-line font-size-18" role="button" tabindex="0"></i>
+                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();methods.Delete(item.ID_MODULE)" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+            </div>
+        </div>
+        <div class="row">
+            <p  style="display: inline-flex;" class="font-size-12 mb-0 col-md-12"><b><i class="ri-community-line mr-1"></i> Modalité : </b><br><span class="span-header"> {{item.NOM_MODALITE}}</span></p>
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Début</b><br><span class="span-header">{{ item.START | date_filter_fr }}</span></p>
+            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Fin</b><br><span class="span-header">{{ item.END | date_filter_fr }}</span></p>
+        </div>
+
+<!--        <div  class="row align-items-center justify-content-between mt-3">-->
+<!--            <div  class="col-sm-6">-->
+<!--                <button class="btn btn-light btn-block"><i class="ri-money-dollar-circle-line"></i>Prix</button>-->
+<!--            </div>-->
+<!--            <div  class="col-sm-6">-->
+<!--                <button class="btn btn-light btn-block"><i class="ri-time-line"></i>Date</button>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+    <!---->
+</div>
+
+<!--<div class="folder">-->
+<!--    <div class="folder-summary">-->
+<!--        <div class="folder-summary__details" style="min-width: 100%;">-->
+<!--            <div class="row ns-block">-->
+
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="folder-summary__details__name title-folder-header">-->
+
+<!--						<h6 class="title-folder">-->
+<!--						<span class="user-name">{{ data.NOM }}</span>-->
+<!--						</h6>-->
+
+
+<!--                        <div style="position: relative; float: right; display: flex;">-->
+
+<!--                            <button ng-click="methods.ShowPrixModule(data);animationCtrl.ExpandFolder()" class="folder-collapse-button js_folder-collapse-button btn-ns-folder">-->
+<!--                                 Prix-->
+<!--                            </button>-->
+
+<!--                            <button ng-click="methods.ShowDateModule(data);animationCtrl.ExpandFolder()" class="folder-collapse-button js_folder-collapse-button btn-ns-folder">-->
+<!--                                 Date-->
+<!--                            </button>-->
+<!--                            <button ng-click="methods.Edit(data.ID_MODULE)" class="folder-collapse-button js_folder-collapse-button btn-ns-folder">-->
+<!--                                <i class="ri-pencil-line" style="position: relative; left: -3px; top: -3px;"></i> Modifier-->
+<!--                            </button>-->
+
+<!--							<button ng-click="methods.Delete(data.ID_MODULE)" class="folder-collapse-button js_folder-collapse-button btn-ns-folder">-->
+<!--							<i class="ri-delete-bin-line" style="position: relative; left: -3px; top: -3px;"></i> Supprimer-->
+<!--							</button>-->
+<!--						</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <div class="folder-summary__details__name"> Date début </div>-->
+<!--                    <div class="folder-summary__details__share"> {{data.START}} </div>-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <div class="folder-summary__details__name"> Date fin </div>-->
+<!--                    <div class="folder-summary__details__share"> {{data.END}} </div>-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <div class="folder-summary__details__name"> Modalité </div>-->
+<!--                    <div class="folder-summary__details__share"> {{data.NOM_MODALITE}} </div>-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <div class="folder-summary__details__name"> Session </div>-->
+<!--                    <div class="folder-summary__details__share"> {{data.NOM_SESSION}} </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="folder-content" id="js_folder-content" style="padding-left: 0px;">-->
+<!--        <div class="folder-item js_folder-item">-->
+<!--            <div ng-controller="CrudPrixModulesController" class="col-md-12 ns-block" ng-show="module.TypeFolder == 'Prix'">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-12 col-lg-auto">-->
+<!--                            <div class="card">-->
+<!--                                <div class="card-body pt-20 pr-10 pb-20 pl-10">-->
+<!--                                    <ul class="nav-pills">-->
+<!--                                        <li ng-repeat="type_prix in types_prix"><a ng-click="ChangePrixModule(type_prix.ID_TYPE_PRIX,module,$event)" ng-class="PrixModule ==  type_prix.ID_TYPE_PRIX?'active':''" class="nav-link nav-user" href="#"> <span>{{type_prix.NOM}}</span></a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div ng-repeat="type_prix in types_prix" class="col-12 col-lg-8 step" ng-show="PrixModule == type_prix.ID_TYPE_PRIX">-->
+<!--                             <ng-form  autocomplete="off" name="form" novalidate>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-10">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Description <span>*</span></label>-->
+<!--                                            <input  ng-model="ins.NOM" type="text" name="nom" parsley-trigger="change"-->
+<!--                                                   placeholder="Entrer description" class="form-control" required>-->
+<!--                                            <div ng-show="(form.$submitted && form.nom.$touched) && form.nom.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">-->
+<!--                                                <ul class="parsley-errors-list error" >-->
+<!--                                                    <li class="parsley-required">Veuillez entrer une description.</li>-->
+<!--                                                </ul>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-2">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Prix <span>*</span></label>-->
+<!--                                            <input ng-input-mask mask="decimal" id="prix_{{module.ID_MODULE+type_prix.ID_TYPE_PRIX}}" ng-model="ins.PRIX" type="text" name="prix" parsley-trigger="change"-->
+<!--                                                   class="form-control">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="offset-10 col-md-2">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>TVA %     <span>*</span></label>-->
+<!--                                            <input ng-input-mask mask="decimal" id="tva_{{module.ID_MODULE+type_prix.ID_TYPE_PRIX}}" ng-model="ins.TVA" type="text" name="tva" parsley-trigger="change"-->
+<!--                                                   class="form-control">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Modalités prix <span>*</span></label>-->
+<!--                                            <div class="row">-->
+<!--                                                <div class="col-md-6"  ng-repeat="tarif_prix in tarifs_prix track by $index">-->
+<!--                                                    <button ng-class="tarif_prix.ID_TARIF == ins.ID_TARIF ? 'active':''" ng-click="ins.ID_TARIF=tarif_prix.ID_TARIF" type="button" class="tarif float-left btn btn-primary" >-->
+<!--                                                        {{tarif_prix.NOM}}-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+
+<!--                                            </div>-->
+<!--                                            <div ng-show="form.$submitted && ins.ID_TARIF==(0 || undefined || null)"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">-->
+<!--                                                <ul class="parsley-errors-list error" >-->
+<!--                                                    <li class="parsley-required">Veuillez choisir une modalité.</li>-->
+<!--                                                </ul>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group text-right mb-0" style="margin-top: 20px;">-->
+<!--                                        <button ng-click="form.$valid?Save(ins):void" ng-disabled="form.$invalid" type="submit" class="btn btn-primary waves-effect waves-light mr-1" >-->
+<!--                                            Enregistrer-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group text-right mb-0" style="margin-top: 20px;">-->
+<!--                                        <button ng-if="ShowDelete" ng-click="Delete(module)" type="button" class="btn btn-primary waves-effect waves-light mr-1" >-->
+<!--                                            Supprimer-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </ng-form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--            </div>-->
+<!--            <div ng-controller="CrudDatesModulesController" class="col-md-12 ns-block" ng-show="module.TypeFolder == 'Date'" >-->
+<!--                <div class="row date_details">-->
+<!--                    <div id="calendar{{module.ID_MODULE}}" class="calendar"></div>-->
+<!--                    <div id="date_crud{{module.ID_MODULE}}" class="date_crud">-->
+<!--                        <div class="col-md-12">-->
+<!--                        </div>-->
+
+<!--                        <div class="col-md-12 seances" style="overflow: auto;height: 470px;">-->
+<!--                            <button class="btn-seance float-left btn btn-primary" ng-click="AddSeance($event)">Ajouter Séance</button>-->
+
+<!--                            <div class="col-md-12 form-inline my-1">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label class="my-1 mr-2" for="start">Du</label>-->
+<!--                                    <input ng-date-input name="start" type="date" class="form-control" id="start"-->
+<!--                                           ng-model="ins.START"-->
+<!--                                           max="{{ins.END | date:'yyyy-MM-dd'}}"-->
+<!--                                           min="{{module.DEBUT}}">-->
+<!--                                    <label  class="my-1 mr-2 ml-2" for="end">au</label>-->
+<!--                                    <input ng-date-input name="end" type="date" class="form-control" id="end"-->
+<!--                                           ng-model="ins.END"-->
+<!--                                           max="{{module.FIN}}"-->
+<!--                                           min="{{ins.START | date:'yyyy-MM-dd'}}">-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+<!--                            <ng-seance  methods="seanceMethodes" ng-repeat="seance in seances track by $index" seance="seance" salles='salles' types-seances='types_seances' index="$index+1" template-url='app/Modules/SessionsModule/Resources/views/seance_card.html'></ng-seance>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-md-12 crud" style="margin-top: 20px;">-->
+<!--                            <button ng-click="Save(ins.START,ins.END)" type="button" class="btn-crud float-left btn btn-primary">-->
+<!--                                Enregistrer-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-12 crud" style="margin-top: 20px;">-->
+<!--                            <button ng-click="Close()" type="button" class="btn-crud float-left btn btn-primary">-->
+<!--                                Annuler-->
+<!--                            </button>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
+<!--<style>-->
+<!--    .btn-crud {-->
+<!--        position: relative;-->
+<!--        width: 100%;-->
+<!--        margin-bottom: 15px;-->
+<!--        text-align: center;-->
+<!--        line-height: 1px;-->
+<!--        background: rgb(0 0 0);-->
+<!--        border-radius: 3px;-->
+<!--        color: rgb(255 255 255);-->
+<!--        margin-right: 5px;-->
+<!--        font-size: 12px;-->
+<!--        padding: 15px;-->
+<!--        height: 0px;-->
+<!--        font-weight: 500;-->
+<!--        border: none;-->
+<!--    }-->
+<!--    .btn-crud:hover{-->
+<!--        background: rgb(255 255 255) !important;-->
+<!--        color: rgb(0 0 0) !important;-->
+<!--        border: 1px solid #dbdbdb !important;-->
+<!--    }-->
+<!--    .btn-seance {-->
+<!--        position: relative;-->
+<!--        width: 100%;-->
+<!--        margin-bottom: 15px;-->
+<!--        text-align: center;-->
+<!--        line-height: 1px;-->
+<!--        background: rgb(250 250 250);-->
+<!--        border-radius: 3px;-->
+<!--        color: rgb(0 0 0);-->
+<!--        margin-right: 5px;-->
+<!--        font-size: 12px;-->
+<!--        padding: 15px;-->
+<!--        height: 0px;-->
+<!--        font-weight: 500;-->
+<!--        border: none;-->
+<!--    }-->
+<!--    .btn-seance:hover{-->
+<!--        background: rgb(0 0 0) !important;-->
+<!--        color: rgb(255 255 255) !important;-->
+<!--        border: 1px solid #dbdbdb !important;-->
+<!--    }-->
+<!--    .date_crud {-->
+<!--    width:50%;-->
+<!--        opacity: 0;-->
+<!--        padding-left: 10px;-->
+<!--    }-->
+<!--    .calendar{-->
+<!--        padding-right: 10px;-->
+<!--    }-->
+<!--    .type_seance.active{-->
+<!--        background: rgb(250 250 250) !important;-->
+<!--        color: rgb(0 0 0) !important;-->
+<!--        border: 1px solid #dbdbdb !important;-->
+<!--    }-->
+<!--    .btn.disabled, .btn[disabled], fieldset[disabled] .btn {-->
+<!--        pointer-events: auto;-->
+<!--    }-->
+<!--    .folder-item:not(:last-child)::after {-->
+<!--        background: transparent;-->
+<!--    }-->
+
+
+<!--    button.js_folder-collapse-button {-->
+<!--        opacity: 1 !important;-->
+<!--        top: 20px;-->
+<!--        background: #efeff0;-->
+<!--        padding: 18px;-->
+<!--    }-->
+
+
+
+
+
+
+
+
+<!--    .tarif.active{-->
+<!--        background: rgb(250 250 250) !important;-->
+<!--        color: rgb(0 0 0) !important;-->
+<!--        border: 1px solid #dbdbdb !important;-->
+<!--    }-->
+
+<!--</style>-->
+

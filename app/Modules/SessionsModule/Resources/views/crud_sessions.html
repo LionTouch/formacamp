@@ -1,0 +1,541 @@
+<div class="col-md-12" ng-controller="CrudSessionsController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Session</li>
+        </ol>
+    </nav>
+    <div class="folder-summary__details" style="padding: 0;">
+        <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+            <div class="row">
+                <div class="col-md-12">
+                    <button ng-click="GoToStep(1,$event)" type="button" class="tabs active float-left btn btn-primary" >
+                        Dates & Prix
+                    </button>
+                    <button ng-click="GoToStep(2,$event)"  type="button" class="tabs float-left btn btn-primary" >
+                        Intervenants
+                    </button>
+                    <button ng-click="GoToStep(3,$event)"  type="button" class="tabs float-left btn btn-primary" >
+                        Programme
+                    </button>
+                    <button ng-click="GoToStep(4,$event)"  type="button" class="tabs float-left btn btn-primary" >
+                        Apprenants
+                    </button>
+                    <button ng-if="session.TYPE!==2" ng-click="UpdateType(session)"  type="button" class="tabs float-right btn btn-primary" >
+                        <i class="ri-check-double-line mr-2"></i> {{session.TYPE===0?'Valider le projet et passer en mode planification':'Valider la session et passer en mode planifié'}}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12 step" ng-show="step == 1">
+                <div ng-controller="CrudModulesController">
+                    <div class="folder-summary__details" style="padding: 0;">
+                        <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="iq-search-bar">
+                                        <div class="searchbox" style="width: 100%">
+                                            <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                                   placeholder="Recherche modules..."
+                                                   ng-model="search">
+                                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <button ng-click="Add()" type="button" class="float-right btn btn-primary" >
+                                        <i class="ri-user-add-line mr-2"></i> Ajouter un module
+                                    </button>
+                                    <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                                        <i class="ri-computer-line br-2"></i>
+                                        {{ searched.length }} modules
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <folder-module ng-repeat="module in  searched = ((liste_data|filter:search)| filter:searchType)| orderBy: '-DATE'"
+                                   module="module"
+                                   salles="liste_salles"
+                                   gestionnaires="liste_users"
+                                   types-seances="liste_types_seances"
+                                   types-prix="liste_types_prix"
+                                   tarifs-prix="liste_tarifs_prix"
+                                   template-url="app/Modules/SessionsModule/Resources/views/folder-modules.html"
+                                   sub-height="600"
+                                   type-folder="folderType"
+                                   methods="folderMethodes"
+                    ></folder-module>
+                </div>
+
+            </div>
+            <div class="col-12 step" ng-show="step == 2">
+                <div class="row" ng-controller="CrudIntervenantsSessionsController">
+                    <div class="col-md-4">
+                        <div class="folder-summary__details" style="padding: 0;">
+                            <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                                       placeholder="Recherche intervenants..."
+                                                       ng-model="search_inter">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 scroll-list">
+                            <folder ng-repeat="intervenant in  searched_inter = (liste_intervenants|filter:search_inter) track by $index" data="intervenant" template-url="app/Modules/SessionsModule/Resources/views/folder-intervenants.html" methods="folderMethodes"></folder>
+                            <div class="card">
+                                <div class="card-body" ng-show="searched_inter.length == 0">
+                                    Aucun intervenant trouvé
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="folder-summary__details" style="padding: 0;">
+                            <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                                       placeholder="Recherche intervenants..."
+                                                       ng-model="search_inter_session">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+
+                                        <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                                            <i class="ri-computer-line br-2"></i>
+                                            {{ searched_inter_session.length }} intervenants
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+<!--                        <div class="col-md-12 scroll-list">-->
+
+                            <folder sub-height="50*inter.total_seances" ng-repeat="inter in  searched_inter_session = (liste_session_intervenants|filter:search_inter_session) track by $index" data="inter" class-data="[]" types-data="liste_types_seances" template-url="app/Modules/SessionsModule/Resources/views/folder-intervenants-sessions.html" methods="folderMethodes"></folder>
+                            <div class="card">
+                                <div class="card-body" ng-show="liste_session_intervenants.length == 0">
+                                    Aucun intervenant séléctionné
+                                </div>
+                                <div class="card-body" ng-show="liste_session_intervenants.length > 0 && searched_inter_session.length == 0">
+                                    Aucun intervenant trouvé
+                                </div>
+                            </div>
+<!--                        </div>-->
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 3">
+                <div class="row" ng-controller="CrudProgrammesSessionsController">
+
+                    <div class="col-md-3">
+                        <ul class="nav-pills">
+                            <li><a ng-click="GoToTab(1)" ng-class="tab == 1?'active':''" class="nav-link nav-user active" href="#"> <span>Description du programme</span></a></li>
+                            <li><a ng-click="GoToTab(2)" ng-class="tab == 2?'active':''" class="nav-link nav-user" href="#"> <span>Objectif pédagogique</span></a></li>
+                            <li><a ng-click="GoToTab(3)" ng-class="tab == 3?'active':''" class="nav-link nav-user" href="#"> <span>Profil des apprenants</span></a></li>
+                            <li><a ng-click="GoToTab(4)" ng-class="tab == 4?'active':''" class="nav-link nav-user" href="#"> <span>Contenu de la formation</span></a></li>
+                            <li><a ng-click="GoToTab(5)" ng-class="tab == 5?'active':''" class="nav-link nav-user" href="#"> <span>Modalité de certifications</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card" ng-if="tab == 1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="description">Description du programme</label>
+                                        <textarea ng-model="programme.DESCRIPTION" type="text" class="form-control" id="description" placeholder="Description du programme"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn-todo float-left btn btn-primary" ng-click="SaveProgramme()">Enregistrer</button>
+                            </div>
+                        </div>
+                        <div class="card" ng-if="tab == 2" ng-controller="CrudObjectifsSessionsController">
+                            <div class="card-header">
+                                <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddObjectif()"><i class="ri-add-line pr-0"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <ul dnd-list="objectifs" class="col-md-12">
+                                        <li ng-repeat="objectif in objectifs"
+                                            dnd-draggable="objectif"
+                                            dnd-moved="objectifs.splice($index, 1)" class="col-md-12">
+                                            <dnd-nodrag class="row">
+                                                <div class="col-md-1">
+                                                    <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        <input ng-model="objectif.TEXT" type="text" class="form-control" placeholder="">
+
+                                                    </div>
+                                                </div>
+                                                <button ng-click="DeleteObjectif($index)" class="col-md-2 btn-todo btn btn-primary">
+                                                    <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                </button>
+                                                <hr>
+                                            </dnd-nodrag>
+                                        </li>
+
+                                        <li class="dndPlaceholder col-md-12">
+                                            <hr>
+                                            <p class="text-center">Deplacer ici</p>
+                                            <hr>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn-todo float-left btn btn-primary" ng-click="Save()">Enregistrer</button>
+                            </div>
+                        </div>
+                        <div ng-if="tab == 3" ng-controller="CrudProfilsApprenantsSessionsController">
+                            <div class="card" ng-repeat="prf in profils" style="margin-bottom: 35px;">
+                                <div class="card-header">
+                                    <h4>{{prf.TITLE}}</h4>
+                                    <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddProfil(prf.TYPE[0])"><i class="ri-add-line pr-0"></i></button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul dnd-list="prf.DATA" dnd-allowed-types="prf.TYPE" class="col-md-12">
+                                                <li ng-repeat="profil in prf.DATA"
+                                                    dnd-draggable="profil"
+                                                    dnd-type="profil.TYPE"
+                                                    dnd-disable-if="profil.TYPE == 'unknown'"
+                                                    dnd-moved="prf.DATA.splice($index, 1)" class="col-md-12">
+                                                    <dnd-nodrag class="row">
+                                                        <div class="col-md-1">
+                                                            <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="form-group">
+                                                                <input ng-model="profil.TEXT" type="text" class="form-control" placeholder="">
+
+                                                            </div>
+                                                        </div>
+                                                        <button ng-click="DeleteProfil($index,profil.TYPE)" class="col-md-2 btn-todo btn btn-primary">
+                                                            <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                        </button>
+                                                        <hr>
+                                                    </dnd-nodrag>
+                                                </li>
+
+                                                <li class="dndPlaceholder col-md-12">
+                                                    <hr>
+                                                    <p class="text-center">Deplacer ici</p>
+                                                    <hr>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer" ng-if="$index == 1">
+                                    <button class="btn-todo float-left btn btn-primary" ng-click="Save()">Enregistrer</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card" ng-if="tab == 4"  ng-controller="CrudFormationsSessionsController">
+                            <div class="card-header">
+                                <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddFormation()"><i class="ri-add-line pr-0"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <ul class="col-md-12" dnd-list="formations"
+                                        dnd-allowed-types="['0']">
+                                        <li class="col-md-12" ng-repeat="formation in formations"
+                                            dnd-draggable="formation"
+                                            dnd-type="'0'"
+                                            dnd-moved="formations.splice($index, 1)">
+                                            <dnd-nodrag class="row">
+                                                <div  class="col-md-1">
+                                                    <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="form-group">
+                                                        <input ng-model="formation.TEXT" type="text" class="form-control" placeholder="">
+
+                                                    </div>
+                                                </div>
+                                                <button ng-click="DeleteFormation($index,formation.TYPE)" class="col-md-2 btn-todo btn btn-primary">
+                                                    <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                </button>
+                                                <hr>
+                                            </dnd-nodrag>
+                                            <div class="offset-1 col-md-9" style="margin-bottom: 50px;">
+                                                <button style="font-size: 30px;" class="btn-todo float-left btn btn-primary" ng-click="AddSousFormation(formation)"><i class="ri-add-line pr-0"></i></button>
+
+                                            </div>
+                                            <ul dnd-list="formation.sous_formations"
+                                                dnd-allowed-types="['1']" class="offset-1 col-md-9">
+                                                <li class="col-md-12" ng-repeat="sous_formation in formation.sous_formations"
+                                                    dnd-draggable="sous_formation"
+                                                    dnd-type="'1'"
+                                                    dnd-moved="formation.sous_formations.splice($index, 1)">
+                                                    <dnd-nodrag class="row">
+                                                        <div  class="col-md-1">
+                                                            <i dnd-handle class="handle ri-drag-move-fill"></i>{{$index+1}}
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="form-group">
+                                                                <input ng-model="sous_formation.TEXT" type="text" class="form-control" placeholder="">
+
+                                                            </div>
+                                                        </div>
+                                                        <button ng-click="DeleteSousFormation(formation,$index)" class="col-md-2 btn-todo btn btn-primary">
+                                                            <i class="ri-subtract-line" style="position: relative; left: -3px; top: -3px;"></i>
+                                                        </button>
+                                                        <hr>
+                                                    </dnd-nodrag>
+                                                </li>
+                                                <li class="dndPlaceholder col-md-12">
+                                                    <hr>
+                                                    <p class="text-center">Deplacer ici</p>
+                                                    <hr>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dndPlaceholder col-md-12">
+                                            <hr>
+                                            <p class="text-center">Deplacer ici</p>
+                                            <hr>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn-todo float-left btn btn-primary" ng-click="Save()">Enregistrer</button>
+                            </div>
+                        </div>
+                        <div class="card" ng-if="tab == 5">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="resultat">Résultats attendus à l'issue de la formation</label>
+                                        <input ng-model="programme.RESULTAT" type="text" class="form-control" id="resultat">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="obtention">Modalités d'obtention</label>
+                                        <input ng-model="programme.OBTENTION" type="text" class="form-control" id="obtention">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="certification">Détails sur la certification</label>
+                                        <input ng-model="programme.CERTIFICATION" type="text" class="form-control" id="certification">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="validite">Durée de validité</label>
+                                        <input ng-model="programme.VALIDITE" type="text" class="form-control" id="validite" placeholder="année(s)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn-todo float-left btn btn-primary" ng-click="SaveProgramme()">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 step" ng-show="step == 4">
+                <div class="row" ng-controller="CrudApprenantsSessionsController">
+                    <div class="col-md-4">
+                        <div class="folder-summary__details" style="padding: 0;">
+                            <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                                       placeholder="Recherche apprenants..."
+                                                       ng-model="search_appren">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 scroll-list">
+                            <folder ng-repeat="apprenant in  searched_apprenant = (liste_apprenants|filter:search_appren) track by $index" data="apprenant" template-url="app/Modules/SessionsModule/Resources/views/folder-apprenants.html" methods="folderMethodes"></folder>
+                            <div class="card" >
+                                <div class="card-body">
+                                    <div ng-show="searched_apprenant.length==0">
+                                        Aucun apprenants trouvés
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="folder-summary__details" style="padding: 0;">
+                            <div class="folder" style="padding: 10px 15px 7px 15px; line-height: 1.5; position: relative;">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div class="iq-search-bar">
+                                            <div class="searchbox" style="width: 100%">
+                                                <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                                       placeholder="Recherche apprenants..."
+                                                       ng-model="search_appren_session">
+                                                <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button ng-click="AllEmargement(searched_apprenant_session)" type="button" class="float-right btn btn-primary" ng-show="searched_apprenant_session.length>0">
+                                           Tous les émargements
+                                        </button>
+                                        <button type="button" class="float-right btn btn-light" style="cursor:auto">
+                                            <i class="ri-computer-line br-2"></i>
+                                            {{ searched_apprenant_session.length }} apprenants
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 scroll-list">
+                            <folder ng-repeat="ap in  searched_apprenant_session = (liste_session_apprenants|filter:search_appren_session) track by $index" data="ap" template-url="app/Modules/SessionsModule/Resources/views/folder-apprenants.html" methods="folderMethodes"></folder>
+                            <div class="card" >
+                                <div class="card-body" ng-show="liste_session_apprenants.length == 0">
+                                    Aucun apprenant séléctionné
+                                </div>
+                                <div class="card-body" ng-show="liste_session_apprenants.length > 0 && searched_apprenant_session.length == 0">
+                                    Aucun apprenant trouvé
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+</style>

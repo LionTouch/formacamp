@@ -1,0 +1,318 @@
+<div class="col-md-12" ng-controller="CrudSessionsController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Session</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <form name="form" novalidate>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="nom">Nom <span>*</span></label>
+                            <input id="nom" ng-model="session.NOM" type="text" name="nom" parsley-trigger="change"
+                                   placeholder="Entrer nom session" class="form-control" required>
+                            <div ng-show="(form.$submitted || form.nom.$touched) && form.nom.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                                <ul ng-show="form.$submitted || form.nom.$touched" class="parsley-errors-list error" >
+                                    <li ng-show="form.nom.$error.required" class="parsley-required">Veuillez entrer un nom session.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="organisme">Organisme <span>*</span></label>
+                        <md-autocomplete
+                            required=""
+                            md-selected-item="selectedOrganisme"
+                            md-search-text="searchOrganisme"
+                            md-selected-item-change="session.ID_ORGANISME = item.ID_ORGANISME"
+                            md-items="item in querySearch(searchOrganisme,liste_organismes)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. FormaCamp"
+                            input-aria-labelledby="organisme">
+                            <md-item-template>
+                                <span md-highlight-text="searchOrganisme" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucun organisme "{{searchOrganisme}}" trouvé.
+                            </md-not-found>
+                        </md-autocomplete>
+<!--                        <select name="organisme" ng-model="session.ID_ORGANISME" class="custom-select" id="organisme" required>-->
+<!--                            <option value="">Organisme</option>-->
+<!--                            <option ng-repeat="org in liste_organismes track by $index" ng-value="org.ID_ORGANISME">{{org.NOM}}</option>-->
+<!--                        </select>-->
+                        <div ng-show="(form.$submitted || form.organisme.$touched) && form.organisme.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                            <ul class="parsley-errors-list error" >
+                                <li  class="parsley-required">Veuillez selectionner un organisme.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="gestionnaire">Client </label>
+<!--                        <select name="gestionnaire" ng-model="session.ID_CLIENT" class="custom-select" id="gestionnaire">-->
+<!--                            <option ng-value="0">&#45;&#45;</option>-->
+<!--                            <option ng-repeat="client in liste_clients track by $index" ng-value="client.ID_CLIENT">{{client.NOM}} ({{client.TYPE_TITRE}})</option>-->
+<!--                        </select>-->
+                        <md-autocomplete
+                            md-selected-item="selectedClient"
+                            md-search-text="searchClient"
+                            md-selected-item-change="session.ID_CLIENT = item.ID_CLIENT"
+                            md-items="item in querySearch(searchClient,liste_clients)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. Entreprise"
+                            input-aria-labelledby="gestionnaire">
+                            <md-item-template>
+                                <span md-highlight-text="searchClient" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucun gestionnaire "{{searchClient}}" trouvé.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="custom-control custom-checkbox">
+                            <input ng-true-value="1"  ng-false-value="0" ng-model="session.TRAITANCE" type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label customCheck1" for="customCheck1">Réalisée en sous traitance d'un autre organisme</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline">
+                            <div class="custom-switch-inner">
+                                <p class="mb-0"> Type de client </p>
+                                <input  ng-true-value="1"  ng-false-value="0" ng-model="session.TYPE_CLIENT"  type="checkbox" class="custom-control-input bg-success" id="customSwitch-2" checked="">
+                                <a href="#" ng-class="session.TYPE_CLIENT == 0 ? 'active':''" ng-click="session.TYPE_CLIENT = 0">Intra</a>
+                                <label class="custom-control-label" for="customSwitch-2">
+                                    <span class="switch-icon-left"><i class="fa fa-check"></i></span>
+                                    <span class="switch-icon-right"><i class="fa fa-check"></i></span>
+                                </label>
+                                <a href="#" ng-class="session.TYPE_CLIENT == 1 ? 'active':''" ng-click="session.TYPE_CLIENT = 1">Inter entreprise</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="domaine">Domaine de formation</label>
+<!--                        <select name="domaine" ng-model="session.ID_DOMAINE" class="custom-select" id="domaine" >-->
+<!--                            <option ng-repeat="domaine in liste_domaines track by $index" ng-value="domaine.ID_DOMAINE">{{domaine.NOM}}</option>-->
+<!--                        </select>-->
+                        <md-autocomplete
+                            md-selected-item="selectedDomaine"
+                            md-selected-item-change="session.ID_DOMAINE = item.ID_DOMAINE"
+                            md-search-text="searchDomaine"
+                            md-items="item in querySearch(searchDomaine,liste_domaines)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. Informatique"
+                            input-aria-labelledby="domaine">
+                            <md-item-template>
+                                <span md-highlight-text="searchDomaine" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucun domaine "{{searchDomaine}}" trouvé.
+
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lieu">Lieu de formation</label>
+<!--                        <select name="domaine" ng-model="session.ID_LIEU_FORMATION" class="custom-select" id="lieu" >-->
+<!--                            <option ng-repeat="lieu in liste_lieux track by $index" ng-value="lieu.ID_LIEU_FORMATION">{{lieu.NOM}}</option>-->
+<!--                        </select>-->
+                        <md-autocomplete
+                            md-selected-item="selectedLieu"
+                            md-search-text="searchLieu"
+                            md-selected-item-change="session.ID_LIEU_FORMATION = item.ID_LIEU_FORMATION"
+                            md-items="item in querySearch(searchLieu,liste_lieux)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. Lieu"
+                            input-aria-labelledby="lieu">
+                            <md-item-template>
+                                <span md-highlight-text="searchLieu" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucun lieu "{{searchLieu}}" trouvé.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="diplome">Diplome de formation</label>
+<!--                        <select name="diplome" ng-model="session.ID_DIPLOME" class="custom-select" id="diplome" >-->
+<!--                            <option ng-repeat="diplome in liste_diplomes track by $index" ng-value="diplome.ID_DIPLOME">{{diplome.NOM}}</option>-->
+<!--                        </select>-->
+                        <md-autocomplete
+                            md-selected-item="selectedDiplome"
+                            md-search-text="searchDiplome"
+                            md-selected-item-change="session.ID_DIPLOME = item.ID_DIPLOME"
+                            md-items="item in querySearch(searchDiplome,liste_diplomes)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. Diplome"
+                            input-aria-labelledby="lieu">
+                            <md-item-template>
+                                <span md-highlight-text="searchDiplome" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucun lieu "{{searchDiplome}}" trouvé.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="action">Action de formation</label>
+<!--                        <select name="action" ng-model="session.ID_ACTION" class="custom-select" id="action" >-->
+<!--                            <option ng-repeat="action in liste_actions track by $index" ng-value="action.ID_ACTION">{{action.NOM}}</option>-->
+<!--                        </select>-->
+                        <md-autocomplete
+                            md-selected-item="selectedAction"
+                            md-search-text="searchAction"
+                            md-selected-item-change="session.ID_ACTION = item.ID_ACTION"
+                            md-items="item in querySearch(searchAction,liste_actions)"
+                            md-item-text="item.NOM"
+                            md-min-length="0"
+                            placeholder="Ex. Action"
+                            input-aria-labelledby="action">
+                            <md-item-template>
+                                <span md-highlight-text="searchAction" md-highlight-flags="^i">{{item.NOM}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Aucune action "{{searchAction}}" trouvée.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nom du titre visé</label>
+                            <input ng-model="session.TITRE_VISE" type="text" name="titre" parsley-trigger="change"
+                                   placeholder="Entrer titre visé" class="form-control">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="debut">Date début</label>
+                            <input ng-date-input ng-model="session.DEBUT" type="date" class="form-control" id="debut" max="{{session.FIN | date:'yyyy-MM-dd'}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fin">Date fin</label>
+                            <input ng-date-input ng-model="session.FIN" type="date" class="form-control" id="fin" min="{{session.DEBUT | date:'yyyy-MM-dd'}}">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-group text-right mb-0" style="margin-top: 20px;">
+                    <button ng-click="form.$valid ? Save(ins):void " class="btn btn-primary waves-effect waves-light mr-1" type="submit" >
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<style>
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+</style>

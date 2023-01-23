@@ -1,0 +1,13 @@
+<li class="mr-3">
+    <a class="font-size-14" href="#" id="navbarDropdown" data-toggle="dropdown">
+        {{current_grid}} - 50 of {{entire}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#">20 per page</a>
+        <a class="dropdown-item" href="#">50 per page</a>
+        <a class="dropdown-item" href="#">100 per page</a>
+    </div>
+</li>
+<li uib-tooltip="Previous" tooltip-placement="'top'" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a href="#" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle ng-class="{disabled: noPrevious()||ngDisabled}"><i class="ri-arrow-left-s-line"></i></a></li>
+
+<li uib-tooltip="Next" tooltip-placement="'top'" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a href="#" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle ng-class="{disabled: noNext()||ngDisabled}"><i class="ri-arrow-right-s-line"></i></a></li>

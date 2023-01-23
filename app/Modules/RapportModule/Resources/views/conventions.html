@@ -1,0 +1,80 @@
+<div class="col-md-12" ng-controller="SuiviConventionsController">
+    <div id="send-loading" style="display: none">
+        <div class="send-loading">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <table class="table mb-0 table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="text" class="form-control" ng-model="search.NOM" placeholder="Recherche Session">
+                    </th>
+                    <th>
+                        <input type="text" class="form-control" ng-model="search.NOM_CLIENT" placeholder="Recherche Client">
+                    </th>
+                    <th>
+                        <input type="text" class="form-control" ng-model="search.NOM_ORGANISME" placeholder="Recherche Organisme">
+                    </th>
+                    <th>
+                        <input type="date" class="form-control" ng-model="after">
+                    </th>
+                    <th>
+                        <input type="date" class="form-control" ng-model="before">
+                    </th>
+                </tr>
+                <tr>
+                    <th>Debut</th>
+                    <th>Fin</th>
+                    <th>Session</th>
+                    <th>Client</th>
+                    <th>Organisme</th>
+                    <th>Montant HT</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="searched.length == 0" class="text-center">
+                    Aucun enregistrement trouvé
+                </tr>
+                <tr ng-repeat="suivi  in  searched = (((liste_data |filter:search )| date_search:after:before) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit) track by $index">
+                    <td>{{suivi.DEBUT}}</td>
+                    <td>{{suivi.FIN}}</td>
+                    <td>{{suivi.NOM}}</td>
+                    <td>{{suivi.NOM_CLIENT ? suivi.NOM_CLIENT:'Aucun client'}}</td>
+                    <td>{{suivi.NOM_ORGANISME}}</td>
+                    <td>{{suivi.PRIX_HTT}}€</td>
+                    <td>
+                        <div class="flex align-items-center list-user-action">
+                            <a class="iq-bg-primary" href="#" tooltip-placement="top"  uib-tooltip="Envoyer" ng-click="Send(suivi)">
+                                <i class="ri-mail-send-line"></i>
+                            </a>
+                            <a class="iq-bg-primary" href="#" tooltip-placement="top"  uib-tooltip="Télécharger" ng-click="Download(suivi.ID_SESSION)">
+                                <i class="ri-download-2-line"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="searched.length == 0">
+                    <td colspan="6" class="text-center">Aucun element trouvé</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="row justify-content-between mt-3">
+                <div id="user-list-page-info" class="col-md-6">
+                    <span>Affichage de {{ searched.length }} sur {{ entire}} résultats</span>
+                </div>
+                <div class="col-md-6" ng-show="searched.length > 0">
+
+                    <ul class="float-right" style="margin-top: 0" uib-pagination direction-links="true" boundary-links="true" total-items="entire" ng-model="current_grid" items-per-page="data_limit" max-size="1" >
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

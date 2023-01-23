@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">Saisie salle</div>
+    <div class="card-body">
+        <form name="form" novalidate>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Nom <span>*</span></label>
+                        <input ng-model="ins.NOM" type="text" name="nom" parsley-trigger="change"
+                               placeholder="Entrer nom salle" class="form-control" required>
+                        <div ng-show="(form.$submitted || form.nom.$touched) && form.nom.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                            <ul ng-show="form.$submitted || form.nom.$touched" class="parsley-errors-list error" >
+                                <li ng-show="form.nom.$error.required" class="parsley-required">Veuillez entrer un nom salle.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group text-right mb-0" style="margin-top: 20px;">
+
+                <button ng-click="form.$valid ? Save(ins):void " class="btn btn-primary waves-effect waves-light mr-1" type="submit" >
+                    Enregistrer
+                </button>
+                <button ng-click="$dismiss()" type="reset" class="btn btn-secondary waves-effect waves-light" >
+                    Fermer
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<style>
+    .error{
+        color: red;
+    }
+    .modal.fade.ng-scope.ng-isolate-scope.in {
+        opacity: 1 !important;
+        width: 100%;
+        min-width: 600px;
+        background: #ffffffd6;
+        z-index: 1050 !important;
+    }
+    .modal-dialog{
+        top: 10%;
+        /*max-width: 80%!important;*/
+    }
+</style>

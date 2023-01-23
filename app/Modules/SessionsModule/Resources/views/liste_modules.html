@@ -1,0 +1,154 @@
+<div class="col-md-12" ng-controller="ListeModulesController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gérer Modules Date&Prix</li>
+            <div style="position: absolute;right: 2%;top: 0" >
+<!--                <button ng-click="GoTo('Sessions/'+session.ID_SESSION)" type="button" class="float-right btn btn-primary" >-->
+<!--                    Modifier Session-->
+<!--                </button>-->
+<!--                <button ng-click="DeleteSession()" type="button" class="float-right btn btn-primary" >-->
+<!--                    Supprimer Session-->
+<!--                </button>-->
+                <button ng-click="Add()" type="button" class="float-right btn btn-primary" >
+                    <i class="ri-user-add-line mr-2"></i> Ajouter un module
+                </button>
+<!--                <button type="button" class="float-right btn btn-light" >-->
+<!--                    <i class="ri-computer-line br-2"></i>-->
+<!--                    {{ searched.length }} modules-->
+<!--                </button>-->
+
+                <button ng-if="session.TYPE!==2" ng-click="UpdateType(session)"  type="button" class="tabs float-right btn btn-primary" >
+                    <i class="ri-check-double-line mr-2"></i> {{session.TYPE===0?'Valider le projet et passer en mode planification':'Valider la session et passer en mode planifié'}}
+                </button>
+            </div>
+
+        </ol>
+    </nav>
+
+    <form autocomplete="off" name="form" novalidate>
+        <div infinite-scroll="loadMore()" class="row">
+            <div class="col-md-4" ng-repeat="module in liste_data | orderBy: 'START'" ng-click="GoTo('Sessions/'+module.ID_SESSION+'/Modules/'+module.ID_MODULE+'/Dates&Prix')">
+                <div  class="iq-card " style="cursor: pointer">
+                    <div class="iq-card-body ">
+                        <div  class="bg-primary p-3 rounded d-flex align-items-center justify-content-between mb-3">
+                            <h5  class="text-white">{{ module.NOM }}</h5>
+                            <div>
+                                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Modifier" ng-click="$event.stopPropagation();Edit(module.ID_MODULE)" class="ri-ball-pen-line font-size-18" role="button" tabindex="0"></i>
+                                <i style="cursor: pointer" tooltip-placement="top" uib-tooltip="Supprimer" ng-click="$event.stopPropagation();Delete(module.ID_MODULE)" class="ri-close-circle-line font-size-18 ml-2" role="button" tabindex="0"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p  style="display: inline-flex;" class="font-size-12 mb-0 col-md-12"><b><i class="ri-community-line mr-1"></i> Modalité : </b><br><span class="span-header"> {{module.NOM_MODALITE}}</span></p>
+                            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-2-line mr-1"></i> Début</b><br><span class="span-header">{{ module.START | date_filter_fr }}</span></p>
+                            <p class="font-size-12 mb-0 col-md-6"><b style="display: inline-flex;"><i class="ri-calendar-event-line mr-1"></i> Fin</b><br><span class="span-header">{{ module.END | date_filter_fr }}</span></p>
+                        </div>
+                    </div>
+                </div>
+<!--                    <folder ng-click="GoTo('Sessions/'+module.ID_SESSION+'/Modules/'+module.ID_MODULE+'/Dates&Prix')"-->
+<!--                            data="module"-->
+<!--                            template-url="app/Modules/SessionsModule/Resources/views/folder-modules.html"-->
+<!--                            methods="folderMethodes"-->
+<!--                    ></folder>-->
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<style>
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .btn-todo {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+        line-height: 1px;
+        border-radius: 3px;
+        background: rgb(0 0 0);
+        color: rgb(255 255 255);
+        border: 1px solid #dbdbdb;
+        font-size: 12px;
+        padding: 15px;
+        height: 0px;
+        font-weight: 500;
+    }
+    .btn-todo:hover{
+        background: rgb(250 250 250) !important;
+        border: none !important;
+        color: rgb(0 0 0) !important;
+    }
+    .handle {
+        cursor: move;
+        font-size: 30px;
+    }
+    ul[dnd-list] {
+        min-height: 42px;
+    }
+    ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        padding: 10px 15px;
+        min-height: 42px;
+    }
+    .scroll-list {
+        max-height: 60vh;
+        overflow: hidden auto;
+    }
+</style>

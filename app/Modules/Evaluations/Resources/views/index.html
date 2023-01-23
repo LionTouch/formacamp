@@ -1,0 +1,39 @@
+<div class="container mt-5 p-0 bg-white" ng-controller="EvaluationController">
+        <div class="row no-gutters">
+            <div class="col-md-6" >
+                <img style="height: 100px" src="resources/assets/images/logo.png">
+            </div>
+            <div class="col-md-6"> Apprenant: {{ apprenant.NOM }} {{ apprenant.PRENOM }}</div>
+            <div class="col-md-6"> Email: {{ apprenant.EMAIL }}</div>
+            <div class="col-md-6"> Session: {{ session.NOM }}</div>
+
+            <div class="col-md-6"> Organisme: {{ session.NOM_ORGANISME }}</div>
+
+            <div class="col-md-6"> Client: {{ session.NOM_CLIENT?session.NOM_CLIENT:'Aucun client' }}</div>
+
+            <div class="col-md-6"> Date Debut: {{ session.DEBUT }}</div>
+
+            <div class="col-md-6"> Date Fin: {{ session.FIN }}</div>
+
+            <div class="col-md-6"> Domaine: {{ session.NOM_DOMAINE }}</div>
+
+            <div class="col-md-6"> Type Client: {{session.TYPE_CLIENT==0?'Intra':'Inter entreprise'}} </div>
+
+            <div class="col-md-6" >Diplome:{{ session.ID_DIPLOME==0?'Veuillez selectionner un diplome':session.NOM_DIPLOME }}</div>
+            <div class="col-md-6">Action:{{ session.ID_ACTION==0?'Veuillez selectionner une action de formation':session.NOM_ACTION }}</div>
+    </div>
+        <div class="row no-gutters" ng-if="!Passed">
+            <div class="col-md-12">
+                <ng-quest  methods="methods" ng-repeat="quest in liste_quests track by $index" quest="quest"  index="$index+1" template-url='app/Modules/Evaluations/Resources/views/evaluation.html'></ng-quest>
+            </div>
+            <div class="col-md-12 border-top" >
+                <button class="btn-primary float-right m-3" type="button" ng-click="Save()">Confirmer</button>
+            </div>
+        </div>
+
+    <div class="row no-gutters" ng-if="Passed">
+        <div class="col-md-12">
+            <ng-quest  methods="methods" ng-repeat="quest in liste_quests track by $index" quest="quest"  index="$index+1" template-url='app/Modules/Evaluations/Resources/views/evaluation2.html'></ng-quest>
+        </div>
+    </div>
+</div>

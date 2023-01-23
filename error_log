@@ -1,0 +1,8 @@
+[02-Jul-2021 12:07:14 UTC] PHP Fatal error:  Could not check compatibility between App\Exceptions\Handler::render($request, App\Exceptions\Exception $exception) and Illuminate\Foundation\Exceptions\Handler::render($request, Throwable $e), because class App\Exceptions\Exception is not available in /var/www/html/formacamp/app/Exceptions/Handler.php on line 41
+[02-Jul-2021 12:07:14 UTC] PHP Fatal error:  Uncaught ReflectionException: Class App\Exceptions\Handler does not exist in /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php:836
+Stack trace:
+#0 /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php(836): ReflectionClass->__construct('App\\Exceptions\\...')
+#1 /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php(717): Illuminate\Container\Container->build('App\\Exceptions\\...')
+#2 /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(841): Illuminate\Container\Container->resolve('App\\Exceptions\\...', Array, false)
+#3 /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php(287): Illuminate\Foundation\Application->resolve('App\\Exceptions\\...', Array, false)
+#4 /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php(832): Illuminate\Container\Container->Illuminate\Container\{closure}(Object(Illuminate in /var/www/html/formacamp/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 838

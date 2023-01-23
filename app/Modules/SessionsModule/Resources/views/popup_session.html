@@ -1,0 +1,133 @@
+<div class="card">
+    <div class="card-header">Saisie session</div>
+    <div class="card-body">
+        <form name="form" novalidate>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Nom <span>*</span></label>
+                        <input ng-model="ins.NOM" type="text" name="nom" parsley-trigger="change"
+                               placeholder="Entrer nom session" class="form-control" required>
+                        <div ng-show="(form.$submitted || form.nom.$touched) && form.nom.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                            <ul ng-show="form.$submitted || form.nom.$touched" class="parsley-errors-list error" >
+                                <li ng-show="form.nom.$error.required" class="parsley-required">Veuillez entrer un nom session.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="organisme">Organisme <span>*</span></label>
+                    <select name="organisme" ng-model="ins.ID_ORGANISME" class="custom-select" id="organisme" required>
+                        <option value="">Organisme</option>
+                        <option ng-repeat="org in liste_organismes track by $index" ng-value="org.ID_ORGANISME">{{org.NOM}}</option>
+                    </select>
+                    <div ng-show="(form.$submitted || form.organisme.$touched) && form.organisme.$error.required"  class="alert alert-danger" role="alert" style="color:#7c2a34;padding: 0px 0px;">
+                        <ul class="parsley-errors-list error" >
+                            <li  class="parsley-required">Veuillez selectionner un organisme.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="gestionnaire">Client </label>
+                    <select name="gestionnaire" ng-model="ins.ID_CLIENT" class="custom-select" id="gestionnaire">
+                        <option ng-value="0">--</option>
+                        <option ng-repeat="client in liste_clients track by $index" ng-value="client.ID_CLIENT">{{client.NOM}} ({{client.TYPE_TITRE}})</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="custom-control custom-checkbox">
+                        <input ng-true-value="1"  ng-false-value="0" ng-model="ins.TRAITANCE" type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label customCheck1" for="customCheck1">Réalisée en sous traitance d'un autre organisme</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline">
+                        <div class="custom-switch-inner">
+                            <p class="mb-0"> Type de client </p>
+                            <input  ng-true-value="1"  ng-false-value="0" ng-model="ins.TYPE_CLIENT"  type="checkbox" class="custom-control-input bg-success" id="customSwitch-2" checked="">
+                            <a href="#" ng-class="ins.TYPE_CLIENT == 0 ? 'active':''" ng-click="ins.TYPE_CLIENT = 0">Intra</a>
+                            <label class="custom-control-label" for="customSwitch-2">
+                                <span class="switch-icon-left"><i class="fa fa-check"></i></span>
+                                <span class="switch-icon-right"><i class="fa fa-check"></i></span>
+                            </label>
+                            <a href="#" ng-class="ins.TYPE_CLIENT == 1 ? 'active':''" ng-click="ins.TYPE_CLIENT = 1">Inter entreprise</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="domaine">Domaine de formation</label>
+                    <select name="domaine" ng-model="ins.ID_DOMAINE" class="custom-select" id="domaine" >
+                        <option ng-repeat="domaine in liste_domaines track by $index" ng-value="domaine.ID_DOMAINE">{{domaine.NOM}}</option>
+                    </select>
+
+                </div>
+                <div class="col-md-6">
+                    <label for="domaine">Lieu de formation</label>
+                    <select name="domaine" ng-model="ins.ID_LIEU_FORMATION" class="custom-select" id="lieu" >
+                        <option ng-repeat="lieu in liste_lieux track by $index" ng-value="lieu.ID_LIEU_FORMATION">{{lieu.NOM}}</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Nom du titre visé</label>
+                        <input ng-model="ins.TITRE_VISE" type="text" name="titre" parsley-trigger="change"
+                               placeholder="Entrer titre visé" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="debut">Date début</label>
+                        <input ng-date-input ng-model="ins.DEBUT" type="date" class="form-control" id="debut" max="{{ins.FIN | date:'yyyy-MM-dd'}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fin">Date fin</label>
+                        <input ng-date-input ng-model="ins.FIN" type="date" class="form-control" id="fin" min="{{ins.DEBUT | date:'yyyy-MM-dd'}}">
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group text-right mb-0" style="margin-top: 20px;">
+
+                <button ng-click="form.$valid ? Save(ins):void " class="btn btn-primary waves-effect waves-light mr-1" type="submit" >
+                    Enregistrer
+                </button>
+                <button ng-click="$dismiss()" type="reset" class="btn btn-secondary waves-effect waves-light" >
+                    Fermer
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+</div>
+<style>
+    .error{
+        color: red;
+    }
+    .modal.fade.ng-scope.ng-isolate-scope.in {
+        opacity: 1 !important;
+        width: 100%;
+        min-width: 600px;
+        background: #ffffffd6;
+        z-index: 1050 !important;
+    }
+    .modal-dialog{
+        top: 10%;
+        /*max-width: 80%!important;*/
+    }
+</style>

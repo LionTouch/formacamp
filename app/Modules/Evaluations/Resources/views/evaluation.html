@@ -1,0 +1,143 @@
+<div class="col-md-12 card">
+    <hr>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 my-1">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 1">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">{{index}}</label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="custom-control custom-radio" ng-repeat="reponse in quest.reponses track by $index">
+                                            <input id="r{{reponse.ID_REPONSE}}" name="r{{index}}-{{quest.ID_QUEST}}" type="radio" class="custom-control-input" ng-value="reponse.ID_REPONSE" ng-model="quest.reponse">
+                                            <label for="r{{reponse.ID_REPONSE}}" class="custom-control-label w-100 border-bottom pl-3" ng-bind="reponse.TEXT"> </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 2">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">
+                                    {{index}}
+                                </label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <div class="form-check" ng-init="quest.reponse = []">
+                                            <checkbox-group name="foo" ng-model="quest.reponse" ng-click="$event.stopPropagation()">
+                                                <ng-checkbox  ng-repeat="reponse in quest.reponses track by $index" value="{{reponse.ID_REPONSE}}">{{reponse.TEXT}}</ng-checkbox>
+                                            </checkbox-group>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 3">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">{{index}}</label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12 ml-3">
+                                <div class="form-group">
+                                    <textarea ng-model="quest.reponse" class="form-control" rows="5"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 4">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">
+                                    {{index}}
+                                </label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12">
+                                <table>
+                                    <thead>
+                                    <th class="col-md-5"></th>
+                                    <th class="col-md-1" ng-repeat="reponse in quest.reponses track by $index" class="text-center" style="white-space: nowrap;">
+                                        <label class="w-100 border-bottom pl-3"  ng-bind="reponse.TEXT" ></label>
+                                    </th>
+
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="sub_quest in quest.sub_quests track by $index">
+                                        <td>
+                                            <label class="w-100 border-bottom pl-3"  ng-bind="sub_quest.TEXT"></label>
+                                        </td>
+                                        <td style="height: 3rem" ng-repeat="reponse in quest.reponses track by $index" class="text-center">
+                                            <label for="r-{{sub_quest.ID_SUB_QUEST}}-{{reponse.ID_REPONSE}}"></label>
+                                            <input  id="r-{{sub_quest.ID_SUB_QUEST}}-{{reponse.ID_REPONSE}}" name="r{{sub_quest.ID_SUB_QUEST}}-{{index}}-{{quest.ID_QUEST}}" type="radio" ng-value="reponse.ID_REPONSE" ng-model="sub_quest.reponse" ng-checked="">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 5">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">{{index}}</label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="ratting">
+                                            <span ng-init="quest.reponse = 0" uib-rating ng-model="quest.reponse" max="5" on-hover="hoveringOver(value)" on-leave="methods.overStar = null" titles="['1','2','3']" aria-labelledby="default-rating"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-if="quest.ID_TYPE === 6">
+                            <div class="form-group form-inline">
+                                <label class="label-quest mr-2">{{index}}</label>
+                                <label class="input-quest border-bottom" type="text" ng-bind="quest.TEXT"></label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <div class="ratting">
+                                            <ul class="ratting-item d-flex p-0 m-0">
+                                                <li ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10] track by $index" class="blank">
+                                                    <button ng-class="i==quest.reponse?'active':''" ng-click="quest.reponse=i" type="button" class="btn btn-primary rounded-pill btn-rate-num mb-3">
+                                                        {{i}}</button>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+  .eval-check-icon{
+      cursor: pointer;
+  }
+  .eval-check-icon:hover{
+      color: var(--iq-primary);
+      font-size: 1.6rem;
+  }
+  .active{
+      color: #fff;
+      background-color: #827af3;
+      border-color: #827af3;
+  }
+</style>

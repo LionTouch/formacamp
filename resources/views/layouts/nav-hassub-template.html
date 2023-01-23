@@ -1,0 +1,8 @@
+<a href="{{url}}" class="iq-waves-effect"  ng-click="!hassub && isOpen ? void:toggleOpen()" uib-accordion-transclude="heading">
+    <i class="{{icon}}"></i>
+    <span uib-accordion-header >{{heading}}</span>
+    <i ng-if="hassub" class="ri-arrow-right-s-line iq-arrow-right"></i>
+</a>
+
+
+<ul class="iq-submenu"  uib-collapse="!isOpen" ng-transclude></ul>

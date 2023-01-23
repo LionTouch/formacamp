@@ -1,0 +1,92 @@
+<div class="row" ng-controller="DevisController">
+    <div class="k-loading">
+        <div class="spinner-border text-primary k-spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary float-right download" ng-click="Print()"><i class="ri-printer-line"></i>Imprimer</button>
+    <button type="button" class="btn btn-primary float-right print" ng-click="Download()"><i class="ri-file-pdf-line"></i>Télécharger</button>
+    <div class="col-sm-12"  id="constat">
+
+        <div class="iq-card prevent-split">
+
+            <div class="iq-card-header d-flex justify-content-between">
+                <div class="col-md-12 iq-header-title mx-auto">
+                    <h4 class="font-weight-bold text-center">Devis de formation professionnelle</h4>
+                </div>
+            </div>
+            <div class="iq-card-body">
+                <p class="col-md-12  text-right">Date du devis: <b>{{ins.DATE}}</b></p>
+                <div class="col-md-12">
+                   <p>Devis de Formation Professionnelle n°{{ins.NUM}}</p>
+                   <p>Destinataire: {{ins.DESTINATAIRE}}</p>
+                   <p>Situé: {{ins.LIEU_DESTINATAIRE}}</p>
+
+                   <p>Organisateur de la formation: {{ins.NOM_ORGANISME}}</p>
+                   <p>Situé: {{ins.LIEU_SERVICE_ORGANISME}}</p>
+                   <p>Numéro SIRET: {{ins.SIRET_ORGANISATEUR}}</p>
+                   <p>Représenté par: {{ins.REPRESENTANT}}</p>
+                    <h6 class="font-weight-bold">1. Objet, nature et durée de la formation</h6>
+                    <ul>
+                        <li>. Intitulé de la formation: {{ins.NOM_SESSION}}</li>
+                        <li>. Type d’action de formation (au sens de l’article L6313-1 du code du travail): {{ins.NOM_ACTION}}</li>
+                        <li>. Durée: {{ins.DUREE_H}}h ({{ins.DUREE_J}} jours)</li>
+                        <li>. Dates de la formation: du {{ins.START}} au 12 novembre 2021</li>
+                        <li>. Lieu de la formation: FRC Technique - 4 Avenue de la Libération 60160 MONTATAIRE</li>
+                        <li>. Effectifs formés du bénéficiaire: 1</li>
+                    </ul>
+                    <h6 class="font-weight-bold">2. Programme de la formation et formateur</h6>
+                    <p>La description détaillée du programme de formation et du formateur est fournie en annexe.</p>
+                    <h6 class="font-weight-bold">3. Prix de la formation</h6>
+                    <div class="row">
+                        <div class="col border p-0">Prix unitaire HT : 900.00 € </div>
+                        <div class="col border p-0">Durée : 35h (5 jours) </div>
+                        <div class="col border p-0">Prix total HT : 900.00 €</div>
+                        <div class="col border p-0">Taux de TVA : 20,00%</div>
+                        <div class="col border p-0">TVA : 180.00 €</div>
+                        <div class="col border p-0">Prix total TTC : 1080.00 €</div>
+                    </div>
+                    <h6 class="font-weight-bold">4. Durée de validité du devis</h6>
+                    <p>Ce devis sera valable pour une durée de 30 jours.</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Pour l'organisme de formation,</p>
+                            <p>FRC Technique,</p>
+                            <p>Tatiana TROUSSELLE</p>
+                        </div>
+                        <div class="col-md-6">
+                            Pour le bénéficiaire, bon pour accord
+                            Tristan BAGAZA
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="x/kendo-template" id="page-template">
+    <div class="page-template" >
+        <div class="header">
+            <img src="../resources/assets/images/logo.png" style="width: 100%"/>
+            <div style="position:absolute;margin-left: 41%;top: 10px;color: white;text-align: left">
+                <p style="line-height: 1em">Siège social : 212 Avenue de Tivoli - 33110 Le Bouscat</p>
+                <p style="line-height: 1em">Numéro téléphone : 06.50.14.32.52</p>
+                <p style="line-height: 1em">Siren : 903.001.899</p>
+            </div>
+
+
+        </div>
+        <div class="footer" >
+            <div class="row">
+                FRC Technique | 4 Avenue de la Libération MONTATAIRE 60160 | Numéro SIRET: 88070475400022 | N° TVA: FR 47 880704754 | Numéro de déclaration d'activité: 11756003775 (Ile de France)
+            </div>
+            <div style="float: right">Page #: pageNum #</div>
+        </div>
+    </div>
+</script>

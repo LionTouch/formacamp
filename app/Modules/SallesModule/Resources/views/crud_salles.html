@@ -1,0 +1,153 @@
+<div class="col-md-12" ng-controller="CrudSallesController">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/GestionDonnees/Salles"><i class="ri-menu-3-line mr-1 float-left"></i>Salles</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ins.ID_SALLE ? 'Modifier' : 'Ajouter'}} Salle</li>
+        </ol>
+    </nav>
+    <form autocomplete="off" name="form" novalidate>
+        <div class="row">
+            <div class="col-12" ng-show="step == 1">
+                <folder ng-repeat="user in  searched = ((liste_data|filter:search)| filter:searchType)| orderBy: '-DATE'| limitTo:infiniteLimit" data="user" template-url="app/Modules/SessionsModule/Resources/views/folder-modules.html"  methods="folderMethodes"></folder>
+
+            </div>
+            <div class="col-12 step" ng-show="step == 2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 7">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 step" ng-show="step == 10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row  justify-content-end">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<style>
+    /*.tabs{
+        position: relative; width: auto; text-align: center; line-height: 1px; background: rgb(0 0 0); border-radius: 3px; color: rgb(255 255 255); margin-right: 5px; font-size: 12px; padding: 15px; height: 0px; font-weight: 500; border: none;
+    }
+    .tabs.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }*/
+    .step.ng-hide {
+        opacity: 0;
+    }
+    .step:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .fade:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .alert.ng-hide {
+        opacity: 0;
+    }
+    .alert:not(.ng-hide)  {
+        -webkit-transition: opacity .9s linear;
+        -o-transition: opacity .9s linear;
+        transition: opacity .9s linear
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .alert:not(.ng-hide) {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none
+        }
+    }
+    .pickr .pcr-button {
+        width: 15em;
+    }
+    .customCheck1{
+        cursor: pointer;
+    }
+    .rui-profile .rui-profile-img img {
+        width: 100px;
+        height: 100px;
+        font-family: "object-fit: cover";
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+</style>

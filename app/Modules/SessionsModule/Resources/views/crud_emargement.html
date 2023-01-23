@@ -1,0 +1,145 @@
+<div class="col-md-12" ng-controller="CrudEmargementSessionsController">
+    <div id="send-loading" style="display: none">
+        <div class="send-loading">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background: #fff">
+            <li class="breadcrumb-item"><a href="/Sessions"><i class="ri-menu-3-line mr-1 float-left"></i>Sessions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Emargements</li>
+        </ol>
+    </nav>
+    <div class="col-md-12 bg-white py-2 my-2">
+        <div uib-dropdown ng-if="liste_apprenants.length>0">
+
+            <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                <i class="ri-download-2-line" style="position: relative; left: -3px; top: -3px;"></i> Emargements
+            </button>
+            <div class="dropdown-menu" uib-dropdown-menu role="menu"  ng-click="$event.stopPropagation()">
+                <div class="col-md-12" ng-show="liste_apprenants.length>0">
+                    <div style="overflow: hidden auto;max-height: 470px;width: 400px">
+                        <div class="col-md-12">
+                            <div class="iq-search-bar">
+                                <div class="searchbox" style="width: 100%">
+                                    <input type="text" class="text search-input" ng-change="infiniteLimit = 5"
+                                           placeholder="Recherche apprenants..."
+                                           ng-model="search_apprenants">
+                                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="searched_apprenants.length>0" >
+                            <button ng-click="toggleAll(searched_apprenants)" class="btn btn-primary" style="width: 100%" >
+                                <i class="ri-check-double-line"></i> {{!isChecked(searched_apprenants) ? 'Sélectionner': 'Désélectionner'}} tout
+                            </button>
+                            <div class="demo-select-all-checkboxes" ng-repeat="apprenant in searched_apprenants = (liste_apprenants|filter:search_apprenants)| orderBy: 'NOM' track by $index">
+                                <md-checkbox ng-checked="exists(apprenant.ID_APPRENANT, selected)" ng-click="toggle(apprenant.ID_APPRENANT, selected)">
+                                    {{apprenant.NOM}} {{apprenant.PRENOM}}
+                                </md-checkbox>
+                            </div>
+                            <div class="row p-0">
+                                <div class="col-md-6">
+                                    <button ng-disabled="selected.length==0 && searched_apprenants.length>0" ng-click="Send(selected)"  class="btn btn-primary mt-1" style="width: 100%">
+                                        <i class="ri-download-2-line"></i> Envoyer
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button ng-disabled="selected.length==0 && searched_apprenants.length>0" ng-click="Download(selected)"  class="btn btn-primary mt-1" style="width: 100%">
+                                        <i class="ri-download-2-line"></i> Télecharger
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12" ng-show="liste_apprenants.length==0">
+                    Veuillez ajouter des apprenants
+                </div>
+                <div class="col-md-12" ng-show="searched_apprenants.length==0 && liste_apprenants.length>0">
+                    Aucun apprenants trouvés
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+       <div class="card-body row text-center">
+           <div class="table-responsive">
+               <table class="table table-bordered">
+                   <thead>
+                        <tr>
+                            <th class="border-0" rowspan="1"></th>
+                            <th colspan="{{module.seances.length}}" ng-repeat="module in liste_modules track by $index">
+                                {{module.NOM}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="border-0" rowspan="1"></th>
+                            <th ng-if="false" ng-repeat-start="module in liste_modules track by $index"></th>
+                            <th scope="col" ng-repeat-end ng-repeat="seance in module.seances track by $index">
+                                <p>{{seance.DATE | date:'dd/MM/yyyy'}}</p>
+                                <p>{{seance.NOM_TYPE_SEANCE}}</p>
+                                <p>{{seance.HD | hhmm}}-{{seance.HF | hhmm}}</p>
+                            </th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                       <tr>
+                           <td class="text-left">Intervenants</td>
+                       </tr>
+                       <tr ng-repeat="intervenant in liste_intervenants track by $index">
+                           <td>{{intervenant.NOM}} {{intervenant.PRENOM}}</td>
+                           <td ng-if="false" ng-repeat-start="module in liste_modules track by $index"></td>
+                           <td ng-repeat-end ng-repeat="seance in module.seances track by $index">
+                               <i style="cursor:pointer;"  ng-if="Exist(seance.intervenants,intervenant.ID_INTERVENANT)" ng-click="CheckIntervenant(seance.emargement_intervenants,seance.ID_SEANCE,intervenant.ID_INTERVENANT)" ng-class="InterPresent(seance.emargement_intervenants,intervenant.ID_INTERVENANT)?'ri-checkbox-circle-fill active':'ri-close-line'"></i>
+                           </td>
+
+                       </tr>
+                       <tr>
+                           <td class="text-left">Apprenants</td>
+                       </tr>
+                       <tr ng-repeat="apprenant in liste_apprenants track by $index">
+                           <td>{{apprenant.NOM}} {{apprenant.PRENOM}}</td>
+                           <td ng-if="false" ng-repeat-start="module in liste_modules track by $index"></td>
+                           <td ng-repeat-end ng-repeat="seance in module.seances track by $index">
+                               <i style="cursor:pointer;" ng-click="CheckApprenant(seance.emargement_apprenants,seance.ID_SEANCE,apprenant.ID_APPRENANT)" ng-class="ApprePresent(seance.emargement_apprenants,apprenant.ID_APPRENANT)?'ri-checkbox-circle-fill active':'ri-close-line'"></i>
+                           </td>
+                       </tr>
+                   </tbody>
+               </table>
+           </div>
+
+       </div>
+    </div>
+
+
+</div>
+<style>
+      .send-loading {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        -webkit-animation: rotation 1s infinite;
+        animation: rotation 1s infinite;
+        left: 50%;
+        top: 33%;
+    }
+    .searchFilter.active{
+        background: rgb(250 250 250) !important;
+        color: rgb(0 0 0) !important;
+        border: 1px solid #dbdbdb !important;
+    }
+    .ri-checkbox-circle-fill.active{
+        color: var(--iq-primary);
+        font-weight: bolder;
+    }
+</style>
